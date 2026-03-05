@@ -4,94 +4,272 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Space Beaver Coffee</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+
+  <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
-  <!-- Lien vers le CSS -->
+  <!-- CSS -->
   <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
 
-  <!-- HEADER -->
-  <header>
-    <div class="container">
-      <h1 class="logo">🦫 Space Beaver Coffee</h1>
+<!-- HEADER -->
+<header>
 
-      <nav>
-        <ul class="nav-links">
-          <li><a href="index.html">Accueil</a></li>
-          <li><a href="menu.html">Menu</a></li>
-          <li><a href="crew.html">L’Équipage</a></li>
-          <li><a href="contact.html">Contact</a></li>
-        </ul>
-      </nav>
-    </div>
-  </header>
+<div class="container header-grid">
 
-  <!-- HERO -->
-  <section class="hero">
-  <div class="container">
-    <h2>Bienvenue au Space Beaver Coffee 🦫✨</h2>
+<h1 class="logo">🦫 Space Beaver Coffee</h1>
+
+<nav>
+<ul class="nav-links">
+
+<li><a href="index.html">Accueil</a></li>
+<li><a href="menu.html">Menu</a></li>
+<li><a href="crew.html">L’Équipage</a></li>
+<li><a href="contact.html">Contact</a></li>
+
+</ul>
+</nav>
+
+<button id="theme-toggle">🌙</button>
+
+</div>
+
+</header>
+
+
+<!-- HERO -->
+<section class="hero">
+
+  <div class="hero-content">
+
+    <h2>Votre dose quotidienne,<br> formulée avec précision.</h2>
+
     <p>
-      Ici, les castors de l’espace mélangent science et café pour créer vos boissons orbitales.
-      Chaque formule est testée dans notre laboratoire cosmique : énergie, créativité, et plaisir garantis.
+      Au cœur de notre laboratoire orbital, nos castors scientifiques
+      élaborent des formules caféinées certifiées.
+      Chaque boisson est testée en gravité réduite pour garantir
+      énergie, créativité et performance.
     </p>
-    <p>
-      Que vous soyez un scientifique du jour ou un explorateur nocturne, nos recettes vous transporteront
-      dans une aventure gustative intergalactique.
-    </p>
-    <a href="menu.html" class="btn">Découvrir les Formules</a>
+
+    <a href="#" class="btn">
+      Découvrir les Formules
+    </a>
+
   </div>
+
 </section>
 
-    <!-- SECTION BOISSONS (placeholder) -->
-    <section class="drinks">
+<!-- STORY SECTION -->
+
+<section class="story">
+
+  <div class="container story-grid">
+
+    <div class="story-text">
+
+      <h2>Un laboratoire caféiné en orbite</h2>
+
+      <p>
+        En 2147, la station scientifique Space Beaver développe
+        les premières formules caféinées optimisées pour les
+        environnements spatiaux.
+      </p>
+
+      <p>
+        Nos castors ingénieurs testent chaque extraction en
+        gravité réduite afin de garantir concentration,
+        créativité et stabilité émotionnelle.
+      </p>
+
+      <p>
+        Chaque boisson est certifiée selon le protocole
+        orbital ISO-2147.
+      </p>
+
+    </div>
+
+    <div class="story-visual">
+
+      <i class="fa-solid fa-flask"></i>
+
+    </div>
+
+  </div>
+
+</section>
+
+<!-- SECTION BOISSONS -->
+
+<section class="drinks">
+
   <div class="container">
 
-    <h2 class="section-title">Formules Pharmaceutiques Certifiées</h2>
+    <h2 class="section-title">
+      Formules Pharmaceutiques Certifiées
+    </h2>
 
     <div class="drinks-grid">
 
       <!-- CARD 1 -->
       <div class="drink-card">
-        <div class="icon-circle"><i class="fas fa-mug-saucer"></i></div>        <h3> Espresso Orbital</h3>
-        <p>Extraction haute précision, concentration maximale.</p>
-        <span class="tag">Boost Cognitif</span>
-        <div class="regulatory">Certifié ISO 2147-A</div>
+
+        <div class="icon-circle">
+          <i class="fa-solid fa-mug-saucer"></i>
+        </div>
+
+        <h3>Espresso Orbital</h3>
+
+        <p>
+          Extraction haute précision pour une
+          concentration maximale.
+        </p>
+
+        <span class="tag">
+          Boost Cognitif
+        </span>
+
+        <div class="regulatory">
+          Certifié ISO 2147-A
+        </div>
+
       </div>
+
 
       <!-- CARD 2 -->
       <div class="drink-card">
-        <div class="icon-circle"><i class="fas fa-flask"></i></div>
-        <h3> Latte Moléculaire</h3>
-        <p>Mousse stabilisée en gravité réduite.</p>
-        <span class="tag">Stabilité Émotionnelle</span>
-        <div class="regulatory">Certifié ISO 2147-A</div>
+
+        <div class="icon-circle">
+          <i class="fa-solid fa-flask"></i>
+        </div>
+
+        <h3>Latte Moléculaire</h3>
+
+        <p>
+          Mousse stabilisée en gravité réduite
+          pour un équilibre parfait.
+        </p>
+
+        <span class="tag">
+          Stabilité Émotionnelle
+        </span>
+
+        <div class="regulatory">
+          Certifié ISO 2147-A
+        </div>
+
       </div>
+
 
       <!-- CARD 3 -->
       <div class="drink-card">
-        <div class="icon-circle"><i class="fas fa-rocket"></i></div>        <h3> Cold Brew Quantique</h3>
-        <p>Infusion lente pour missions longue durée.</p>
-        <span class="tag">Endurance Spatiale</span>
-        <div class="regulatory">Certifié ISO 2147-A</div>
+
+        <div class="icon-circle">
+          <i class="fa-solid fa-rocket"></i>
+        </div>
+
+        <h3>Cold Brew Quantique</h3>
+
+        <p>
+          Infusion lente pour les missions
+          spatiales longue durée.
+        </p>
+
+        <span class="tag">
+          Endurance Spatiale
+        </span>
+
+        <div class="regulatory">
+          Certifié ISO 2147-A
+        </div>
+
       </div>
 
     </div>
 
   </div>
+
 </section>
-  </main>
 
-  <!-- FOOTER -->
-  <footer>
-    <div class="container">
-      <p>© 2147 Space Beaver Coffee — Tous droits réservés</p>
+<!-- MENU JOUR / NUIT -->
+
+<section class="menu-cycle">
+
+  <div class="container">
+
+    <h2 class="section-title">
+      Cycle de Consommation Orbital
+    </h2>
+
+    <div class="cycle-grid">
+
+      <!-- JOUR -->
+
+      <div class="cycle-card day">
+
+        <h3>Mode Jour</h3>
+
+        <p>
+          Formules énergétiques pour
+          les phases de travail scientifique.
+        </p>
+
+        <ul>
+          <li>Espresso Orbital</li>
+          <li>Latte Moléculaire</li>
+          <li>Cappuccino Astéroïde</li>
+          <li>Mocha Galactique</li>
+        </ul>
+
+      </div>
+
+
+      <!-- NUIT -->
+
+      <div class="cycle-card night">
+
+        <h3>Mode Nuit</h3>
+
+        <p>
+          Formules adaptées aux longues
+          observations cosmiques.
+        </p>
+
+        <ul>
+          <li>Cold Brew Quantique</li>
+          <li>Nebula Vanilla</li>
+          <li>Dark Matter Espresso</li>
+          <li>Stellar Caramel Latte</li>
+        </ul>
+
+      </div>
+
     </div>
-  </footer>
 
-  <!-- Lien vers le JS -->
-  <script src="js/main.js"></script>
+  </div>
+
+</section>
+
+
+<!-- FOOTER -->
+
+<footer>
+
+  <div class="container">
+
+    <p>
+      © 2147 Space Beaver Coffee — Tous droits réservés
+    </p>
+
+  </div>
+
+</footer>
+
+<script src="js/main.js"></script>
 
 </body>
 </html>

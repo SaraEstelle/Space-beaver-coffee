@@ -1,209 +1,392 @@
-/* RESET */
+/* ================================
+   1. RESET
+================================ */
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-/* BASE */
-body {
-  font-family: Arial, sans-serif;
-  line-height: 1.6;
-  color: #111111;
-  background: linear-gradient(to bottom, #f5efe6, #e0ebf7);
-  background-image: radial-gradient(rgba(255,255,255,0.4) 1px, transparent 1px);
-  background-size: 40px 40px;
+/* ================================
+   2. VARIABLES
+================================ */
+
+:root {
+
+  --bg-main: #f5efe6;
+  --bg-secondary: #ffffff;
+
+  --text-main: #1e1e1e;
+  --text-soft: #555;
+
+  --accent: #5a3e2b;
+  --accent-2: #2e3a59;
+
 }
 
-/* CONTAINER */
+/* DARK MODE */
+
+.dark-mode {
+
+  --bg-main: #0f172a;
+  --bg-secondary: #1e293b;
+
+  --text-main: #f1f5f9;
+  --text-soft: #94a3b8;
+
+  --accent: #22c55e;
+  --accent-2: #7c3aed;
+
+}
+
+/* ================================
+   3. BASE
+================================ */
+
+body {
+
+  font-family: 'Inter', sans-serif;
+  line-height: 1.6;
+
+  background: var(--bg-main);
+  color: var(--text-main);
+
+  transition: background 0.4s ease, color 0.4s ease;
+
+}
+
+/* ================================
+   4. CONTAINER
+================================ */
+
 .container {
+
   width: 90%;
   max-width: 1200px;
-  margin: 0 auto;
+  margin: auto;
+
 }
 
-/* HEADER */
+/* ================================
+   5. HEADER
+================================ */
+
 header {
-  background-color: #f4f6f8;
+
+  background: var(--bg-secondary);
   padding: 20px 0;
+
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+
+}
+
+header .container {
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
 }
 
 .logo {
+
   font-size: 24px;
+  font-weight: bold;
+
 }
 
-/* NAVIGATION */
+/* NAV */
+
 nav ul {
+
   list-style: none;
   display: flex;
-  gap: 20px;
+  gap: 25px;
+
 }
 
 nav a {
+
   text-decoration: none;
-  color: #111;
-  font-weight: bold;
+  color: var(--text-main);
+  font-weight: 600;
+
 }
 
-/* HERO */
+/* ================================
+   6. HERO
+================================ */
+
 .hero {
-  padding: 80px 0;
-  text-align: center;
-  background: linear-gradient(to bottom, #f5efe6, #e0ebf7);
-  color: #3e2a1d;
-}
 
-.hero p {
-  max-width: 700px;
-  margin: 10px auto;
-  font-size: 18px;
-  line-height: 1.8;
-  color: #4b3c2b;
-}
+  position: relative;
+  height: 90vh;
 
-.btn {
-  display: inline-block;
-  margin-top: 20px;
-  padding: 10px 20px;
-  background-color: #5a3e2b;
-  .btn:hover {
-    background-color: #3e2a1d;
-  }
-  color: white;
-  text-decoration: none;
-  border-radius: 5px;
-}
+  background: url('../assets/images/lab-space.jpg') center/cover no-repeat;
 
-/* SECTION */
-section {
-  padding: 60px 0;
-}
-
-/* FOOTER */
-footer {
-  background-color: #111;
-  color: white;
-  text-align: center;
-  padding: 20px 0;
-}
-h2 {
-  color: blue;
-}
-/* =========================
-   SECTION DRINKS
-========================= */
-
-.drinks {
-  background: linear-gradient(
-    to bottom,
-    #f5efe6,
-    #eef2f7
-  );
-background-image: radial-gradient(rgba(255,255,255,0.4) 1px, transparent 1px);
-background-size: 40px 40px;
-}
-
-.section-title {
-  text-align: center;
-  font-size: 28px;
-  margin-bottom: 50px;
-}
-
-/* GRID */
-.drinks-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 30px;
-}
-
-/* CARD */
-.drink-card {
-  background-color: white;
-  padding: 30px;
-  border-radius: 12px;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
-  transition: transform 0.3s ease;
-}
-
-.drink-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 15px 35px rgba(46, 58, 89, 0.2);
-}
-
-.drink-card h3 {
-  margin-bottom: 15px;
-}
-
-.drink-card p {
-  margin-bottom: 20px;
-  color: #555;
-}
-
-.tag {
-  display: inline-block;
-  padding: 6px 12px;
-  background-color: #2e3a59;
-  color: white;
-  font-size: 12px;
-  border-radius: 20px;
-}
-/* ICON CIRCLE */
-
-.icon-circle {
-  width: 60px;
-  height: 60px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, #5a3e2b, #2e3a59);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 24px;
-  margin-bottom: 20px;
-  color: white;
-}
-/* ANIMATION */
 
-@keyframes fadeUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  text-align: center;
+
 }
+
+/* overlay sombre */
+
+.overlay {
+
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.55);
+  top: 0;
+  left: 0;
+
+}
+
+.hero-content {
+
+  position: relative;
+  z-index: 2;
+  color: white;
+  max-width: 700px;
+
+}
+
+.hero-content h2 {
+
+  font-size: 42px;
+  margin-bottom: 20px;
+
+}
+
+.hero-content p {
+
+  font-size: 18px;
+  margin-bottom: 30px;
+
+}
+
+/* BOUTON */
+
+.btn {
+
+  display: inline-block;
+  padding: 12px 28px;
+
+  background: var(--accent);
+  color: white;
+
+  border-radius: 6px;
+
+  text-decoration: none;
+
+  transition: 0.3s;
+
+}
+
+.btn:hover {
+
+  background: var(--accent-2);
+
+}
+
+/* ================================
+   7. SECTIONS
+================================ */
+
+section {
+
+  padding: 80px 0;
+
+}
+
+.section-title {
+
+  text-align: center;
+  font-size: 32px;
+
+  margin-bottom: 50px;
+
+}
+
+/* ================================
+   8. DRINKS GRID
+================================ */
+
+.drinks {
+
+  background: var(--bg-main);
+
+}
+
+.drinks-grid {
+
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+
+}
+
+/* ================================
+   9. DRINK CARD
+================================ */
 
 .drink-card {
-  animation: fadeUp 0.8s ease forwards;
-}
-/* RESPONSIVE */
 
-@media (max-width: 900px) {
-  .drinks-grid {
-    grid-template-columns: 1fr;
-  }
+  background: var(--bg-secondary);
+
+  padding: 30px;
+
+  border-radius: 14px;
+
+  box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+
+  transition: all 0.3s ease;
+
+  animation: fadeUp 0.8s ease forwards;
+
 }
+
+.drink-card:hover {
+
+  transform: translateY(-8px);
+  box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+
+}
+
+.drink-card h3 {
+
+  margin-bottom: 15px;
+
+}
+
+.drink-card p {
+
+  color: var(--text-soft);
+  margin-bottom: 20px;
+
+}
+
+/* ================================
+   10. TAG
+================================ */
+
+.tag {
+
+  display: inline-block;
+
+  padding: 6px 12px;
+
+  background: var(--accent-2);
+
+  color: white;
+
+  font-size: 12px;
+
+  border-radius: 20px;
+
+}
+
+/* ================================
+   11. ICON CIRCLE
+================================ */
+
+.icon-circle {
+
+  width: 60px;
+  height: 60px;
+
+  border-radius: 50%;
+
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 24px;
+
+  margin-bottom: 20px;
+
+  color: white;
+
+}
+
+/* ================================
+   12. REGULATORY TEXT
+================================ */
 
 .regulatory {
+
   margin-top: 15px;
+
   font-size: 11px;
-  color: #888;
+
+  color: var(--text-soft);
+
   letter-spacing: 1px;
+
   text-transform: uppercase;
+
 }
 
-.icon-circle i {
-  font-size: 28px;
+/* ================================
+   13. FOOTER
+================================ */
+
+footer {
+
+  background: #111;
+
   color: white;
+
+  text-align: center;
+
+  padding: 30px 0;
+
 }
-/* étoiles subtiles */
-body::after {
-  content: "";
-  position: fixed;
-  top:0; left:0;
-  width:100%; height:100%;
-  background: url('assets/images/stars.png') repeat;
-  opacity:0.05;
-  pointer-events:none;
+
+/* ================================
+   14. ANIMATION
+================================ */
+
+@keyframes fadeUp {
+
+  from {
+
+    opacity: 0;
+    transform: translateY(30px);
+
+  }
+
+  to {
+
+    opacity: 1;
+    transform: translateY(0);
+
+  }
+
+}
+
+/* ================================
+   15. RESPONSIVE
+================================ */
+
+@media (max-width: 900px) {
+
+  .drinks-grid {
+
+    grid-template-columns: 1fr;
+
+  }
+
+  .hero-content h2 {
+
+    font-size: 32px;
+
+  }
+
 }
