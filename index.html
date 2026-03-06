@@ -1,144 +1,707 @@
 <!DOCTYPE html>
+<!--
+  index.html — Page d'accueil de Space Beaver Coffee
+  C'est la première page que l'utilisateur voit.
+  Structure générale : navbar → hero → concept → boissons → équipage → footer
+-->
 <html lang="fr">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Space Beaver Coffee</title>
-
-<link rel="stylesheet" href="css/style.css">
-
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
-
+  <meta charset="UTF-8" />
+  <!-- viewport : indispensable pour que le site s'adapte aux mobiles -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Space Beaver Coffee — Certified Orbital Laboratory</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <!-- favicon en SVG inline avec l'emoji castor, pas besoin d'un fichier externe -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🦫</text></svg>" />
 </head>
-
 <body>
 
-<header>
 
-<div class="container header-flex">
+<!-- ============================================================
+     NAVBAR — barre de navigation fixe
+     Reste visible en haut même quand on scrolle (position: fixed dans le CSS)
+     Sur mobile elle se transforme en menu burger grâce au JS
+     ============================================================ -->
+<nav class="navbar">
+  <div class="nav-container">
 
-<h1 class="logo">🦫 Space Beaver Coffee</h1>
+    <!-- Logo cliquable qui ramène à l'accueil -->
+    <a href="index.html" class="nav-logo" aria-label="Space Beaver Coffee">
+      <span class="logo-top">Space Beaver</span>
+      <span class="logo-bottom">Coffee</span>
+    </a>
 
-<nav>
-<ul class="nav-links">
-<li><a href="#">Accueil</a></li>
-<li><a href="#">Menu</a></li>
-<li><a href="#">Crew</a></li>
-<li><a href="#">Contact</a></li>
-</ul>
+    <!-- Liste des liens de navigation
+         Sur mobile, cette liste est cachée par défaut (max-height: 0 en CSS)
+         et s'ouvre quand on clique sur le burger (JS ajoute la classe .open) -->
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html" class="active">Accueil</a></li>
+      <li><a href="menu.html">Les Formules</a></li>
+      <li><a href="crew.html">L'Équipage</a></li>
+      <li><a href="contact.html">Prescription</a></li>
+      <!-- Bouton pour basculer entre mode jour et nuit
+           Le texte est mis à jour par le JS selon le mode actif -->
+      <li>
+        <button class="mode-toggle" aria-label="Basculer le mode">🌙 Black Orbit Mode</button>
+      </li>
+    </ul>
+
+    <!-- Bouton burger pour mobile (3 traits → croix quand ouvert)
+         Caché sur desktop via CSS, visible sur mobile -->
+    <button class="burger" id="burger" aria-label="Menu mobile">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+
+  </div>
 </nav>
 
-<button id="toggleTheme" class="theme-btn">Mode Nuit</button>
 
-</div>
+<!-- ============================================================
+     SECTION HERO — Grande image plein écran d'entrée
+     Deux fonds superposés (jour et nuit), on bascule avec opacity en CSS
+     Le texte est différent selon le mode actif (.day-content / .night-content)
 
-</header>
+     Images à placer dans assets/images/ :
+     - hero-lab-day.png   → labo avec castors en tenue blanche
+     - hero-lab-night.png → même labo version sombre néon
+     ============================================================ -->
+<section class="hero" id="hero">
 
+  <!-- Fond jour (opacity 1 par défaut, passe à 0 en mode nuit via CSS) -->
+  <div class="hero-bg hero-bg-day"></div>
 
-<section class="hero">
+  <!-- Fond nuit (opacity 0 par défaut, passe à 1 en mode nuit via CSS) -->
+  <div class="hero-bg hero-bg-night"></div>
 
-<div class="container hero-grid">
+  <!-- Overlay sombre pour que le texte blanc reste lisible sur la photo -->
+  <div class="hero-overlay"></div>
 
-<div class="hero-text">
+  <div class="hero-content">
 
-<h2>Bienvenue dans notre laboratoire caféiné</h2>
+    <!-- Contenu affiché en MODE JOUR -->
+    <div class="day-content">
+      <div class="hero-badge">
+        🛰️ &nbsp; Station Orbitale · Secteur 7 · En Opération
+      </div>
+      <h1 class="hero-title">
+        Space Beaver Coffee
+        <span>Certified Orbital</span>
+        Laboratory
+      </h1>
+      <p class="hero-subtitle">
+        En orbite basse autour de la Terre, nos castors scientifiques
+        développent des formules énergétiques certifiées pour optimiser
+        les performances humaines.
+      </p>
+      <a href="menu.html" class="hero-cta">
+        Découvrir les Formules <span class="arrow">→</span>
+      </a>
+      <div class="hero-tags">
+        <span class="hero-tag">Bio-Synthétique</span>
+        <span class="hero-tag">Orbital Certified</span>
+        <span class="hero-tag">Since 2147</span>
+        <span class="hero-tag">12 Formules Actives</span>
+      </div>
+    </div>
 
-<p>
-Depuis l'orbite basse jusqu'aux stations profondes,
-les ingénieurs de Space Beaver Coffee développent
-des formules énergétiques certifiées pour toutes les missions.
-</p>
+    <!-- Contenu affiché en MODE NUIT
+         (display:none par défaut, devient display:block quand dark-mode est actif) -->
+    <div class="night-content">
+      <div class="hero-badge" style="border-color:rgba(176,38,255,0.5);color:rgba(176,38,255,0.9);">
+        ⚠️ &nbsp; ACCÈS RESTREINT · PROTOCOLE NOCTURNE ACTIVÉ
+      </div>
+      <h1 class="hero-title">
+        Black Orbit
+        <span style="color:#b026ff;">Laboratory</span>
+      </h1>
+      <p class="hero-subtitle" style="color:rgba(200,170,255,0.8);">
+        Lorsque la station passe dans l'ombre, certains protocoles
+        scientifiques continuent… Des expériences non autorisées commencent.
+      </p>
+      <a href="menu.html" class="hero-cta" style="background:#b026ff;">
+        Accéder aux Expériences <span class="arrow">→</span>
+      </a>
+      <div class="hero-tags">
+        <span class="hero-tag" style="border-color:rgba(176,38,255,0.3);color:rgba(176,38,255,0.6);">Non-Homologué</span>
+        <span class="hero-tag" style="border-color:rgba(0,245,212,0.3);color:rgba(0,245,212,0.5);">Expérimental</span>
+        <span class="hero-tag" style="border-color:rgba(176,38,255,0.3);color:rgba(176,38,255,0.6);">Interdit × 12 Systèmes</span>
+        <span class="hero-tag" style="border-color:rgba(0,245,212,0.3);color:rgba(0,245,212,0.5);">Données Classifiées</span>
+      </div>
+    </div>
 
-<p>
-Chaque café est conçu comme une expérience scientifique :
-équilibre aromatique, précision nutritionnelle et
-plaisir gustatif.
-</p>
+  </div>
 
-<a class="btn">Découvrir les Formules</a>
-
-</div>
-
-<div class="hero-visual">
-🦫☕🚀
-</div>
-
-</div>
-
-</section>
-
-
-<section class="drinks">
-
-<div class="container">
-
-<h2 class="section-title">Formules Café Certifiées</h2>
-
-<div class="cards">
-
-<div class="card">
-
-<div class="icon">☕</div>
-
-<h3>Orbital Espresso</h3>
-
-<p>
-Shot ultra concentré conçu pour les phases
-de décollage mental.
-</p>
-
-<span class="tag">BOOST</span>
-
-</div>
-
-
-<div class="card">
-
-<div class="icon">🧪</div>
-
-<h3>Nebula Latte</h3>
-
-<p>
-Lait mousseux enrichi en arômes stellaires
-pour une navigation douce.
-</p>
-
-<span class="tag">SMOOTH</span>
-
-</div>
-
-
-<div class="card">
-
-<div class="icon">🚀</div>
-
-<h3>Quantum Cappuccino</h3>
-
-<p>
-Un mélange équilibré pour maintenir
-la stabilité cognitive en mission.
-</p>
-
-<span class="tag">BALANCE</span>
-
-</div>
-
-</div>
-
-</div>
+  <!-- Indicateur visuel qui invite à scroller vers le bas -->
+  <div class="hero-scroll">
+    <div class="scroll-line"></div>
+    <span>Explorer</span>
+  </div>
 
 </section>
 
 
+<!-- ============================================================
+     SECTION CONCEPT — Histoire et valeurs du labo
+     Grille 2 colonnes : texte à gauche, image à droite
+     Même principe jour/nuit avec .day-content et .night-content
+
+     Images à placer dans assets/images/ :
+     - concept-lab-day.png   → labo lumineux, castors en blouse
+     - concept-lab-night.png → labo sombre avec fioles néon
+     ============================================================ -->
+<section class="concept" id="concept">
+  <div class="concept-inner">
+
+    <!-- En-tête de section : label + titre + séparateur décoratif -->
+    <div class="section-header reveal">
+
+      <div class="day-content">
+        <span class="section-label">🔬 Notre Concept</span>
+        <h2 class="section-title">Pourquoi des castors pharmaciens de l'espace ?</h2>
+        <div class="section-divider">
+          <span class="divider-line"></span>
+          <span class="divider-dot">✦</span>
+          <span class="divider-dot">Certifiés</span>
+          <span class="divider-dot">✦</span>
+          <span class="divider-dot">Nature & Science</span>
+          <span class="divider-dot">✦</span>
+          <span class="divider-dot">Orbite</span>
+          <span class="divider-line"></span>
+        </div>
+      </div>
+
+      <div class="night-content">
+        <span class="section-label" style="border-color:#b026ff;color:#b026ff;">⚗️ Protocole Nocturne</span>
+        <h2 class="section-title">Que cachent nos castors de l'espace ?</h2>
+        <div class="section-divider">
+          <span class="divider-line"></span>
+          <span class="divider-dot" style="color:#b026ff;">◈</span>
+          <span class="divider-dot" style="color:#9ab0d4;">Illegal</span>
+          <span class="divider-dot" style="color:#b026ff;">◈</span>
+          <span class="divider-dot" style="color:#9ab0d4;">Experimental</span>
+          <span class="divider-dot" style="color:#b026ff;">◈</span>
+          <span class="divider-dot" style="color:#9ab0d4;">Secret</span>
+          <span class="divider-line"></span>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Grille concept : 2 colonnes sur desktop, 1 colonne sur mobile -->
+    <div class="concept-grid">
+
+      <!-- Colonne gauche : texte descriptif + liste de features -->
+      <div class="concept-text reveal">
+
+        <!-- Texte MODE JOUR -->
+        <div class="day-content">
+          <p>En 2147, après une crise énergétique interplanétaire, un collectif de castors ingénieurs décide de créer le premier laboratoire de nutrition orbitale.</p>
+          <p>Installé en orbite basse au-dessus de la Terre, Space Beaver Coffee développe des formules énergétiques stables, bio-synthétiques et approuvées par les autorités galactiques.</p>
+          <div class="concept-features">
+            <div class="concept-feature">
+              <span class="feature-icon">⚗️</span>
+              <div class="feature-text">
+                <strong>Stabilisation Caféine</strong>
+                <p>Molécules stimulantes extraites et stabilisées orbitalement pour une libération optimale.</p>
+              </div>
+            </div>
+            <div class="concept-feature">
+              <span class="feature-icon">🌿</span>
+              <div class="feature-text">
+                <strong>Bio-Synthèse Éthique</strong>
+                <p>Extraction botanique conforme aux normes galactiques de respect environnemental.</p>
+              </div>
+            </div>
+            <div class="concept-feature">
+              <span class="feature-icon">🛰️</span>
+              <div class="feature-text">
+                <strong>Contrôle Orbital</strong>
+                <p>Chaque formule est dosée en microgravité pour une précision moléculaire maximale.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Texte MODE NUIT -->
+        <div class="night-content">
+          <p>Lorsque la station passe en orbite côté obscur, le laboratoire bascule. Les castors les plus brillants restent après la fermeture.</p>
+          <p>Ils testent des formules non autorisées. Des stimulants instables. Des recettes interdites dans 12 systèmes stellaires.</p>
+          <blockquote style="font-family:'Space Mono',monospace;font-size:0.8rem;color:#b026ff;border-left:2px solid #b026ff;padding-left:1rem;margin:1.5rem 0;font-style:italic;">
+            "La science n'avance que dans l'ombre."
+          </blockquote>
+          <div class="concept-features">
+            <div class="concept-feature">
+              <span class="feature-icon">🧨</span>
+              <div class="feature-text">
+                <strong>Réactions Instables</strong>
+                <p>Des molécules trop puissantes pour la certification. Pour les véritables aventuriers.</p>
+              </div>
+            </div>
+            <div class="concept-feature">
+              <span class="feature-icon">🔮</span>
+              <div class="feature-text">
+                <strong>Formules Secrètes</strong>
+                <p>Recettes non répertoriées. Effets non documentés. Satisfactions garanties.</p>
+              </div>
+            </div>
+            <div class="concept-feature">
+              <span class="feature-icon">☣️</span>
+              <div class="feature-text">
+                <strong>Zone Expérimentale</strong>
+                <p>Territoire scientifique clandestin. Accès sur invitation du Dr. Beaverstein uniquement.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Colonne droite : image du labo
+           On affiche concept-lab-day.png ou concept-lab-night.png selon le mode
+           Si l'image est absente, onerror déclenche l'affichage du fallback emoji -->
+      <div class="concept-visual reveal">
+        <div class="concept-image-frame">
+
+          <!-- Image MODE JOUR
+               onerror : si le fichier PNG n'existe pas, on cache l'img
+               et on affiche le div fallback juste après -->
+          <img
+            class="concept-img day-content"
+            src="assets/images/concept-lab-day.png"
+            alt="Laboratoire orbital certifié — mode jour"
+            onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+          />
+          <!-- Fallback jour (emoji) si l'image ne charge pas -->
+          <div class="concept-img-fallback day-content">🧪</div>
+
+          <!-- Image MODE NUIT -->
+          <img
+            class="concept-img night-content"
+            src="assets/images/concept-lab-night.png"
+            alt="Black Orbit Lab — expériences clandestines"
+            onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+          />
+          <!-- Fallback nuit (emoji) si l'image ne charge pas -->
+          <div class="concept-img-fallback night-content" style="background:linear-gradient(135deg,#0d0520,#1a0840);">⚗️</div>
+
+        </div>
+
+        <!-- Petite carte statistique superposée en bas à droite de l'image -->
+        <div class="concept-overlay-card">
+          <div class="day-content">
+            <span class="overlay-stat">2147</span>
+            <span class="overlay-label">Année de fondation</span>
+          </div>
+          <div class="night-content">
+            <span class="overlay-stat" style="color:#b026ff;text-shadow:0 0 20px rgba(176,38,255,0.8);">404</span>
+            <span class="overlay-label">Formules non homologuées</span>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ============================================================
+     SECTION BOISSONS — Aperçu des 4 produits phares
+     Les cartes sont dans une CSS Grid auto-fill (responsive automatique)
+     .day-grid et .night-grid gèrent le basculement des cartes
+     ============================================================ -->
+<section class="products-section" id="boissons">
+  <div class="products-inner">
+
+    <div class="section-header reveal">
+      <div class="day-content">
+        <span class="section-label">☕ Nos Formules</span>
+        <h2 class="section-title">Les Formules Certifiées</h2>
+        <p class="section-desc">4 formules développées en orbite basse, pour optimiser vos performances quotidiennes.</p>
+      </div>
+      <div class="night-content">
+        <span class="section-label" style="border-color:#b026ff;color:#b026ff;">☠️ Formules Interdites</span>
+        <h2 class="section-title">Expériences Nocturnes</h2>
+        <p class="section-desc" style="color:#9ab0d4;">Des formules trop puissantes pour la certification officielle.</p>
+      </div>
+    </div>
+
+    <div class="products-grid">
+
+      <!-- Cartes MODE JOUR
+           display:contents sur .day-grid pour que les cartes
+           s'insèrent directement dans la grille parente -->
+      <div class="day-grid">
+
+        <article class="product-card reveal">
+          <div class="card-image">
+            <div class="card-emoji">🧪</div>
+          </div>
+          <div class="card-content">
+            <span class="card-tag">Stimulant</span>
+            <h3 class="card-title">Caféine HCl 2.0™</h3>
+            <p class="card-desc">Arabica stabilisé orbitalement. Notes de noisette, clarté mentale garantie.</p>
+            <div class="card-footer">
+              <span class="card-price">4.90 €</span>
+              <span class="card-badge">Certifié</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="product-card reveal">
+          <div class="card-image" style="background:linear-gradient(135deg,#e8f8ee,#c8f0d8);">
+            <div class="card-emoji">🌿</div>
+          </div>
+          <div class="card-content">
+            <span class="card-tag">Endurance</span>
+            <h3 class="card-title">Matcha BioSynth™</h3>
+            <p class="card-desc">Matcha enrichi en chlorophylle activée. Énergie longue durée, servi en erlenmeyer.</p>
+            <div class="card-footer">
+              <span class="card-price">5.50 €</span>
+              <span class="card-badge">Certifié</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="product-card reveal">
+          <div class="card-image" style="background:linear-gradient(135deg,#eef8e8,#d0f0c8);">
+            <div class="card-emoji">🧬</div>
+          </div>
+          <div class="card-content">
+            <span class="card-tag">Récupération</span>
+            <h3 class="card-title">Sérum Vitalité 3000™</h3>
+            <p class="card-desc">Smoothie spiruline + fruits blancs. Formule de récupération musculaire avancée.</p>
+            <div class="card-footer">
+              <span class="card-price">6.20 €</span>
+              <span class="card-badge">Certifié</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="product-card reveal">
+          <div class="card-image" style="background:linear-gradient(135deg,#f5eee8,#ead8c8);">
+            <div class="card-emoji">🌡️</div>
+          </div>
+          <div class="card-content">
+            <span class="card-tag">Anti-Stress</span>
+            <h3 class="card-title">Infusion Adaptogène Alpha</h3>
+            <p class="card-desc">Ashwagandha + racine martienne. Anti-stress orbital homologué.</p>
+            <div class="card-footer">
+              <span class="card-price">5.80 €</span>
+              <span class="card-badge">Certifié</span>
+            </div>
+          </div>
+        </article>
+
+      </div><!-- fin day-grid boissons -->
+
+      <!-- Cartes MODE NUIT -->
+      <div class="night-grid">
+
+        <article class="product-card reveal">
+          <div class="card-image" style="background:linear-gradient(135deg,#0d0520,#1a0840);">
+            <div class="card-emoji" style="filter:drop-shadow(0 0 15px #b026ff);">☕</div>
+          </div>
+          <div class="card-content">
+            <span class="card-tag">⚠️ Non-Homologué</span>
+            <h3 class="card-title">Dark Matter Espresso</h3>
+            <p class="card-desc">Triple extraction. Caféine concentrée instable. Interdit aux mineurs interstellaires.</p>
+            <div class="card-footer">
+              <span class="card-price">6.66 €</span>
+              <span class="card-badge">Experimental</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="product-card reveal">
+          <div class="card-image" style="background:linear-gradient(135deg,#001a10,#003320);">
+            <div class="card-emoji" style="filter:drop-shadow(0 0 15px #00f5d4);">🌿</div>
+          </div>
+          <div class="card-content">
+            <span class="card-tag">⚗️ Particules Actives</span>
+            <h3 class="card-title">Plasma Matcha X</h3>
+            <p class="card-desc">Matcha enrichi en particules actives. Glow vert néon. Effets… variables.</p>
+            <div class="card-footer">
+              <span class="card-price">7.77 €</span>
+              <span class="card-badge">Experimental</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="product-card reveal">
+          <div class="card-image" style="background:linear-gradient(135deg,#1a0010,#400030);">
+            <div class="card-emoji" style="filter:drop-shadow(0 0 15px #ff00aa);">🧬</div>
+          </div>
+          <div class="card-content">
+            <span class="card-tag">🔮 Formule Secrète</span>
+            <h3 class="card-title">Sérum Dopamine-404</h3>
+            <p class="card-desc">Milkshake ultra sucré + stimulant mystère. Formule non documentée.</p>
+            <div class="card-footer">
+              <span class="card-price">8.88 €</span>
+              <span class="card-badge">Experimental</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="product-card reveal">
+          <div class="card-image" style="background:linear-gradient(135deg,#000d1a,#001a35);">
+            <div class="card-emoji" style="filter:drop-shadow(0 0 15px #00aaff);">⚡</div>
+          </div>
+          <div class="card-content">
+            <span class="card-tag">☣️ Effet Rapide</span>
+            <h3 class="card-title">Élixir Nebula Shot</h3>
+            <p class="card-desc">Shot court, effet rapide. Non homologué. Responsabilité déclinée.</p>
+            <div class="card-footer">
+              <span class="card-price">9.99 €</span>
+              <span class="card-badge">Experimental</span>
+            </div>
+          </div>
+        </article>
+
+      </div><!-- fin night-grid boissons -->
+
+    </div><!-- fin products-grid -->
+
+    <!-- Bouton centré sous les cartes pour aller vers la page menu complète -->
+    <div style="text-align:center;margin-top:2.5rem;" class="reveal">
+      <a href="menu.html" class="hero-cta">
+        Voir toutes les formules <span class="arrow">→</span>
+      </a>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ============================================================
+     SECTION ÉQUIPAGE — Aperçu des 4 membres
+     Les avatars utilisent des PNG dans assets/images/
+     Si l'image est absente, onerror ajoute .img-error sur le wrapper
+     et le CSS affiche l'emoji fallback à la place
+     ============================================================ -->
+<section class="crew-section" id="equipe">
+  <div class="crew-inner">
+
+    <div class="section-header reveal">
+      <div class="day-content">
+        <span class="section-label">🦫 Notre Équipage</span>
+        <h2 class="section-title">Les Castors Scientifiques</h2>
+        <p class="section-desc">Une équipe d'élite formée dans les meilleures universités galactiques.</p>
+      </div>
+      <div class="night-content">
+        <span class="section-label" style="border-color:#b026ff;color:#b026ff;">🕶️ L'Équipe Nocturne</span>
+        <h2 class="section-title">Division Expérimentale</h2>
+        <p class="section-desc" style="color:#9ab0d4;">Les renegats de la science orbitale. Ils opèrent dans l'ombre.</p>
+      </div>
+    </div>
+
+    <div class="crew-grid">
+
+      <!-- Membres MODE JOUR
+           Fichiers attendus : castor-nova.png / prof-lignine.png
+                               fibra-7.png / analyste-orbit.png -->
+      <div class="day-grid">
+
+        <div class="crew-card reveal">
+          <div class="crew-avatar">
+            <img
+              class="crew-avatar-img"
+              src="assets/images/castor-nova.png"
+              alt="Dr. Castor Nova"
+              onerror="this.closest('.crew-avatar').classList.add('img-error')"
+            />
+            <span class="crew-avatar-fallback">🧑‍🔬</span>
+          </div>
+          <h3 class="crew-name">Dr. Castor Nova</h3>
+          <p class="crew-role">Chief Formulation Officer</p>
+          <p class="crew-desc">Spécialiste en molécules stimulantes végétales. 12 ans d'expérience orbitale.</p>
+          <span class="crew-badge">Certified Research Crew</span>
+        </div>
+
+        <div class="crew-card reveal">
+          <div class="crew-avatar">
+            <img
+              class="crew-avatar-img"
+              src="assets/images/prof-lignine.png"
+              alt="Prof. Lignine"
+              onerror="this.closest('.crew-avatar').classList.add('img-error')"
+            />
+            <span class="crew-avatar-fallback">🔬</span>
+          </div>
+          <h3 class="crew-name">Prof. Lignine</h3>
+          <p class="crew-role">R&D Research Director</p>
+          <p class="crew-desc">Expert en extraction botanique orbitale. Auteur de 47 publications galactiques.</p>
+          <span class="crew-badge">Certified Research Crew</span>
+        </div>
+
+        <div class="crew-card reveal">
+          <div class="crew-avatar">
+            <img
+              class="crew-avatar-img"
+              src="assets/images/fibra-7.png"
+              alt="Ing. Fibra-7"
+              onerror="this.closest('.crew-avatar').classList.add('img-error')"
+            />
+            <span class="crew-avatar-fallback">🧬</span>
+          </div>
+          <h3 class="crew-name">Ing. Fibra-7</h3>
+          <p class="crew-role">Food Safety Officer</p>
+          <p class="crew-desc">Garant de la conformité galactique. Zéro incident depuis 2151.</p>
+          <span class="crew-badge">Certified Research Crew</span>
+        </div>
+
+        <div class="crew-card reveal">
+          <div class="crew-avatar">
+            <img
+              class="crew-avatar-img"
+              src="assets/images/analyste-orbit.png"
+              alt="Analyste Orbit"
+              onerror="this.closest('.crew-avatar').classList.add('img-error')"
+            />
+            <span class="crew-avatar-fallback">📡</span>
+          </div>
+          <h3 class="crew-name">Analyste Orbit</h3>
+          <p class="crew-role">Quality Control Analyst</p>
+          <p class="crew-desc">Contrôle qualité et dosage moléculaire. Précision à 0.001 mg près.</p>
+          <span class="crew-badge">Certified Research Crew</span>
+        </div>
+
+      </div><!-- fin day-grid équipage -->
+
+      <!-- Membres MODE NUIT
+           Fichiers attendus : dr-beaverstein.png / dark-lignine.png
+                               agent-beta42.png / shadow-fibra.png -->
+      <div class="night-grid">
+
+        <div class="crew-card reveal" style="border-color:rgba(176,38,255,0.2);">
+          <div class="crew-avatar" style="border-color:rgba(176,38,255,0.4);">
+            <img
+              class="crew-avatar-img"
+              src="assets/images/dr-beaverstein.png"
+              alt="Dr. Beaverstein"
+              onerror="this.closest('.crew-avatar').classList.add('img-error')"
+            />
+            <span class="crew-avatar-fallback" style="filter:drop-shadow(0 0 10px #b026ff);">🧪</span>
+          </div>
+          <h3 class="crew-name">Dr. Beaverstein</h3>
+          <p class="crew-role" style="color:#b026ff;">Ancien Certifié · Rebelle</p>
+          <p class="crew-desc">Scientifique certifié devenu renegat. Créateur des formules les plus instables.</p>
+          <span class="crew-badge">Experimental Division</span>
+        </div>
+
+        <div class="crew-card reveal" style="border-color:rgba(176,38,255,0.2);">
+          <div class="crew-avatar" style="border-color:rgba(176,38,255,0.4);">
+            <img
+              class="crew-avatar-img"
+              src="assets/images/dark-lignine.png"
+              alt="Prof. Dark Lignine"
+              onerror="this.closest('.crew-avatar').classList.add('img-error')"
+            />
+            <span class="crew-avatar-fallback" style="filter:drop-shadow(0 0 10px #b026ff);">💀</span>
+          </div>
+          <h3 class="crew-name">Prof. Dark Lignine</h3>
+          <p class="crew-role" style="color:#b026ff;">Réactions Instables</p>
+          <p class="crew-desc">Spécialiste des réactions chimiques non documentées. Ne lit pas les notices.</p>
+          <span class="crew-badge">Experimental Division</span>
+        </div>
+
+        <div class="crew-card reveal" style="border-color:rgba(176,38,255,0.2);">
+          <div class="crew-avatar" style="border-color:rgba(0,245,212,0.4);">
+            <img
+              class="crew-avatar-img"
+              src="assets/images/agent-beta42.png"
+              alt="Agent Beta-42"
+              onerror="this.closest('.crew-avatar').classList.add('img-error')"
+            />
+            <span class="crew-avatar-fallback" style="filter:drop-shadow(0 0 10px #00f5d4);">🔮</span>
+          </div>
+          <h3 class="crew-name">Agent Beta-42</h3>
+          <p class="crew-role" style="color:#00f5d4;">Manipulation Moléculaire</p>
+          <p class="crew-desc">Identité classifiée. Manipulation moléculaire expérimentale. Niveau : EXTRÊME.</p>
+          <span class="crew-badge">Experimental Division</span>
+        </div>
+
+        <div class="crew-card reveal" style="border-color:rgba(176,38,255,0.2);">
+          <div class="crew-avatar" style="border-color:rgba(0,245,212,0.4);">
+            <img
+              class="crew-avatar-img"
+              src="assets/images/shadow-fibra.png"
+              alt="Shadow Fibra"
+              onerror="this.closest('.crew-avatar').classList.add('img-error')"
+            />
+            <span class="crew-avatar-fallback" style="filter:drop-shadow(0 0 10px #00f5d4);">🕶️</span>
+          </div>
+          <h3 class="crew-name">Shadow Fibra</h3>
+          <p class="crew-role" style="color:#00f5d4;">Opérations Nocturnes</p>
+          <p class="crew-desc">Responsable des opérations nocturnes. Coordonne les livraisons clandestines.</p>
+          <span class="crew-badge">Experimental Division</span>
+        </div>
+
+      </div><!-- fin night-grid équipage -->
+
+    </div><!-- fin crew-grid -->
+
+    <div style="text-align:center;margin-top:2.5rem;" class="reveal">
+      <a href="crew.html" class="hero-cta">
+        Rencontrer l'équipage <span class="arrow">→</span>
+      </a>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ============================================================
+     FOOTER — Pied de page commun à toutes les pages
+     Grille 3 colonnes : logo + 2 colonnes de liens
+     .footer-year est rempli automatiquement par le JS
+     ============================================================ -->
 <footer>
+  <div class="footer-inner">
 
-<p>© 2147 Space Beaver Coffee</p>
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="nav-logo" style="margin-bottom:1rem;">
+          <span class="logo-top">Space Beaver</span>
+          <span class="logo-bottom">Coffee</span>
+        </div>
+        <p>Laboratoire de nutrition orbitale certifié. Développons ensemble les formules qui feront avancer l'humanité vers les étoiles.</p>
+      </div>
 
+      <div class="footer-col">
+        <h4>Navigation</h4>
+        <a href="index.html">Accueil</a>
+        <a href="menu.html">Les Formules</a>
+        <a href="crew.html">L'Équipage</a>
+        <a href="contact.html">Prescription</a>
+      </div>
+
+      <div class="footer-col">
+        <h4>Station Orbitale</h4>
+        <a href="#">Orbite Basse · Secteur 7</a>
+        <a href="#">Alt: 408 km</a>
+        <a href="#">contact@spacebeaver.orbital</a>
+        <a href="#">Lun–Sam · 06:00–22:00 UTC</a>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p class="footer-copy">© <span class="footer-year"></span> Space Beaver Coffee Corp. · Tous droits réservés · Secteur Galactique 7</p>
+      <!-- Point vert animé qui indique que la station est "en ligne" -->
+      <div class="footer-status">
+        <div class="status-dot"></div>
+        <span>Station en ligne · Orbite stable</span>
+      </div>
+    </div>
+
+  </div>
 </footer>
 
-<script src="js/main.js"></script>
 
+<!-- Le script est chargé EN DERNIER pour que tout le HTML soit déjà
+     présent dans le DOM quand le JS s'exécute -->
+<script src="js/main.js"></script>
 </body>
 </html>

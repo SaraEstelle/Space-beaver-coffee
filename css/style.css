@@ -1,187 +1,1545 @@
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
+/* ============================================================
+   style.css — Feuille de style principale de Space Beaver Coffee
+   Organisé par grandes sections pour s'y retrouver facilement
+   ============================================================ */
+
+
+/* ============================================================
+   IMPORT DES POLICES (Google Fonts)
+   Orbitron  → titres futuristes
+   Space Mono → labels techniques, petits textes mono
+   Rajdhani  → corps de texte, plus lisible que Orbitron
+   ============================================================ */
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Rajdhani:wght@300;400;600;700&display=swap');
+
+
+/* ============================================================
+   VARIABLES CSS — THÈME JOUR (mode par défaut)
+   Toutes les couleurs sont centralisées ici.
+   Pour changer le thème, on modifie juste ces valeurs.
+   La notation --nom-variable est propre au CSS moderne.
+   ============================================================ */
+:root {
+  /* Fonds */
+  --bg-primary:   #f0f4f8;
+  --bg-secondary: #ffffff;
+  --bg-card:      #ffffff;
+
+  /* Textes */
+  --text-primary:   #0a1628;
+  --text-secondary: #3a5a8a;
+  --text-muted:     #6b8aaa;
+
+  /* Couleur principale (bleu scientifique) */
+  --accent:           #1a6bdc;
+  --accent-hover:     #0f4fa8;
+  --accent-secondary: #00b4d8;
+
+  /* Bordures */
+  --border:      #d0dce8;
+  --border-card: #e2ecf5;
+
+  /* Ombres */
+  --shadow:       0 4px 24px rgba(26,107,220,0.08);
+  --shadow-card:  0 2px 16px rgba(26,107,220,0.10);
+  --shadow-hover: 0 8px 32px rgba(26,107,220,0.18);
+
+  /* Navbar avec flou (effet verre dépoli) */
+  --nav-bg: rgba(240,244,248,0.92);
+
+  /* Dégradé sombre sur le hero pour que le texte reste lisible */
+  --hero-overlay: linear-gradient(135deg, rgba(10,22,40,0.82) 0%, rgba(26,107,220,0.35) 100%);
+
+  /* Badges et tags colorés */
+  --badge-bg:    #e8f0fe;
+  --badge-color: #1a6bdc;
+  --tag-bg:      #e0f0ff;
+
+  /* Pas d'effet glow en mode jour */
+  --glow: none;
+
+  /* Les cartes ne se transforment pas en mode jour */
+  --card-transform: none;
+
+  /* Footer toujours sombre même en mode jour */
+  --footer-bg:   #0a1628;
+  --footer-text: #c8d8f0;
+
+  --hero-text:   #ffffff;
+  --section-alt: #e8f0fb;
+  --input-bg:    #f8faff;
+  --price-color: #1a6bdc;
 }
 
-body{
-font-family:'Inter',sans-serif;
-background:#f5f7fa;
-color:#1a1a1a;
-transition:0.3s;
+
+/* ============================================================
+   VARIABLES CSS — THÈME NUIT
+   On écrase les mêmes variables quand .dark-mode est sur le body.
+   Le JS ajoute/retire cette classe au clic sur le bouton toggle.
+   ============================================================ */
+body.dark-mode {
+  --bg-primary:   #070a10;
+  --bg-secondary: #0d1220;
+  --bg-card:      #111827;
+
+  --text-primary:   #e8f0ff;
+  --text-secondary: #9ab0d4;
+  --text-muted:     #5a7090;
+
+  /* Violet néon pour le mode nuit */
+  --accent:           #b026ff;
+  --accent-hover:     #8a00dd;
+  --accent-secondary: #00f5d4;
+
+  --border:      #1e2d45;
+  --border-card: #1a2540;
+
+  /* Ombres violettes lumineuses */
+  --shadow:       0 4px 32px rgba(176,38,255,0.15);
+  --shadow-card:  0 2px 20px rgba(176,38,255,0.12);
+  --shadow-hover: 0 0 40px rgba(176,38,255,0.4), 0 0 80px rgba(176,38,255,0.15);
+
+  --nav-bg: rgba(7,10,16,0.95);
+  --hero-overlay: linear-gradient(135deg, rgba(7,10,16,0.92) 0%, rgba(176,38,255,0.25) 100%);
+
+  --badge-bg:    #1a0a2e;
+  --badge-color: #b026ff;
+  --tag-bg:      #0d1a30;
+
+  /* Effet néon sur certains éléments */
+  --glow: 0 0 20px rgba(176,38,255,0.6), 0 0 60px rgba(176,38,255,0.2);
+
+  /* Les cartes montent légèrement au hover en mode nuit */
+  --card-transform: translateY(-4px);
+
+  --footer-bg:   #050709;
+  --footer-text: #5a7090;
+
+  --hero-text:   #e8f0ff;
+  --section-alt: #0a0f1a;
+  --input-bg:    #0d1220;
+  --price-color: #00f5d4;
 }
 
-/* container */
 
-.container{
-width:90%;
-max-width:1200px;
-margin:auto;
+/* ============================================================
+   RESET DE BASE
+   Remet à zéro les marges/paddings des navigateurs
+   box-sizing: border-box évite les débordements de mise en page
+   ============================================================ */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
-/* header */
-
-header{
-background:white;
-padding:20px 0;
-border-bottom:1px solid #ddd;
+html {
+  scroll-behavior: smooth; /* scroll doux quand on clique sur une ancre # */
 }
 
-.header-flex{
-display:flex;
-justify-content:space-between;
-align-items:center;
+body {
+  font-family: 'Rajdhani', sans-serif;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  transition: background-color 0.4s ease, color 0.4s ease; /* transition fluide jour/nuit */
+  overflow-x: hidden; /* évite le scroll horizontal non voulu */
+  min-height: 100vh;
 }
 
-.logo{
-font-family:'Orbitron';
-font-size:22px;
+/* Étoiles en fond en mode nuit, générées via plusieurs radial-gradient */
+body.dark-mode::before {
+  content: '';
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background-image:
+    radial-gradient(1px 1px at 10% 20%, rgba(255,255,255,0.8) 0%, transparent 100%),
+    radial-gradient(1px 1px at 30% 60%, rgba(255,255,255,0.6) 0%, transparent 100%),
+    radial-gradient(1px 1px at 50% 10%, rgba(255,255,255,0.9) 0%, transparent 100%),
+    radial-gradient(1px 1px at 70% 80%, rgba(255,255,255,0.5) 0%, transparent 100%),
+    radial-gradient(1px 1px at 90% 40%, rgba(255,255,255,0.7) 0%, transparent 100%),
+    radial-gradient(1px 1px at 20% 90%, rgba(255,255,255,0.4) 0%, transparent 100%),
+    radial-gradient(1px 1px at 80% 15%, rgba(255,255,255,0.6) 0%, transparent 100%),
+    radial-gradient(2px 2px at 45% 50%, rgba(176,38,255,0.5) 0%, transparent 100%),
+    radial-gradient(2px 2px at 65% 30%, rgba(0,245,212,0.4) 0%, transparent 100%);
+  pointer-events: none; /* ne bloque pas les clics */
+  z-index: 0;
+  animation: twinkle 4s ease-in-out infinite alternate;
 }
 
-.nav-links{
-display:flex;
-gap:20px;
-list-style:none;
+@keyframes twinkle {
+  0%   { opacity: 0.6; }
+  100% { opacity: 1; }
 }
 
-.nav-links a{
-text-decoration:none;
-color:#333;
-font-weight:500;
+/* Réinitialisation rapide pour images et liens */
+img { max-width: 100%; height: auto; display: block; }
+a   { text-decoration: none; color: inherit; }
+ul  { list-style: none; }
+
+
+/* ============================================================
+   NAVBAR — Barre de navigation fixe en haut
+   backdrop-filter: blur donne l'effet "verre dépoli"
+   ============================================================ */
+.navbar {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 1000; /* au-dessus de tout le reste */
+  background: var(--nav-bg);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px); /* préfixe nécessaire pour Safari */
+  border-bottom: 1px solid var(--border);
+  transition: all 0.4s ease;
+  padding: 0 1.5rem;
 }
 
-/* bouton theme */
-
-.theme-btn{
-padding:8px 16px;
-border:none;
-background:#111;
-color:white;
-border-radius:6px;
-cursor:pointer;
+.nav-container {
+  max-width: 1280px;
+  margin: 0 auto; /* centrage */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 70px;
 }
 
-/* hero */
-
-.hero{
-padding:80px 0;
+/* Logo en deux lignes */
+.nav-logo {
+  display: flex;
+  flex-direction: column;
+  line-height: 1;
 }
 
-.hero-grid{
-display:grid;
-grid-template-columns:1fr 1fr;
-align-items:center;
-gap:40px;
+.logo-top {
+  font-family: 'Orbitron', monospace;
+  font-size: 0.9rem;
+  font-weight: 900;
+  letter-spacing: 0.18em;
+  color: var(--accent);
+  transition: color 0.4s;
 }
 
-.hero h2{
-font-family:'Orbitron';
-font-size:36px;
-margin-bottom:20px;
+.logo-bottom {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.55rem;
+  letter-spacing: 0.35em;
+  color: var(--text-muted);
+  text-transform: uppercase;
 }
 
-.hero p{
-margin-bottom:15px;
-color:#555;
+body.dark-mode .logo-top {
+  text-shadow: var(--glow);
 }
 
-.hero-visual{
-font-size:80px;
-text-align:center;
+/* Liens de navigation */
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
 }
 
-.btn{
-display:inline-block;
-margin-top:20px;
-padding:12px 22px;
-background:#4a7cff;
-color:white;
-border-radius:8px;
-cursor:pointer;
+.nav-links a {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  transition: color 0.3s;
+  position: relative;
+  padding-bottom: 4px;
 }
 
-/* drinks */
-
-.drinks{
-padding:80px 0;
-background:#eef3ff;
+/* Soulignement animé au hover : ::after part de width:0 → width:100% */
+.nav-links a::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0;
+  width: 0;
+  height: 2px;
+  background: var(--accent);
+  transition: width 0.3s ease;
 }
 
-.section-title{
-text-align:center;
-font-family:'Orbitron';
-margin-bottom:50px;
+.nav-links a:hover,
+.nav-links a.active           { color: var(--accent); }
+.nav-links a:hover::after,
+.nav-links a.active::after    { width: 100%; }
+
+/* Bouton toggle jour/nuit */
+.mode-toggle {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.45rem 1rem;
+  border: 1px solid var(--accent);
+  border-radius: 50px;
+  background: transparent;
+  color: var(--accent);
+  font-family: 'Space Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.1em;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  white-space: nowrap;
 }
 
-.cards{
-display:grid;
-grid-template-columns:repeat(3,1fr);
-gap:30px;
+.mode-toggle:hover {
+  background: var(--accent);
+  color: #fff;
+  box-shadow: var(--shadow);
 }
 
-.card{
-background:white;
-padding:30px;
-border-radius:12px;
-text-align:center;
-box-shadow:0 5px 20px rgba(0,0,0,0.05);
+body.dark-mode .mode-toggle {
+  box-shadow: var(--glow);
 }
 
-.icon{
-font-size:40px;
-margin-bottom:15px;
+/* Bouton burger (mobile) — caché sur desktop */
+.burger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  cursor: pointer;
+  padding: 4px;
+  background: none;
+  border: none;
 }
 
-.tag{
-display:inline-block;
-margin-top:10px;
-background:#4a7cff;
-color:white;
-padding:4px 10px;
-border-radius:20px;
-font-size:12px;
+.burger span {
+  display: block;
+  width: 24px;
+  height: 2px;
+  background: var(--text-primary);
+  border-radius: 2px;
+  transition: all 0.3s ease;
 }
 
-/* footer */
+/* Animation 3 traits → croix quand .active est ajouté par le JS */
+.burger.active span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.burger.active span:nth-child(2) { opacity: 0; }
+.burger.active span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
-footer{
-text-align:center;
-padding:40px;
-background:#111;
-color:white;
-margin-top:60px;
+/* Responsive mobile : en dessous de 768px */
+@media (max-width: 768px) {
+  .burger { display: flex; }
+
+  /* Menu caché via max-height:0 (on ne peut pas animer display:none) */
+  .nav-links {
+    position: fixed;
+    top: 70px; left: 0; right: 0;
+    background: var(--nav-bg);
+    backdrop-filter: blur(20px);
+    flex-direction: column;
+    gap: 0;
+    padding: 0;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease, padding 0.4s ease;
+    border-bottom: 1px solid var(--border);
+  }
+
+  /* Quand .open est ajouté par le JS, le menu se déplie */
+  .nav-links.open {
+    max-height: 400px;
+    padding: 1rem 0;
+  }
+
+  .nav-links a {
+    padding: 1rem 2rem;
+    font-size: 0.8rem;
+    width: 100%;
+    text-align: center;
+  }
+
+  .nav-links a::after { display: none; }
+
+  .mode-toggle { margin: 0.5rem auto; }
 }
 
-/* MODE NUIT */
 
-body.dark{
-background:#0b0f1a;
-color:white;
+/* ============================================================
+   SECTION HERO — Grande image plein écran
+   Deux divs superposés pour les fonds jour/nuit
+   On bascule via opacity (transition douce)
+   ============================================================ */
+.hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
 }
 
-body.dark header{
-background:#101522;
-border-bottom:none;
+/* Conteneur de fond commun aux deux modes */
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  transition: opacity 0.6s ease;
 }
 
-body.dark .nav-links a{
-color:#ddd;
+/* Fond MODE JOUR — fichier : assets/images/hero-lab-day.png
+   Le dégradé sert de fallback si l'image ne charge pas */
+.hero-bg-day {
+  background:
+    url('../assets/images/hero-lab-day.png') center/cover no-repeat,
+    linear-gradient(135deg, #0a1628 0%, #1a6bdc 100%);
 }
 
-body.dark .hero p{
-color:#bbb;
+/* Fond MODE NUIT — fichier : assets/images/hero-lab-night.png */
+.hero-bg-night {
+  background:
+    url('../assets/images/hero-lab-night.png') center/cover no-repeat,
+    linear-gradient(135deg, #070a10 0%, #2a0845 100%);
+  opacity: 0;
 }
 
-body.dark .card{
-background:#151b2c;
-color:white;
+/* Basculement d'opacity selon le mode actif */
+body.dark-mode .hero-bg-day   { opacity: 0; }
+body.dark-mode .hero-bg-night { opacity: 1; }
+body:not(.dark-mode) .hero-bg-day   { opacity: 1; }
+body:not(.dark-mode) .hero-bg-night { opacity: 0; }
+
+/* Overlay sombre pour lisibilité du texte */
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: var(--hero-overlay);
+  transition: background 0.6s ease;
 }
 
-body.dark .drinks{
-background:#0e1424;
+/* Contenu textuel du hero, au-dessus de l'overlay */
+.hero-content {
+  position: relative;
+  z-index: 2;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 120px 2rem 4rem;
+  width: 100%;
 }
 
-body.dark .tag{
-background:#00e5ff;
-color:black;
+/* Badge au-dessus du titre */
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.4rem 1rem;
+  border: 1px solid rgba(255,255,255,0.3);
+  border-radius: 50px;
+  font-family: 'Space Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  color: rgba(255,255,255,0.7);
+  margin-bottom: 1.5rem;
+  backdrop-filter: blur(8px);
+  background: rgba(255,255,255,0.08);
+  animation: fadeSlideDown 0.8s ease both;
+}
+
+body.dark-mode .hero-badge {
+  border-color: rgba(176,38,255,0.4);
+  color: rgba(176,38,255,0.9);
+  background: rgba(176,38,255,0.08);
+  box-shadow: 0 0 20px rgba(176,38,255,0.2);
+}
+
+/* Titre principal — clamp() ajuste la taille selon la largeur d'écran */
+.hero-title {
+  font-family: 'Orbitron', monospace;
+  font-size: clamp(2.5rem, 6vw, 5rem);
+  font-weight: 900;
+  line-height: 1.05;
+  color: var(--hero-text);
+  margin-bottom: 1.5rem;
+  animation: fadeSlideDown 0.8s 0.1s ease both;
+  max-width: 700px;
+}
+
+.hero-title span {
+  color: var(--accent);
+  display: block;
+}
+
+body.dark-mode .hero-title span { text-shadow: var(--glow); }
+
+.hero-subtitle {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: clamp(1rem, 2vw, 1.25rem);
+  font-weight: 300;
+  color: rgba(255,255,255,0.75);
+  line-height: 1.7;
+  max-width: 520px;
+  margin-bottom: 2.5rem;
+  animation: fadeSlideDown 0.8s 0.2s ease both;
+}
+
+/* Bouton d'appel à l'action (CTA) */
+.hero-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem 2.2rem;
+  background: var(--accent);
+  color: white;
+  font-family: 'Space Mono', monospace;
+  font-size: 0.8rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+  animation: fadeSlideDown 0.8s 0.3s ease both;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.hero-cta:hover {
+  background: var(--accent-hover);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-hover);
+}
+
+body.dark-mode .hero-cta { box-shadow: var(--glow); }
+
+/* La flèche → dans le bouton se déplace au hover */
+.hero-cta .arrow { transition: transform 0.3s ease; }
+.hero-cta:hover .arrow { transform: translateX(5px); }
+
+/* Petits tags informatifs sous le CTA */
+.hero-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 3rem;
+  animation: fadeSlideDown 0.8s 0.4s ease both;
+}
+
+.hero-tag {
+  padding: 0.3rem 0.9rem;
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 3px;
+  font-family: 'Space Mono', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.15em;
+  color: rgba(255,255,255,0.5);
+  text-transform: uppercase;
+}
+
+body.dark-mode .hero-tag {
+  border-color: rgba(176,38,255,0.3);
+  color: rgba(176,38,255,0.6);
+}
+
+/* Indicateur "explorer" en bas du hero */
+.hero-scroll {
+  position: absolute;
+  bottom: 2.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  z-index: 2;
+  animation: bounce 2s infinite;
+}
+
+.hero-scroll span {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.55rem;
+  letter-spacing: 0.2em;
+  color: rgba(255,255,255,0.4);
+  text-transform: uppercase;
+}
+
+.scroll-line {
+  width: 1px;
+  height: 40px;
+  background: linear-gradient(to bottom, rgba(255,255,255,0.5), transparent);
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateX(-50%) translateY(0); }
+  50%       { transform: translateX(-50%) translateY(-6px); }
+}
+
+
+/* ============================================================
+   ÉLÉMENTS COMMUNS AUX SECTIONS
+   section en position relative pour rester au-dessus
+   du pseudo-élément étoiles du body (z-index: 0)
+   ============================================================ */
+section {
+  position: relative;
+  z-index: 1;
+}
+
+/* En-tête de section : label + titre + séparateur */
+.section-header { text-align: center; margin-bottom: 3.5rem; }
+
+.section-label {
+  display: inline-block;
+  font-family: 'Space Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 0.75rem;
+  padding: 0.3rem 1rem;
+  border: 1px solid var(--accent);
+  border-radius: 2px;
+}
+
+body.dark-mode .section-label {
+  text-shadow: var(--glow);
+  box-shadow: 0 0 10px rgba(176,38,255,0.2);
+}
+
+.section-title {
+  font-family: 'Orbitron', monospace;
+  font-size: clamp(1.6rem, 4vw, 2.8rem);
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 1rem;
+  line-height: 1.2;
+}
+
+.section-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.divider-dot  { font-size: 0.6rem; color: var(--accent); }
+.divider-line { width: 60px; height: 1px; background: var(--border); }
+
+body.dark-mode .divider-line { background: rgba(176,38,255,0.3); }
+
+.section-desc {
+  font-size: 1.05rem;
+  color: var(--text-secondary);
+  max-width: 600px;
+  margin: 1rem auto 0;
+  line-height: 1.8;
+}
+
+
+/* ============================================================
+   SECTION CONCEPT — Grille 2 colonnes texte + image
+   ============================================================ */
+.concept {
+  padding: 6rem 2rem;
+  background: var(--bg-secondary);
+  transition: background 0.4s;
+}
+
+.concept-inner { max-width: 1280px; margin: 0 auto; }
+
+.concept-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: center;
+  margin-top: 3rem;
+}
+
+.concept-text p {
+  font-size: 1.05rem;
+  color: var(--text-secondary);
+  line-height: 1.8;
+  margin-bottom: 1.5rem;
+}
+
+.concept-features { display: flex; flex-direction: column; gap: 1rem; margin-top: 2rem; }
+
+.concept-feature {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  padding: 1rem 1.25rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border-card);
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+/* Glissement vers la droite au hover */
+.concept-feature:hover {
+  border-color: var(--accent);
+  transform: translateX(4px);
+  box-shadow: var(--shadow-card);
+}
+
+.feature-icon { font-size: 1.4rem; flex-shrink: 0; }
+
+.feature-text strong {
+  display: block;
+  font-family: 'Orbitron', monospace;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 0.25rem;
+  letter-spacing: 0.05em;
+}
+
+.feature-text p { font-size: 0.9rem; color: var(--text-muted); margin: 0; }
+
+/* Partie droite : cadre image */
+.concept-visual { position: relative; }
+
+.concept-image-frame {
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+  aspect-ratio: 4/3; /* maintient le ratio même sans image */
+  border: 1px solid var(--border);
+}
+
+/* Image réelle dans le cadre concept
+   position: absolute pour remplir tout le cadre
+   object-fit: cover pour ne pas déformer l'image */
+.concept-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  transition: transform 0.5s ease;
+  border-radius: 12px;
+}
+
+.concept-image-frame:hover .concept-img { transform: scale(1.03); }
+
+/* Fallback emoji si l'image ne charge pas
+   display:none par défaut, onerror le passe à flex */
+.concept-img-fallback {
+  display: none;
+  position: absolute;
+  inset: 0;
+  align-items: center;
+  justify-content: center;
+  font-size: 8rem;
+  background: linear-gradient(135deg, #e8f0fb, #c8daf5);
+}
+
+/* Petite carte statistique superposée en bas à droite */
+.concept-overlay-card {
+  position: absolute;
+  bottom: -1.5rem;
+  right: -1.5rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border-card);
+  border-radius: 10px;
+  padding: 1.2rem 1.5rem;
+  box-shadow: var(--shadow-card);
+}
+
+body.dark-mode .concept-overlay-card {
+  box-shadow: 0 0 30px rgba(176,38,255,0.2);
+  border-color: rgba(176,38,255,0.3);
+}
+
+.overlay-stat {
+  font-family: 'Orbitron', monospace;
+  font-size: 2rem;
+  font-weight: 900;
+  color: var(--accent);
+  line-height: 1;
+  display: block;
+}
+
+body.dark-mode .overlay-stat { text-shadow: var(--glow); }
+
+.overlay-label {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.15em;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  display: block;
+  margin-top: 0.25rem;
+}
+
+@media (max-width: 768px) {
+  .concept-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+  .concept-overlay-card { right: 0; bottom: -1rem; }
+}
+
+
+/* ============================================================
+   CARTES PRODUITS — Grille responsive auto-fill
+   ============================================================ */
+.products-section {
+  padding: 6rem 2rem;
+  background: var(--bg-primary);
+  transition: background 0.4s;
+}
+
+.products-section.alt { background: var(--section-alt); }
+
+.products-inner { max-width: 1280px; margin: 0 auto; }
+
+/* auto-fill : chaque carte fait au minimum 260px
+   le navigateur calcule le nombre de colonnes tout seul */
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1.5rem;
+  margin-top: 3rem;
+}
+
+.product-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-card);
+  border-radius: 12px;
+  overflow: hidden;
+  transition: all 0.35s ease;
+}
+
+.product-card:hover {
+  transform: var(--card-transform, translateY(-4px));
+  box-shadow: var(--shadow-hover);
+  border-color: var(--accent);
+}
+
+/* Zone image de la carte (emoji ou future illustration) */
+.card-image {
+  aspect-ratio: 16/9;
+  overflow: hidden;
+  position: relative;
+  background: var(--bg-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Overlay coloré sur les images de carte en mode nuit */
+body.dark-mode .card-image::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(176,38,255,0.15), rgba(0,245,212,0.08));
+  mix-blend-mode: overlay;
+  pointer-events: none;
+}
+
+/* Avatars castors dans les cartes équipage
+   Fichiers PNG dans assets/images/ avec fallback emoji via onerror */
+.crew-avatar-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  border-radius: 50%;
+  display: block;
+}
+
+.crew-avatar-fallback { display: none; font-size: 3.5rem; line-height: 1; }
+
+.crew-avatar.img-error .crew-avatar-img      { display: none; }
+.crew-avatar.img-error .crew-avatar-fallback { display: flex; align-items: center; justify-content: center; width: 100%; height: 100%; }
+
+/* Grands avatars de la page crew.html */
+.crew-avatar-xl-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  border-radius: 50%;
+  display: block;
+}
+
+.crew-avatar-xl-fallback { display: none; font-size: 4rem; line-height: 1; }
+
+.crew-avatar-xl.img-error .crew-avatar-xl-img      { display: none; }
+.crew-avatar-xl.img-error .crew-avatar-xl-fallback { display: flex; align-items: center; justify-content: center; width: 100%; height: 100%; }
+
+/* Emoji dans les cartes produit */
+.card-emoji { font-size: 3.5rem; transition: transform 0.3s ease; }
+.product-card:hover .card-emoji { transform: scale(1.15); }
+
+.card-content { padding: 1.25rem; }
+
+.card-tag {
+  display: inline-block;
+  padding: 0.2rem 0.6rem;
+  background: var(--tag-bg);
+  color: var(--accent);
+  font-family: 'Space Mono', monospace;
+  font-size: 0.55rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  border-radius: 3px;
+  margin-bottom: 0.75rem;
+}
+
+body.dark-mode .card-tag {
+  background: rgba(176,38,255,0.12);
+  box-shadow: 0 0 8px rgba(176,38,255,0.15);
+}
+
+.card-title {
+  font-family: 'Orbitron', monospace;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 0.5rem;
+  letter-spacing: 0.03em;
+}
+
+.card-desc {
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+  margin-bottom: 1rem;
+}
+
+.card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-top: 1px solid var(--border);
+  padding-top: 0.75rem;
+}
+
+.card-price {
+  font-family: 'Orbitron', monospace;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--price-color);
+}
+
+body.dark-mode .card-price { text-shadow: 0 0 10px rgba(0,245,212,0.5); }
+
+.card-badge {
+  padding: 0.2rem 0.6rem;
+  background: var(--badge-bg);
+  color: var(--badge-color);
+  font-family: 'Space Mono', monospace;
+  font-size: 0.5rem;
+  letter-spacing: 0.1em;
+  border-radius: 3px;
+  text-transform: uppercase;
+}
+
+body.dark-mode .card-badge {
+  background: rgba(176,38,255,0.15);
+  box-shadow: 0 0 6px rgba(176,38,255,0.2);
+}
+
+
+/* ============================================================
+   CARTES FAST FOOD — Disposition horizontale (flexbox)
+   ============================================================ */
+.fastfood-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 1.5rem;
+  margin-top: 3rem;
+}
+
+.fastfood-card {
+  display: flex;
+  gap: 1.25rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border-card);
+  border-radius: 12px;
+  padding: 1.25rem;
+  align-items: center;
+  transition: all 0.35s ease;
+}
+
+.fastfood-card:hover {
+  transform: var(--card-transform, translateY(-3px));
+  box-shadow: var(--shadow-hover);
+  border-color: var(--accent);
+}
+
+/* Bloc emoji à gauche de la carte fast food */
+.fastfood-emoji {
+  font-size: 3rem;
+  flex-shrink: 0;
+  width: 70px;
+  height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-primary);
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  transition: all 0.3s ease;
+}
+
+.fastfood-card:hover .fastfood-emoji {
+  border-color: var(--accent);
+  transform: scale(1.1);
+}
+
+.fastfood-info  { flex: 1; }
+.fastfood-title { font-family: 'Orbitron', monospace; font-size: 0.85rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.4rem; }
+.fastfood-desc  { font-size: 0.85rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 0.5rem; }
+.fastfood-price { font-family: 'Orbitron', monospace; font-size: 0.9rem; font-weight: 700; color: var(--price-color); }
+
+
+/* ============================================================
+   SECTION ÉQUIPAGE — Grille de cartes membres
+   ============================================================ */
+.crew-section {
+  padding: 6rem 2rem;
+  background: var(--bg-secondary);
+  transition: background 0.4s;
+}
+
+.crew-inner { max-width: 1280px; margin: 0 auto; }
+
+.crew-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 1.5rem;
+  margin-top: 3rem;
+}
+
+.crew-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-card);
+  border-radius: 12px;
+  padding: 2rem 1.5rem;
+  text-align: center;
+  transition: all 0.35s ease;
+}
+
+.crew-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-hover);
+  border-color: var(--accent);
+}
+
+body.dark-mode .crew-card:hover { box-shadow: 0 0 40px rgba(176,38,255,0.3); }
+
+/* Avatar circulaire — overflow:hidden pour que l'img PNG reste ronde */
+.crew-avatar {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  margin: 0 auto 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 3.2rem;
+  background: var(--bg-primary);
+  border: 2px solid var(--border);
+  transition: all 0.3s ease;
+  overflow: hidden;
+}
+
+.crew-card:hover .crew-avatar { border-color: var(--accent); transform: scale(1.05); }
+
+body.dark-mode .crew-avatar { border-color: rgba(176,38,255,0.3); box-shadow: 0 0 20px rgba(176,38,255,0.15); }
+body.dark-mode .crew-card:hover .crew-avatar { box-shadow: 0 0 30px rgba(176,38,255,0.4); }
+
+.crew-name {
+  font-family: 'Orbitron', monospace;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 0.35rem;
+  letter-spacing: 0.05em;
+}
+
+.crew-role {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 0.75rem;
+}
+
+.crew-desc {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+  margin-bottom: 1.2rem;
+}
+
+.crew-badge {
+  display: inline-block;
+  padding: 0.3rem 0.9rem;
+  background: var(--badge-bg);
+  color: var(--badge-color);
+  font-family: 'Space Mono', monospace;
+  font-size: 0.55rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  border-radius: 3px;
+}
+
+body.dark-mode .crew-badge { background: rgba(176,38,255,0.12); box-shadow: 0 0 10px rgba(176,38,255,0.2); }
+
+
+/* ============================================================
+   SECTION CONTACT — Grille infos + formulaire
+   ============================================================ */
+.contact-section {
+  padding: 6rem 2rem;
+  background: var(--bg-primary);
+  transition: background 0.4s;
+}
+
+.contact-inner { max-width: 1280px; margin: 0 auto; }
+
+/* Grille 2 colonnes : infos (1fr) + formulaire (1.5fr) */
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.5fr;
+  gap: 4rem;
+  margin-top: 3rem;
+}
+
+.contact-info h3 {
+  font-family: 'Orbitron', monospace;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 1rem;
+  letter-spacing: 0.05em;
+}
+
+.contact-info p {
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  line-height: 1.8;
+  margin-bottom: 2rem;
+}
+
+/* Ligne de détail contact : icône + label + valeur */
+.contact-detail {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.9rem 1.1rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border-card);
+  border-radius: 8px;
+  margin-bottom: 0.75rem;
+  transition: all 0.3s ease;
+}
+
+.contact-detail:hover { border-color: var(--accent); transform: translateX(4px); }
+
+.detail-icon { font-size: 1.2rem; }
+
+.detail-text strong {
+  display: block;
+  font-family: 'Space Mono', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 0.2rem;
+}
+
+.detail-text span { font-size: 0.9rem; color: var(--text-primary); }
+
+/* Wrapper du formulaire */
+.contact-form-wrapper {
+  background: var(--bg-card);
+  border: 1px solid var(--border-card);
+  border-radius: 12px;
+  padding: 2.5rem;
+  transition: all 0.4s ease;
+}
+
+body.dark-mode .contact-form-wrapper {
+  border-color: rgba(176,38,255,0.2);
+  box-shadow: 0 0 40px rgba(176,38,255,0.08);
+}
+
+/* Label style terminal au-dessus du titre du formulaire */
+.form-terminal {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  color: var(--accent);
+  margin-bottom: 0.5rem;
+  display: block;
+}
+
+/* Curseur clignotant en mode nuit */
+body.dark-mode .form-terminal { animation: blink 1.2s step-end infinite; }
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0; }
+}
+
+.form-header { margin-bottom: 2rem; }
+.form-title  { font-family: 'Orbitron', monospace; font-size: 1.2rem; font-weight: 700; color: var(--text-primary); }
+
+.form-group { margin-bottom: 1.25rem; }
+
+.form-group label {
+  display: block;
+  font-family: 'Space Mono', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 0.5rem;
+}
+
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  padding: 0.85rem 1rem;
+  background: var(--input-bg);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text-primary);
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  outline: none;
+}
+
+/* Halo au focus */
+.form-group input:focus,
+.form-group textarea:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(26,107,220,0.1);
+}
+
+body.dark-mode .form-group input:focus,
+body.dark-mode .form-group textarea:focus {
+  box-shadow: 0 0 0 3px rgba(176,38,255,0.15), 0 0 20px rgba(176,38,255,0.1);
+}
+
+/* Bordure rouge quand le JS ajoute .error sur le champ */
+.form-group input.error,
+.form-group textarea.error {
+  border-color: #ef4444;
+  box-shadow: 0 0 0 3px rgba(239,68,68,0.1);
+}
+
+/* Message d'erreur (affiché par le JS via .show) */
+.error-msg      { display: none; font-family: 'Space Mono', monospace; font-size: 0.6rem; color: #ef4444; margin-top: 0.35rem; letter-spacing: 0.1em; }
+.error-msg.show { display: block; }
+
+.form-group textarea { min-height: 130px; resize: vertical; }
+
+.form-submit {
+  width: 100%;
+  padding: 1rem 2rem;
+  background: var(--accent);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-family: 'Space Mono', monospace;
+  font-size: 0.75rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 0.5rem;
+}
+
+.form-submit:hover {
+  background: var(--accent-hover);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-hover);
+}
+
+body.dark-mode .form-submit { box-shadow: var(--glow); }
+
+/* Message de succès affiché après "envoi" du formulaire */
+.form-success       { display: none; text-align: center; padding: 2rem; }
+.form-success.show  { display: block; }
+.form-success .success-icon { font-size: 3rem; margin-bottom: 1rem; }
+.form-success p { font-family: 'Orbitron', monospace; font-size: 0.85rem; color: var(--accent); letter-spacing: 0.05em; }
+
+@media (max-width: 768px) {
+  .contact-grid { grid-template-columns: 1fr; gap: 2rem; }
+}
+
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+footer {
+  background: var(--footer-bg);
+  color: var(--footer-text);
+  padding: 3rem 2rem 2rem;
+  transition: background 0.4s;
+}
+
+.footer-inner { max-width: 1280px; margin: 0 auto; }
+
+/* Grille 3 colonnes */
+.footer-top {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr 1fr;
+  gap: 3rem;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  margin-bottom: 2rem;
+}
+
+.footer-brand .logo-top    { color: var(--accent); margin-bottom: 0.25rem; }
+.footer-brand .logo-bottom { color: rgba(255,255,255,0.3); }
+
+.footer-brand p {
+  margin-top: 1rem;
+  font-size: 0.85rem;
+  color: var(--footer-text);
+  line-height: 1.7;
+  max-width: 280px;
+}
+
+.footer-col h4 {
+  font-family: 'Orbitron', monospace;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.5);
+  margin-bottom: 1.25rem;
+}
+
+.footer-col a {
+  display: block;
+  font-size: 0.9rem;
+  color: var(--footer-text);
+  margin-bottom: 0.6rem;
+  transition: color 0.3s;
+  font-family: 'Rajdhani', sans-serif;
+}
+
+.footer-col a:hover { color: var(--accent); }
+
+.footer-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.footer-copy {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.1em;
+  color: rgba(255,255,255,0.25);
+}
+
+/* Point vert clignotant "station en ligne" */
+.footer-status {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: 'Space Mono', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.12em;
+  color: rgba(255,255,255,0.3);
+}
+
+.status-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #22c55e;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%       { opacity: 0.5; transform: scale(1.3); }
+}
+
+@media (max-width: 768px) {
+  .footer-top    { grid-template-columns: 1fr; gap: 2rem; }
+  .footer-bottom { flex-direction: column; text-align: center; }
+}
+
+
+/* ============================================================
+   HERO DES PAGES INTERNES (menu, crew, contact)
+   Version compacte du hero pour les pages secondaires
+   ============================================================ */
+.page-hero {
+  padding: 120px 2rem 4rem;
+  text-align: center;
+  background: var(--bg-secondary);
+  border-bottom: 1px solid var(--border);
+  transition: all 0.4s;
+}
+
+.page-hero-label {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 1rem;
+  display: block;
+}
+
+.page-hero-title {
+  font-family: 'Orbitron', monospace;
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: 900;
+  color: var(--text-primary);
+  margin-bottom: 1rem;
+}
+
+.page-hero-desc {
+  font-size: 1rem;
+  color: var(--text-muted);
+  max-width: 600px;
+  margin: 0 auto;
+  line-height: 1.8;
+}
+
+
+/* ============================================================
+   SYSTÈME JOUR / NUIT — Bascule de contenu
+   .day-content  visible par défaut, caché en dark-mode
+   .night-content caché par défaut, visible en dark-mode
+   .day-grid / .night-grid : même logique pour les grilles CSS
+   ============================================================ */
+.day-content   { display: block; }
+.night-content { display: none; }
+
+body.dark-mode .day-content   { display: none; }
+body.dark-mode .night-content { display: block; }
+
+/* display:contents permet aux cartes enfants de s'insérer
+   directement dans la grille parente sans wrapper intermédiaire */
+.day-grid   { display: contents; }
+.night-grid { display: none; }
+
+body.dark-mode .day-grid   { display: none; }
+body.dark-mode .night-grid { display: contents; }
+
+
+/* ============================================================
+   ANIMATIONS
+   ============================================================ */
+
+/* Entrée depuis le haut (éléments du hero) */
+@keyframes fadeSlideDown {
+  from { opacity: 0; transform: translateY(-20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Entrée depuis le bas (cartes) */
+@keyframes cardReveal {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* État initial avant apparition au scroll */
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+/* État final après que l'IntersectionObserver détecte l'élément */
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Délais échelonnés pour un effet cascade sur les grilles */
+.reveal:nth-child(1) { transition-delay: 0s; }
+.reveal:nth-child(2) { transition-delay: 0.08s; }
+.reveal:nth-child(3) { transition-delay: 0.16s; }
+.reveal:nth-child(4) { transition-delay: 0.24s; }
+
+
+/* ============================================================
+   EFFET GLITCH — Mode nuit uniquement
+   ::before et ::after dupliquent le texte (via data-text mis par JS)
+   avec un léger décalage et des couleurs différentes
+   clip:rect découpe le texte en tranches animées
+   ============================================================ */
+body.dark-mode .glitch { position: relative; }
+
+body.dark-mode .glitch::before {
+  content: attr(data-text);
+  position: absolute;
+  left: 2px; top: 0;
+  color: #b026ff;
+  clip: rect(0, 900px, 0, 0);
+  animation: glitch-1 3s infinite linear alternate-reverse;
+}
+
+body.dark-mode .glitch::after {
+  content: attr(data-text);
+  position: absolute;
+  left: -2px; top: 0;
+  color: #00f5d4;
+  clip: rect(0, 900px, 0, 0);
+  animation: glitch-2 2s infinite linear alternate-reverse;
+}
+
+@keyframes glitch-1 {
+  0%   { clip: rect(30px, 9999px, 10px, 0); }
+  25%  { clip: rect(60px, 9999px, 40px, 0); }
+  50%  { clip: rect(10px, 9999px, 80px, 0); }
+  75%  { clip: rect(80px, 9999px, 20px, 0); }
+  100% { clip: rect(50px, 9999px, 60px, 0); }
+}
+
+@keyframes glitch-2 {
+  0%   { clip: rect(80px, 9999px, 20px, 0); }
+  25%  { clip: rect(10px, 9999px, 70px, 0); }
+  50%  { clip: rect(50px, 9999px, 30px, 0); }
+  75%  { clip: rect(20px, 9999px, 90px, 0); }
+  100% { clip: rect(70px, 9999px, 10px, 0); }
+}
+
+
+/* ============================================================
+   UTILITAIRES DIVERS
+   ============================================================ */
+.container   { max-width: 1280px; margin: 0 auto; padding: 0 2rem; }
+.text-accent { color: var(--accent); }
+.text-center { text-align: center; }
+
+/* Onglets de filtre sur la page menu */
+.menu-tabs {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 1rem;
+}
+
+.menu-tab {
+  padding: 0.5rem 1.3rem;
+  border: 1px solid var(--border);
+  border-radius: 50px;
+  font-family: 'Space Mono', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background: transparent;
+}
+
+.menu-tab:hover,
+.menu-tab.active {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: var(--badge-bg);
+}
+
+body.dark-mode .menu-tab.active {
+  box-shadow: 0 0 15px rgba(176,38,255,0.25);
 }

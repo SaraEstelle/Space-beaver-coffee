@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Les Formules — Space Beaver Coffee</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🦫</text></svg>" />
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+  <div class="nav-container">
+    <a href="index.html" class="nav-logo">
+      <span class="logo-top">Space Beaver</span>
+      <span class="logo-bottom">Coffee</span>
+    </a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html">Accueil</a></li>
+      <li><a href="menu.html" class="active">Les Formules</a></li>
+      <li><a href="crew.html">L'Équipage</a></li>
+      <li><a href="contact.html">Prescription</a></li>
+      <li>
+        <button class="mode-toggle">🌙 Black Orbit Mode</button>
+      </li>
+    </ul>
+    <button class="burger" id="burger" aria-label="Menu mobile">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- PAGE HERO -->
+<div class="page-hero">
+  <div class="day-content">
+    <span class="page-hero-label">🧪 Catalogue Certifié</span>
+    <h1 class="page-hero-title">Les Formules Certifiées</h1>
+    <p class="page-hero-desc">Toutes nos formules sont développées en orbite basse, testées en microgravité et approuvées par les autorités galactiques.</p>
+  </div>
+  <div class="night-content">
+    <span class="page-hero-label" style="color:#b026ff;">☣️ Catalogue Clandestin</span>
+    <h1 class="page-hero-title" style="color:#b026ff;">Formules Interdites</h1>
+    <p class="page-hero-desc" style="color:#9ab0d4;">Des formules développées dans l'ombre de la station. Non-homologuées. Non-documentées. Diablement efficaces.</p>
+  </div>
+</div>
+
+<!-- =============================
+     BOISSONS
+     ============================= -->
+<section class="products-section" data-category="boissons">
+  <div class="products-inner">
+    <div class="section-header reveal">
+      <div class="day-content">
+        <span class="section-label">☕ Boissons</span>
+        <h2 class="section-title">Les Formules Certifiées</h2>
+        <p class="section-desc">Nos 4 boissons phares, développées en conditions orbitales.</p>
+      </div>
+      <div class="night-content">
+        <span class="section-label" style="border-color:#b026ff;color:#b026ff;">☠️ Boissons</span>
+        <h2 class="section-title">Formules Interdites</h2>
+        <p class="section-desc" style="color:#9ab0d4;">Stimulants instables. Effets garantis. Responsabilité déclinée.</p>
+      </div>
+    </div>
+
+    <div class="products-grid">
+      <!-- DAY -->
+      <div class="day-grid">
+        <article class="product-card reveal">
+          <div class="card-image"><div class="card-emoji">🧪</div></div>
+          <div class="card-content">
+            <span class="card-tag">Stimulant · Classique</span>
+            <h3 class="card-title">Caféine HCl 2.0™</h3>
+            <p class="card-desc">Arabica orbitalement stabilisé. Notes de noisette, précision mentale et clarté cognitive certifiées. Servi en fiole graduée.</p>
+            <div class="card-footer">
+              <span class="card-price">4.90 €</span>
+              <span class="card-badge">✓ Galactic Certified</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="product-card reveal">
+          <div class="card-image" style="background:linear-gradient(135deg,#e8f8ee,#c8f0d8);"><div class="card-emoji">🌿</div></div>
+          <div class="card-content">
+            <span class="card-tag">Endurance · Botanique</span>
+            <h3 class="card-title">Matcha BioSynth™</h3>
+            <p class="card-desc">Matcha enrichi en chlorophylle activée. Énergie longue durée. Servi en erlenmeyer transparent. Anti-oxydants renforcés.</p>
+            <div class="card-footer">
+              <span class="card-price">5.50 €</span>
+              <span class="card-badge">✓ Galactic Certified</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="product-card reveal">
+          <div class="card-image" style="background:linear-gradient(135deg,#eef8e8,#d0f0c8);"><div class="card-emoji">🧬</div></div>
+          <div class="card-content">
+            <span class="card-tag">Récupération · Protéiné</span>
+            <h3 class="card-title">Sérum Vitalité 3000™</h3>
+            <p class="card-desc">Smoothie spiruline + fruits blancs. Formule récupération musculaire. Servi en flacon médical stérile scellé.</p>
+            <div class="card-footer">
+              <span class="card-price">6.20 €</span>
+              <span class="card-badge">✓ Galactic Certified</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="product-card reveal">
+          <div class="card-image" style="background:linear-gradient(135deg,#f5eee8,#ead8c8);"><div class="card-emoji">🌡️</div></div>
+          <div class="card-content">
+            <span class="card-tag">Anti-Stress · Adaptogène</span>
+            <h3 class="card-title">Infusion Adaptogène Alpha</h3>
+            <p class="card-desc">Mélange d'ashwagandha & racine martienne. Anti-stress homologué. Servi en tube à essai de précision.</p>
+            <div class="card-footer">
+              <span class="card-price">5.80 €</span>
+              <span class="card-badge">✓ Galactic Certified</span>
+            </div>
+          </div>
+        </article>
+      </div>
+
+      <!-- NIGHT -->
+      <div class="night-grid">
+        <article class="product-card reveal">
+          <div class="card-image" style="background:linear-gradient(135deg,#0d0520,#1a0840);"><div class="card-emoji" style="filter:drop-shadow(0 0 15px #b026ff);">☕</div></div>
+          <div class="card-content">
+            <span class="card-tag">⚠️ Triple Extraction</span>
+            <h3 class="card-title">Dark Matter Espresso</h3>
+            <p class="card-desc">Triple extraction, caféine concentrée instable. Interdit aux mineurs interstellaires et aux cardiaques galactiques.</p>
+            <div class="card-footer">
+              <span class="card-price">6.66 €</span>
+              <span class="card-badge">⚗️ Non-Homologué</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="product-card reveal">
+          <div class="card-image" style="background:linear-gradient(135deg,#001a10,#003320);"><div class="card-emoji" style="filter:drop-shadow(0 0 15px #00f5d4);">🌿</div></div>
+          <div class="card-content">
+            <span class="card-tag">☢️ Particules Actives</span>
+            <h3 class="card-title">Plasma Matcha X</h3>
+            <p class="card-desc">Matcha enrichi en "particules actives". Glow vert néon garanti. Composition non communiquée par sécurité.</p>
+            <div class="card-footer">
+              <span class="card-price">7.77 €</span>
+              <span class="card-badge">⚗️ Non-Homologué</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="product-card reveal">
+          <div class="card-image" style="background:linear-gradient(135deg,#1a0010,#400030);"><div class="card-emoji" style="filter:drop-shadow(0 0 15px #ff00aa);">🧬</div></div>
+          <div class="card-content">
+            <span class="card-tag">🔮 Formule Secrète</span>
+            <h3 class="card-title">Sérum Dopamine-404</h3>
+            <p class="card-desc">Milkshake ultra sucré + stimulant mystère. Composition classifiée. Effets documentés par le Dr. Beaverstein uniquement.</p>
+            <div class="card-footer">
+              <span class="card-price">8.88 €</span>
+              <span class="card-badge">⚗️ Non-Homologué</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="product-card reveal">
+          <div class="card-image" style="background:linear-gradient(135deg,#000d1a,#001a35);"><div class="card-emoji" style="filter:drop-shadow(0 0 15px #00aaff);">⚡</div></div>
+          <div class="card-content">
+            <span class="card-tag">☣️ Effet Immédiat</span>
+            <h3 class="card-title">Élixir Nebula Shot</h3>
+            <p class="card-desc">Shot court, effet rapide, non homologué dans 12 systèmes stellaires. Responsabilité déclinée par l'ensemble de l'équipage.</p>
+            <div class="card-footer">
+              <span class="card-price">9.99 €</span>
+              <span class="card-badge">⚗️ Non-Homologué</span>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =============================
+     GÂTEAUX
+     ============================= -->
+<section class="products-section alt" data-category="patisseries">
+  <div class="products-inner">
+    <div class="section-header reveal">
+      <div class="day-content">
+        <span class="section-label">🍰 Pâtisseries</span>
+        <h2 class="section-title">Pâtisseries Saines</h2>
+        <p class="section-desc">Des douceurs formulées pour le bien-être, sans compromis sur le plaisir.</p>
+      </div>
+      <div class="night-content">
+        <span class="section-label" style="border-color:#b026ff;color:#b026ff;">🎂 Desserts</span>
+        <h2 class="section-title">Desserts Clandestins</h2>
+        <p class="section-desc" style="color:#9ab0d4;">Des pâtisseries aux ingrédients… discutables. Saveurs non-homologuées.</p>
+      </div>
+    </div>
+
+    <div class="products-grid">
+      <div class="day-grid">
+        <article class="product-card reveal">
+          <div class="card-image" style="background:linear-gradient(135deg,#fdf8f0,#f5e8d8);"><div class="card-emoji">🍪</div></div>
+          <div class="card-content">
+            <span class="card-tag">Anxiolytique · Bio</span>
+            <h3 class="card-title">Cookie Anxiolytique</h3>
+            <p class="card-desc">Avoine, graines de chia, miel bio. Réduit le cortisol de 23% selon nos tests orbitaux.</p>
+            <div class="card-footer">
+              <span class="card-price">3.20 €</span>
+              <span class="card-badge">✓ Certifié</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="product-card reveal">
+          <div class="card-image" style="background:linear-gradient(135deg,#2d1b0e,#4a2c1a);"><div class="card-emoji">🍫</div></div>
+          <div class="card-content">
+            <span class="card-tag">Chocolat · Allégé</span>
+            <h3 class="card-title">Brownie Gravité Zéro</h3>
+            <p class="card-desc">Chocolat noir 85%, sucre réduit. Formulé pour flotter… métaphoriquement. Texture dense et fondante.</p>
+            <div class="card-footer">
+              <span class="card-price">4.10 €</span>
+              <span class="card-badge">✓ Certifié</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="product-card reveal">
+          <div class="card-image" style="background:linear-gradient(135deg,#fffff0,#f5f5d0);"><div class="card-emoji">🍋</div></div>
+          <div class="card-content">
+            <span class="card-tag">Citrus · Protéiné</span>
+            <h3 class="card-title">Tarte Photon</h3>
+            <p class="card-desc">Citron blanc + mousse légère protéinée. Acidité parfaitement calibrée. Un rayon de lumière dans votre journée.</p>
+            <div class="card-footer">
+              <span class="card-price">4.80 €</span>
+              <span class="card-badge">✓ Certifié</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="product-card reveal">
+          <div class="card-image" style="background:linear-gradient(135deg,#f8f0e0,#ecdcc0);"><div class="card-emoji">🫐</div></div>
+          <div class="card-content">
+            <span class="card-tag">Oméga-3 · Graines</span>
+            <h3 class="card-title">Muffin Oméga-3</h3>
+            <p class="card-desc">Graines & fruits secs enrichis en acides gras essentiels. Pour un cerveau opérationnel à pleine capacité orbitale.</p>
+            <div class="card-footer">
+              <span class="card-price">3.60 €</span>
+              <span class="card-badge">✓ Certifié</span>
+            </div>
+          </div>
+        </article>
+      </div>
+
+      <div class="night-grid">
+        <article class="product-card reveal">
+          <div class="card-image" style="background:linear-gradient(135deg,#0a0a0a,#1a1a1a);"><div class="card-emoji" style="filter:drop-shadow(0 0 15px #b026ff);">🍪</div></div>
+          <div class="card-content">
+            <span class="card-tag">🌫️ Effet Prolongé</span>
+            <h3 class="card-title">Space Cake 404</h3>
+            <p class="card-desc">Texture dense. Effet prolongé. Recette disparue des archives officielles en 2149. Retrouvée par Dr. Beaverstein. 😈</p>
+            <div class="card-footer">
+              <span class="card-price">6.04 €</span>
+              <span class="card-badge">⚗️ Clandestin</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="product-card reveal">
+          <div class="card-image" style="background:linear-gradient(135deg,#1a0800,#3a1500);"><div class="card-emoji" style="filter:drop-shadow(0 0 15px #ff4400);">🍫</div></div>
+          <div class="card-content">
+            <span class="card-tag">☢️ Radioactif</span>
+            <h3 class="card-title">Brownie Dark Matter</h3>
+            <p class="card-desc">Ultra chocolat. Cœur fondant potentiellement radioactif (humour 😈). Déconseillé avant 22h00 station time.</p>
+            <div class="card-footer">
+              <span class="card-price">5.55 €</span>
+              <span class="card-badge">⚗️ Clandestin</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="product-card reveal">
+          <div class="card-image" style="background:linear-gradient(135deg,#0a1a0a,#1a2a0a);"><div class="card-emoji" style="filter:drop-shadow(0 0 15px #00ff44);">🍪</div></div>
+          <div class="card-content">
+            <span class="card-tag">🧬 Mutation</span>
+            <h3 class="card-title">Cookie Mutation</h3>
+            <p class="card-desc">Pépites fluorescentes. Recette modifiée génétiquement. Goût non identifiable. Effets constatés : excellents.</p>
+            <div class="card-footer">
+              <span class="card-price">4.44 €</span>
+              <span class="card-badge">⚗️ Clandestin</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="product-card reveal">
+          <div class="card-image" style="background:linear-gradient(135deg,#10001a,#20003a);"><div class="card-emoji" style="filter:drop-shadow(0 0 15px #aa00ff);">🍩</div></div>
+          <div class="card-content">
+            <span class="card-tag">🌀 Antigravité</span>
+            <h3 class="card-title">Donut Antigravity</h3>
+            <p class="card-desc">Glaçage néon violet. Semble flotter légèrement au-dessus de l'assiette (selon les témoignages de l'équipage). Non vérifié.</p>
+            <div class="card-footer">
+              <span class="card-price">5.88 €</span>
+              <span class="card-badge">⚗️ Clandestin</span>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =============================
+     FAST FOOD
+     ============================= -->
+<section class="products-section" data-category="fastfood">
+  <div class="products-inner">
+    <div class="section-header reveal">
+      <div class="day-content">
+        <span class="section-label">🍔 Fast Food</span>
+        <h2 class="section-title">Restauration Rapide Healthy</h2>
+        <p class="section-desc">Une alimentation rapide, efficace et optimisée pour les castors en mission.</p>
+      </div>
+      <div class="night-content">
+        <span class="section-label" style="border-color:#b026ff;color:#b026ff;">🌮 Fast Food</span>
+        <h2 class="section-title">Restauration Clandestine</h2>
+        <p class="section-desc" style="color:#9ab0d4;">Cuisine intense. Ingrédients secrets. Satisfaction cosmique garantie.</p>
+      </div>
+    </div>
+
+    <div class="fastfood-grid">
+      <div class="day-grid">
+        <div class="fastfood-card reveal">
+          <div class="fastfood-emoji">🍔</div>
+          <div class="fastfood-info">
+            <h3 class="fastfood-title">Burger Protéiné Beta</h3>
+            <p class="fastfood-desc">Pain complet orbital, steak végétal enrichi protéines, sauce probiotiques cultivés en microgravité.</p>
+            <span class="fastfood-price">8.90 €</span>
+          </div>
+        </div>
+
+        <div class="fastfood-card reveal">
+          <div class="fastfood-emoji">🌮</div>
+          <div class="fastfood-info">
+            <h3 class="fastfood-title">Tacos Lacto-Free</h3>
+            <p class="fastfood-desc">Galette protéinée, poulet orbital bio, sauce yaourt végétal. Sans lactose, sans compromis.</p>
+            <span class="fastfood-price">7.50 €</span>
+          </div>
+        </div>
+
+        <div class="fastfood-card reveal">
+          <div class="fastfood-emoji">🍕</div>
+          <div class="fastfood-info">
+            <h3 class="fastfood-title">Pizza Nutriplex</h3>
+            <p class="fastfood-desc">Base fine aux fibres actives, mozzarella allégée à 15%, légumes synthétisés en serre orbitale.</p>
+            <span class="fastfood-price">9.20 €</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="night-grid">
+        <div class="fastfood-card reveal" style="border-color:rgba(176,38,255,0.2);">
+          <div class="fastfood-emoji" style="background:rgba(176,38,255,0.08);border-color:rgba(176,38,255,0.3);">🍔</div>
+          <div class="fastfood-info">
+            <h3 class="fastfood-title">Burger Supernova</h3>
+            <p class="fastfood-desc">Double steak cosmique, sauce explosive piment stellaire grade 7, fromage fondu à 800°C. Danger : 🔥🔥🔥</p>
+            <span class="fastfood-price" style="color:#00f5d4;">12.66 €</span>
+          </div>
+        </div>
+
+        <div class="fastfood-card reveal" style="border-color:rgba(176,38,255,0.2);">
+          <div class="fastfood-emoji" style="background:rgba(0,0,0,0.4);border-color:rgba(176,38,255,0.3);">🌮</div>
+          <div class="fastfood-info">
+            <h3 class="fastfood-title">Tacos Black Hole</h3>
+            <p class="fastfood-desc">Sauce noire secrète. Viande d'origine non communiquée. Résidu de matière sombre (au sens culinaire).</p>
+            <span class="fastfood-price" style="color:#00f5d4;">10.44 €</span>
+          </div>
+        </div>
+
+        <div class="fastfood-card reveal" style="border-color:rgba(176,38,255,0.2);">
+          <div class="fastfood-emoji" style="background:rgba(176,38,255,0.08);border-color:rgba(176,38,255,0.3);">🍕</div>
+          <div class="fastfood-info">
+            <h3 class="fastfood-title">Pizza Quasar</h3>
+            <p class="fastfood-desc">Fromage triple couche surchargé, piment stellaire, base radioactive (comestible). Intensité : EXTRÊME.</p>
+            <span class="fastfood-price" style="color:#00f5d4;">11.11 €</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="nav-logo" style="margin-bottom:1rem;">
+          <span class="logo-top">Space Beaver</span>
+          <span class="logo-bottom">Coffee</span>
+        </div>
+        <p>Laboratoire de nutrition orbitale certifié. Formulons l'avenir, une boisson à la fois.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Navigation</h4>
+        <a href="index.html">Accueil</a>
+        <a href="menu.html">Les Formules</a>
+        <a href="crew.html">L'Équipage</a>
+        <a href="contact.html">Prescription</a>
+      </div>
+      <div class="footer-col">
+        <h4>Station Orbitale</h4>
+        <a href="#">Orbite Basse · Secteur 7</a>
+        <a href="#">Alt: 408 km</a>
+        <a href="#">contact@spacebeaver.orbital</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p class="footer-copy">© <span class="footer-year"></span> Space Beaver Coffee Corp. · Tous droits réservés</p>
+      <div class="footer-status">
+        <div class="status-dot"></div>
+        <span>Station en ligne · Orbite stable</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="js/main.js"></script>
+</body>
+</html>
