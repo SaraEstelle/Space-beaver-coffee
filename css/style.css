@@ -203,18 +203,38 @@ ul  { list-style: none; }
   height: 70px;
 }
 
-/* Logo en deux lignes */
+/* Logo avec mascotte à gauche et texte à droite */
 .nav-logo {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.55rem;
+  line-height: 1;
+}
+
+.nav-logo-icon {
+  font-size: 2rem;
+  line-height: 1;
+  filter: drop-shadow(0 0 5px rgba(26,107,220,0.3));
+  transition: transform 0.3s ease;
+  flex-shrink: 0;
+}
+
+.nav-logo:hover .nav-logo-icon { transform: rotate(-12deg) scale(1.15); }
+
+.nav-logo-text {
   display: flex;
   flex-direction: column;
   line-height: 1;
 }
 
+body.dark-mode .nav-logo-icon { filter: drop-shadow(0 0 8px rgba(176,38,255,0.7)); }
+
 .logo-top {
   font-family: 'Orbitron', monospace;
-  font-size: 0.9rem;
+  font-size: 1.1rem;
   font-weight: 900;
-  letter-spacing: 0.18em;
+  letter-spacing: 0.12em;
   color: var(--accent);
   transition: color 0.4s;
 }

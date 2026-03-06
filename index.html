@@ -1,165 +1,203 @@
 <!DOCTYPE html>
-<!--
-  index.html — Page d'accueil de Space Beaver Coffee
-  C'est la première page que l'utilisateur voit.
-  Structure générale : navbar → hero → concept → boissons → équipage → footer
--->
+<!-- je déclare que c'est un fichier HTML5 -->
 <html lang="fr">
+<!-- lang="fr" pour dire au navigateur que la page est en français -->
+
 <head>
+  <!-- le <head> contient les infos de la page, rien de visible ici -->
+
+  <!-- encodage UTF-8 pour pouvoir écrire les accents français -->
   <meta charset="UTF-8" />
-  <!-- viewport : indispensable pour que le site s'adapte aux mobiles -->
+
+  <!-- viewport : sans ça le site ne s'adapte pas aux téléphones -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- titre qui s'affiche dans l'onglet du navigateur -->
   <title>Space Beaver Coffee — Certified Orbital Laboratory</title>
+
+  <!-- je lie mon fichier CSS externe pour avoir tous les styles -->
   <link rel="stylesheet" href="css/style.css" />
-  <!-- favicon en SVG inline avec l'emoji castor, pas besoin d'un fichier externe -->
+
+  <!-- favicon : la petite icône dans l'onglet, j'utilise un emoji castor en SVG inline
+       comme ça pas besoin de créer un fichier image séparé -->
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🦫</text></svg>" />
+
 </head>
+
 <body>
+<!-- tout ce qui est visible commence ici -->
 
 
-<!-- ============================================================
-     NAVBAR — barre de navigation fixe
-     Reste visible en haut même quand on scrolle (position: fixed dans le CSS)
-     Sur mobile elle se transforme en menu burger grâce au JS
-     ============================================================ -->
+<!-- ======= BARRE DE NAVIGATION ======= -->
+<!-- nav est une balise sémantique HTML5, elle dit que c'est un menu de navigation -->
 <nav class="navbar">
+
+  <!-- je centre et limite la largeur du contenu à l'intérieur de la navbar -->
   <div class="nav-container">
 
-    <!-- Logo cliquable qui ramène à l'accueil -->
+    <!-- logo cliquable qui ramène à l'accueil
+         aria-label = description pour les lecteurs d'écran (accessibilité) -->
     <a href="index.html" class="nav-logo" aria-label="Space Beaver Coffee">
-      <span class="logo-top">Space Beaver</span>
-      <span class="logo-bottom">Coffee</span>
+      <!-- icône castor à gauche du logo -->
+      <span class="nav-logo-icon">🦫</span>
+      <!-- texte du logo en deux lignes -->
+      <span class="nav-logo-text">
+        <span class="logo-top">Space Beaver</span>
+        <span class="logo-bottom">Coffee</span>
+      </span>
     </a>
 
-    <!-- Liste des liens de navigation
-         Sur mobile, cette liste est cachée par défaut (max-height: 0 en CSS)
-         et s'ouvre quand on clique sur le burger (JS ajoute la classe .open) -->
+    <!-- liste des liens de navigation
+         id="navLinks" pour que le JS puisse l'ouvrir/fermer sur mobile -->
     <ul class="nav-links" id="navLinks">
+      <!-- class="active" sur le lien actuel pour le souligner en bleu -->
       <li><a href="index.html" class="active">Accueil</a></li>
       <li><a href="menu.html">Les Formules</a></li>
       <li><a href="crew.html">L'Équipage</a></li>
       <li><a href="contact.html">Prescription</a></li>
-      <!-- Bouton pour basculer entre mode jour et nuit
-           Le texte est mis à jour par le JS selon le mode actif -->
+      <!-- bouton pour passer du mode jour au mode nuit
+           le JS va changer le texte et ajouter la classe dark-mode sur le body -->
       <li>
         <button class="mode-toggle" aria-label="Basculer le mode">🌙 Black Orbit Mode</button>
       </li>
     </ul>
 
-    <!-- Bouton burger pour mobile (3 traits → croix quand ouvert)
-         Caché sur desktop via CSS, visible sur mobile -->
+    <!-- bouton burger pour mobile (les 3 petits traits)
+         il est caché sur desktop via le CSS, visible seulement sur mobile
+         le JS lui ajoute la classe .active pour le transformer en croix -->
     <button class="burger" id="burger" aria-label="Menu mobile">
-      <span></span>
-      <span></span>
-      <span></span>
+      <span></span> <!-- trait 1 -->
+      <span></span> <!-- trait 2 -->
+      <span></span> <!-- trait 3 -->
     </button>
 
   </div>
 </nav>
+<!-- fin de la navbar -->
 
 
-<!-- ============================================================
-     SECTION HERO — Grande image plein écran d'entrée
-     Deux fonds superposés (jour et nuit), on bascule avec opacity en CSS
-     Le texte est différent selon le mode actif (.day-content / .night-content)
-
-     Images à placer dans assets/images/ :
-     - hero-lab-day.png   → labo avec castors en tenue blanche
-     - hero-lab-night.png → même labo version sombre néon
-     ============================================================ -->
+<!-- ======= SECTION HERO ======= -->
+<!-- c'est la grande image plein écran qu'on voit en arrivant sur la page -->
 <section class="hero" id="hero">
+<!-- id="hero" pour pouvoir faire défiler jusqu'ici avec un lien ancre -->
 
-  <!-- Fond jour (opacity 1 par défaut, passe à 0 en mode nuit via CSS) -->
+  <!-- fond MODE JOUR : photo du labo en blanc (chargée via le CSS avec background-image) -->
   <div class="hero-bg hero-bg-day"></div>
 
-  <!-- Fond nuit (opacity 0 par défaut, passe à 1 en mode nuit via CSS) -->
+  <!-- fond MODE NUIT : même labo mais version sombre avec néons
+       les deux divs sont superposées, le CSS bascule leur opacité selon le mode actif -->
   <div class="hero-bg hero-bg-night"></div>
 
-  <!-- Overlay sombre pour que le texte blanc reste lisible sur la photo -->
+  <!-- overlay sombre semi-transparent pour que le texte blanc soit lisible sur la photo -->
   <div class="hero-overlay"></div>
 
+  <!-- contenu textuel au-dessus de l'image -->
   <div class="hero-content">
 
-    <!-- Contenu affiché en MODE JOUR -->
+    <!-- tout ce qui est dans .day-content s'affiche en mode jour
+         le CSS le cache automatiquement quand dark-mode est actif -->
     <div class="day-content">
-      <div class="hero-badge">
-        🛰️ &nbsp; Station Orbitale · Secteur 7 · En Opération
-      </div>
+
+      <!-- petit badge d'info en haut du titre -->
+      <div class="hero-badge">🛰️ &nbsp; Station Orbitale · Secteur 7 · En Opération</div>
+
+      <!-- titre principal, le <span> à l'intérieur passe à la ligne et change de couleur -->
       <h1 class="hero-title">
         Space Beaver Coffee
         <span>Certified Orbital</span>
         Laboratory
       </h1>
+
+      <!-- sous-titre descriptif -->
       <p class="hero-subtitle">
         En orbite basse autour de la Terre, nos castors scientifiques
         développent des formules énergétiques certifiées pour optimiser
         les performances humaines.
       </p>
+
+      <!-- bouton d'appel à l'action (CTA) qui mène vers la page menu -->
       <a href="menu.html" class="hero-cta">
         Découvrir les Formules <span class="arrow">→</span>
+        <!-- la flèche est dans un span pour animer son déplacement au hover en CSS -->
       </a>
+
+      <!-- petits tags informatifs sous le bouton -->
       <div class="hero-tags">
         <span class="hero-tag">Bio-Synthétique</span>
         <span class="hero-tag">Orbital Certified</span>
         <span class="hero-tag">Since 2147</span>
         <span class="hero-tag">12 Formules Actives</span>
       </div>
-    </div>
 
-    <!-- Contenu affiché en MODE NUIT
-         (display:none par défaut, devient display:block quand dark-mode est actif) -->
+    </div>
+    <!-- fin du contenu jour -->
+
+    <!-- tout ce qui est dans .night-content est caché par défaut
+         le CSS le rend visible quand on active le mode nuit -->
     <div class="night-content">
+
+      <!-- badge version nuit avec couleurs violettes -->
       <div class="hero-badge" style="border-color:rgba(176,38,255,0.5);color:rgba(176,38,255,0.9);">
         ⚠️ &nbsp; ACCÈS RESTREINT · PROTOCOLE NOCTURNE ACTIVÉ
       </div>
+
+      <!-- titre nuit différent du titre jour -->
       <h1 class="hero-title">
         Black Orbit
         <span style="color:#b026ff;">Laboratory</span>
       </h1>
+
       <p class="hero-subtitle" style="color:rgba(200,170,255,0.8);">
         Lorsque la station passe dans l'ombre, certains protocoles
         scientifiques continuent… Des expériences non autorisées commencent.
       </p>
+
+      <!-- même lien mais bouton violet -->
       <a href="menu.html" class="hero-cta" style="background:#b026ff;">
         Accéder aux Expériences <span class="arrow">→</span>
       </a>
+
+      <!-- tags version nuit avec couleurs différentes -->
       <div class="hero-tags">
         <span class="hero-tag" style="border-color:rgba(176,38,255,0.3);color:rgba(176,38,255,0.6);">Non-Homologué</span>
         <span class="hero-tag" style="border-color:rgba(0,245,212,0.3);color:rgba(0,245,212,0.5);">Expérimental</span>
         <span class="hero-tag" style="border-color:rgba(176,38,255,0.3);color:rgba(176,38,255,0.6);">Interdit × 12 Systèmes</span>
         <span class="hero-tag" style="border-color:rgba(0,245,212,0.3);color:rgba(0,245,212,0.5);">Données Classifiées</span>
       </div>
+
     </div>
+    <!-- fin du contenu nuit -->
 
   </div>
+  <!-- fin hero-content -->
 
-  <!-- Indicateur visuel qui invite à scroller vers le bas -->
+  <!-- petite animation en bas du hero pour inviter l'utilisateur à scroller -->
   <div class="hero-scroll">
-    <div class="scroll-line"></div>
+    <div class="scroll-line"></div> <!-- ligne verticale qui descend -->
     <span>Explorer</span>
   </div>
 
 </section>
+<!-- fin section hero -->
 
 
-<!-- ============================================================
-     SECTION CONCEPT — Histoire et valeurs du labo
-     Grille 2 colonnes : texte à gauche, image à droite
-     Même principe jour/nuit avec .day-content et .night-content
-
-     Images à placer dans assets/images/ :
-     - concept-lab-day.png   → labo lumineux, castors en blouse
-     - concept-lab-night.png → labo sombre avec fioles néon
-     ============================================================ -->
+<!-- ======= SECTION CONCEPT ======= -->
+<!-- cette section explique l'histoire et les valeurs de Space Beaver Coffee
+     elle est composée d'une grille 2 colonnes : texte à gauche, image à droite -->
 <section class="concept" id="concept">
+
+  <!-- div qui centre et limite la largeur du contenu -->
   <div class="concept-inner">
 
-    <!-- En-tête de section : label + titre + séparateur décoratif -->
+    <!-- en-tête de la section avec titre et séparateur décoratif
+         class="reveal" = la carte apparaît en fondu quand on scroll jusqu'à elle -->
     <div class="section-header reveal">
 
+      <!-- titre affiché en mode jour -->
       <div class="day-content">
         <span class="section-label">🔬 Notre Concept</span>
         <h2 class="section-title">Pourquoi des castors pharmaciens de l'espace ?</h2>
+        <!-- séparateur décoratif avec des étoiles et des mots -->
         <div class="section-divider">
           <span class="divider-line"></span>
           <span class="divider-dot">✦</span>
@@ -172,6 +210,7 @@
         </div>
       </div>
 
+      <!-- titre affiché en mode nuit -->
       <div class="night-content">
         <span class="section-label" style="border-color:#b026ff;color:#b026ff;">⚗️ Protocole Nocturne</span>
         <h2 class="section-title">Que cachent nos castors de l'espace ?</h2>
@@ -188,18 +227,22 @@
       </div>
 
     </div>
+    <!-- fin section-header -->
 
-    <!-- Grille concept : 2 colonnes sur desktop, 1 colonne sur mobile -->
+    <!-- grille 2 colonnes : texte à gauche + image à droite -->
     <div class="concept-grid">
 
-      <!-- Colonne gauche : texte descriptif + liste de features -->
+      <!-- colonne gauche : les textes descriptifs et les features -->
       <div class="concept-text reveal">
 
-        <!-- Texte MODE JOUR -->
+        <!-- texte version jour -->
         <div class="day-content">
           <p>En 2147, après une crise énergétique interplanétaire, un collectif de castors ingénieurs décide de créer le premier laboratoire de nutrition orbitale.</p>
           <p>Installé en orbite basse au-dessus de la Terre, Space Beaver Coffee développe des formules énergétiques stables, bio-synthétiques et approuvées par les autorités galactiques.</p>
+
+          <!-- liste des points forts, chaque feature a une icône + titre + texte -->
           <div class="concept-features">
+
             <div class="concept-feature">
               <span class="feature-icon">⚗️</span>
               <div class="feature-text">
@@ -207,6 +250,7 @@
                 <p>Molécules stimulantes extraites et stabilisées orbitalement pour une libération optimale.</p>
               </div>
             </div>
+
             <div class="concept-feature">
               <span class="feature-icon">🌿</span>
               <div class="feature-text">
@@ -214,6 +258,7 @@
                 <p>Extraction botanique conforme aux normes galactiques de respect environnemental.</p>
               </div>
             </div>
+
             <div class="concept-feature">
               <span class="feature-icon">🛰️</span>
               <div class="feature-text">
@@ -221,17 +266,25 @@
                 <p>Chaque formule est dosée en microgravité pour une précision moléculaire maximale.</p>
               </div>
             </div>
-          </div>
-        </div>
 
-        <!-- Texte MODE NUIT -->
+          </div>
+          <!-- fin concept-features jour -->
+
+        </div>
+        <!-- fin day-content -->
+
+        <!-- texte version nuit, même structure mais contenu différent -->
         <div class="night-content">
           <p>Lorsque la station passe en orbite côté obscur, le laboratoire bascule. Les castors les plus brillants restent après la fermeture.</p>
           <p>Ils testent des formules non autorisées. Des stimulants instables. Des recettes interdites dans 12 systèmes stellaires.</p>
+
+          <!-- citation en style terminal -->
           <blockquote style="font-family:'Space Mono',monospace;font-size:0.8rem;color:#b026ff;border-left:2px solid #b026ff;padding-left:1rem;margin:1.5rem 0;font-style:italic;">
             "La science n'avance que dans l'ombre."
           </blockquote>
+
           <div class="concept-features">
+
             <div class="concept-feature">
               <span class="feature-icon">🧨</span>
               <div class="feature-text">
@@ -239,6 +292,7 @@
                 <p>Des molécules trop puissantes pour la certification. Pour les véritables aventuriers.</p>
               </div>
             </div>
+
             <div class="concept-feature">
               <span class="feature-icon">🔮</span>
               <div class="feature-text">
@@ -246,6 +300,7 @@
                 <p>Recettes non répertoriées. Effets non documentés. Satisfactions garanties.</p>
               </div>
             </div>
+
             <div class="concept-feature">
               <span class="feature-icon">☣️</span>
               <div class="feature-text">
@@ -253,42 +308,48 @@
                 <p>Territoire scientifique clandestin. Accès sur invitation du Dr. Beaverstein uniquement.</p>
               </div>
             </div>
+
           </div>
+          <!-- fin concept-features nuit -->
+
         </div>
+        <!-- fin night-content -->
 
       </div>
+      <!-- fin colonne gauche concept -->
 
-      <!-- Colonne droite : image du labo
-           On affiche concept-lab-day.png ou concept-lab-night.png selon le mode
-           Si l'image est absente, onerror déclenche l'affichage du fallback emoji -->
+      <!-- colonne droite : image du labo -->
       <div class="concept-visual reveal">
+
+        <!-- cadre de l'image avec bordure et ratio fixe -->
         <div class="concept-image-frame">
 
-          <!-- Image MODE JOUR
-               onerror : si le fichier PNG n'existe pas, on cache l'img
-               et on affiche le div fallback juste après -->
+          <!-- image MODE JOUR
+               si le fichier PNG n'existe pas, onerror cache l'image
+               et affiche le div suivant (le fallback emoji) à la place -->
           <img
-            class="concept-img day-content"
+            class="concept-img concept-img-day"
             src="assets/images/concept-lab-day.png"
             alt="Laboratoire orbital certifié — mode jour"
             onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
           />
-          <!-- Fallback jour (emoji) si l'image ne charge pas -->
-          <div class="concept-img-fallback day-content">🧪</div>
+          <!-- emoji de secours si l'image jour ne charge pas -->
+          <div class="concept-img-fallback concept-fallback-day">🧪</div>
 
-          <!-- Image MODE NUIT -->
+          <!-- image MODE NUIT, même principe -->
           <img
-            class="concept-img night-content"
+            class="concept-img concept-img-night"
             src="assets/images/concept-lab-night.png"
             alt="Black Orbit Lab — expériences clandestines"
             onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
           />
-          <!-- Fallback nuit (emoji) si l'image ne charge pas -->
-          <div class="concept-img-fallback night-content" style="background:linear-gradient(135deg,#0d0520,#1a0840);">⚗️</div>
+          <!-- emoji de secours si l'image nuit ne charge pas -->
+          <div class="concept-img-fallback concept-fallback-night" style="background:linear-gradient(135deg,#0d0520,#1a0840);">⚗️</div>
 
         </div>
+        <!-- fin concept-image-frame -->
 
-        <!-- Petite carte statistique superposée en bas à droite de l'image -->
+        <!-- petite carte statistique positionnée en bas à droite de l'image -->
         <div class="concept-overlay-card">
           <div class="day-content">
             <span class="overlay-stat">2147</span>
@@ -301,20 +362,25 @@
         </div>
 
       </div>
+      <!-- fin colonne droite concept -->
 
     </div>
+    <!-- fin concept-grid -->
+
   </div>
 </section>
+<!-- fin section concept -->
 
 
-<!-- ============================================================
-     SECTION BOISSONS — Aperçu des 4 produits phares
-     Les cartes sont dans une CSS Grid auto-fill (responsive automatique)
-     .day-grid et .night-grid gèrent le basculement des cartes
-     ============================================================ -->
+<!-- ======= SECTION BOISSONS ======= -->
+<!-- aperçu des 4 produits phares sur la page d'accueil
+     les cartes sont dans une grille CSS responsive (auto-fill)
+     chaque carte a une image PNG avec un emoji de secours si l'image manque -->
 <section class="products-section" id="boissons">
+
   <div class="products-inner">
 
+    <!-- en-tête de section -->
     <div class="section-header reveal">
       <div class="day-content">
         <span class="section-label">☕ Nos Formules</span>
@@ -328,21 +394,29 @@
       </div>
     </div>
 
+    <!-- grille des cartes produits
+         display:contents sur .day-grid/.night-grid permet aux cartes
+         de s'insérer directement dans la grille parente sans div intermédiaire -->
     <div class="products-grid">
 
-      <!-- Cartes MODE JOUR
-           display:contents sur .day-grid pour que les cartes
-           s'insèrent directement dans la grille parente -->
+      <!-- cartes affichées en MODE JOUR -->
       <div class="day-grid">
 
+        <!-- carte 1 : Caféine HCl -->
+        <!-- j'utilise <article> car c'est un contenu autonome (HTML sémantique) -->
         <article class="product-card reveal">
+          <!-- zone image avec fallback emoji si le PNG manque -->
           <div class="card-image">
-            <div class="card-emoji">🧪</div>
+            <img class="card-img" src="assets/images/icon-caffeine.png" alt="Caféine HCl 2.0"
+              onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+            <span class="card-emoji-fallback">🧪</span>
           </div>
+          <!-- contenu texte de la carte -->
           <div class="card-content">
             <span class="card-tag">Stimulant</span>
             <h3 class="card-title">Caféine HCl 2.0™</h3>
             <p class="card-desc">Arabica stabilisé orbitalement. Notes de noisette, clarté mentale garantie.</p>
+            <!-- pied de carte : prix à gauche, badge à droite -->
             <div class="card-footer">
               <span class="card-price">4.90 €</span>
               <span class="card-badge">Certifié</span>
@@ -350,9 +424,12 @@
           </div>
         </article>
 
+        <!-- carte 2 : Matcha BioSynth -->
         <article class="product-card reveal">
-          <div class="card-image" style="background:linear-gradient(135deg,#e8f8ee,#c8f0d8);">
-            <div class="card-emoji">🌿</div>
+          <div class="card-image">
+            <img class="card-img" src="assets/images/icon-matcha.png" alt="Matcha BioSynth"
+              onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+            <span class="card-emoji-fallback">🌿</span>
           </div>
           <div class="card-content">
             <span class="card-tag">Endurance</span>
@@ -365,9 +442,12 @@
           </div>
         </article>
 
+        <!-- carte 3 : Sérum Vitalité -->
         <article class="product-card reveal">
-          <div class="card-image" style="background:linear-gradient(135deg,#eef8e8,#d0f0c8);">
-            <div class="card-emoji">🧬</div>
+          <div class="card-image">
+            <img class="card-img" src="assets/images/icon-vitality.png" alt="Sérum Vitalité 3000"
+              onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+            <span class="card-emoji-fallback">🧬</span>
           </div>
           <div class="card-content">
             <span class="card-tag">Récupération</span>
@@ -380,9 +460,12 @@
           </div>
         </article>
 
+        <!-- carte 4 : Infusion Adaptogène -->
         <article class="product-card reveal">
-          <div class="card-image" style="background:linear-gradient(135deg,#f5eee8,#ead8c8);">
-            <div class="card-emoji">🌡️</div>
+          <div class="card-image">
+            <img class="card-img" src="assets/images/icon-adaptogen.png" alt="Infusion Adaptogène Alpha"
+              onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+            <span class="card-emoji-fallback">🌡️</span>
           </div>
           <div class="card-content">
             <span class="card-tag">Anti-Stress</span>
@@ -395,14 +478,18 @@
           </div>
         </article>
 
-      </div><!-- fin day-grid boissons -->
+      </div>
+      <!-- fin day-grid boissons -->
 
-      <!-- Cartes MODE NUIT -->
+      <!-- cartes affichées en MODE NUIT (cachées par défaut) -->
       <div class="night-grid">
 
+        <!-- carte nuit 1 : Dark Matter Espresso -->
         <article class="product-card reveal">
-          <div class="card-image" style="background:linear-gradient(135deg,#0d0520,#1a0840);">
-            <div class="card-emoji" style="filter:drop-shadow(0 0 15px #b026ff);">☕</div>
+          <div class="card-image">
+            <img class="card-img" src="assets/images/icon-dark-espresso.png" alt="Dark Matter Espresso"
+              onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+            <span class="card-emoji-fallback">☕</span>
           </div>
           <div class="card-content">
             <span class="card-tag">⚠️ Non-Homologué</span>
@@ -415,9 +502,12 @@
           </div>
         </article>
 
+        <!-- carte nuit 2 : Plasma Matcha X -->
         <article class="product-card reveal">
-          <div class="card-image" style="background:linear-gradient(135deg,#001a10,#003320);">
-            <div class="card-emoji" style="filter:drop-shadow(0 0 15px #00f5d4);">🌿</div>
+          <div class="card-image">
+            <img class="card-img" src="assets/images/icon-plasma-matcha.png" alt="Plasma Matcha X"
+              onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+            <span class="card-emoji-fallback">🌿</span>
           </div>
           <div class="card-content">
             <span class="card-tag">⚗️ Particules Actives</span>
@@ -430,9 +520,12 @@
           </div>
         </article>
 
+        <!-- carte nuit 3 : Sérum Dopamine-404 -->
         <article class="product-card reveal">
-          <div class="card-image" style="background:linear-gradient(135deg,#1a0010,#400030);">
-            <div class="card-emoji" style="filter:drop-shadow(0 0 15px #ff00aa);">🧬</div>
+          <div class="card-image">
+            <img class="card-img" src="assets/images/icon-dopamine.png" alt="Sérum Dopamine-404"
+              onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+            <span class="card-emoji-fallback">🧬</span>
           </div>
           <div class="card-content">
             <span class="card-tag">🔮 Formule Secrète</span>
@@ -445,9 +538,12 @@
           </div>
         </article>
 
+        <!-- carte nuit 4 : Élixir Nebula Shot -->
         <article class="product-card reveal">
-          <div class="card-image" style="background:linear-gradient(135deg,#000d1a,#001a35);">
-            <div class="card-emoji" style="filter:drop-shadow(0 0 15px #00aaff);">⚡</div>
+          <div class="card-image">
+            <img class="card-img" src="assets/images/icon-nebula-shot.png" alt="Élixir Nebula Shot"
+              onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+            <span class="card-emoji-fallback">⚡</span>
           </div>
           <div class="card-content">
             <span class="card-tag">☣️ Effet Rapide</span>
@@ -460,30 +556,29 @@
           </div>
         </article>
 
-      </div><!-- fin night-grid boissons -->
+      </div>
+      <!-- fin night-grid boissons -->
 
-    </div><!-- fin products-grid -->
+    </div>
+    <!-- fin products-grid -->
 
-    <!-- Bouton centré sous les cartes pour aller vers la page menu complète -->
+    <!-- bouton centré sous les cartes pour aller vers la page menu complète -->
     <div style="text-align:center;margin-top:2.5rem;" class="reveal">
-      <a href="menu.html" class="hero-cta">
-        Voir toutes les formules <span class="arrow">→</span>
-      </a>
+      <a href="menu.html" class="hero-cta">Voir toutes les formules <span class="arrow">→</span></a>
     </div>
 
   </div>
 </section>
+<!-- fin section boissons -->
 
 
-<!-- ============================================================
-     SECTION ÉQUIPAGE — Aperçu des 4 membres
-     Les avatars utilisent des PNG dans assets/images/
-     Si l'image est absente, onerror ajoute .img-error sur le wrapper
-     et le CSS affiche l'emoji fallback à la place
-     ============================================================ -->
+<!-- ======= SECTION ÉQUIPAGE ======= -->
+<!-- aperçu des membres de l'équipe, avec leur photo PNG et un emoji de secours -->
 <section class="crew-section" id="equipe">
+
   <div class="crew-inner">
 
+    <!-- en-tête de section -->
     <div class="section-header reveal">
       <div class="day-content">
         <span class="section-label">🦫 Notre Équipage</span>
@@ -497,21 +592,20 @@
       </div>
     </div>
 
+    <!-- grille des cartes membres -->
     <div class="crew-grid">
 
-      <!-- Membres MODE JOUR
-           Fichiers attendus : castor-nova.png / prof-lignine.png
-                               fibra-7.png / analyste-orbit.png -->
+      <!-- membres affichés en MODE JOUR -->
       <div class="day-grid">
 
+        <!-- carte membre 1 : Dr. Castor Nova -->
         <div class="crew-card reveal">
+          <!-- avatar circulaire avec photo PNG
+               si la photo manque, onerror ajoute .img-error sur le wrapper
+               le CSS affiche alors l'emoji à la place -->
           <div class="crew-avatar">
-            <img
-              class="crew-avatar-img"
-              src="assets/images/castor-nova.png"
-              alt="Dr. Castor Nova"
-              onerror="this.closest('.crew-avatar').classList.add('img-error')"
-            />
+            <img class="crew-avatar-img" src="assets/images/castor-nova.png" alt="Dr. Castor Nova"
+              onerror="this.closest('.crew-avatar').classList.add('img-error')" />
             <span class="crew-avatar-fallback">🧑‍🔬</span>
           </div>
           <h3 class="crew-name">Dr. Castor Nova</h3>
@@ -520,14 +614,11 @@
           <span class="crew-badge">Certified Research Crew</span>
         </div>
 
+        <!-- carte membre 2 : Prof. Lignine -->
         <div class="crew-card reveal">
           <div class="crew-avatar">
-            <img
-              class="crew-avatar-img"
-              src="assets/images/prof-lignine.png"
-              alt="Prof. Lignine"
-              onerror="this.closest('.crew-avatar').classList.add('img-error')"
-            />
+            <img class="crew-avatar-img" src="assets/images/prof-lignine.png" alt="Prof. Lignine"
+              onerror="this.closest('.crew-avatar').classList.add('img-error')" />
             <span class="crew-avatar-fallback">🔬</span>
           </div>
           <h3 class="crew-name">Prof. Lignine</h3>
@@ -536,14 +627,11 @@
           <span class="crew-badge">Certified Research Crew</span>
         </div>
 
+        <!-- carte membre 3 : Ing. Fibra-7 -->
         <div class="crew-card reveal">
           <div class="crew-avatar">
-            <img
-              class="crew-avatar-img"
-              src="assets/images/fibra-7.png"
-              alt="Ing. Fibra-7"
-              onerror="this.closest('.crew-avatar').classList.add('img-error')"
-            />
+            <img class="crew-avatar-img" src="assets/images/fibra-7.png" alt="Ing. Fibra-7"
+              onerror="this.closest('.crew-avatar').classList.add('img-error')" />
             <span class="crew-avatar-fallback">🧬</span>
           </div>
           <h3 class="crew-name">Ing. Fibra-7</h3>
@@ -552,14 +640,11 @@
           <span class="crew-badge">Certified Research Crew</span>
         </div>
 
+        <!-- carte membre 4 : Analyste Orbit -->
         <div class="crew-card reveal">
           <div class="crew-avatar">
-            <img
-              class="crew-avatar-img"
-              src="assets/images/analyste-orbit.png"
-              alt="Analyste Orbit"
-              onerror="this.closest('.crew-avatar').classList.add('img-error')"
-            />
+            <img class="crew-avatar-img" src="assets/images/analyste-orbit.png" alt="Analyste Orbit"
+              onerror="this.closest('.crew-avatar').classList.add('img-error')" />
             <span class="crew-avatar-fallback">📡</span>
           </div>
           <h3 class="crew-name">Analyste Orbit</h3>
@@ -568,21 +653,18 @@
           <span class="crew-badge">Certified Research Crew</span>
         </div>
 
-      </div><!-- fin day-grid équipage -->
+      </div>
+      <!-- fin day-grid équipage -->
 
-      <!-- Membres MODE NUIT
-           Fichiers attendus : dr-beaverstein.png / dark-lignine.png
-                               agent-beta42.png / shadow-fibra.png -->
+      <!-- membres affichés en MODE NUIT -->
       <div class="night-grid">
 
+        <!-- carte nuit 1 : Dr. Beaverstein -->
+        <!-- border-color en style inline car cette couleur est propre à ce membre -->
         <div class="crew-card reveal" style="border-color:rgba(176,38,255,0.2);">
           <div class="crew-avatar" style="border-color:rgba(176,38,255,0.4);">
-            <img
-              class="crew-avatar-img"
-              src="assets/images/dr-beaverstein.png"
-              alt="Dr. Beaverstein"
-              onerror="this.closest('.crew-avatar').classList.add('img-error')"
-            />
+            <img class="crew-avatar-img" src="assets/images/dr-beaverstein.png" alt="Dr. Beaverstein"
+              onerror="this.closest('.crew-avatar').classList.add('img-error')" />
             <span class="crew-avatar-fallback" style="filter:drop-shadow(0 0 10px #b026ff);">🧪</span>
           </div>
           <h3 class="crew-name">Dr. Beaverstein</h3>
@@ -591,14 +673,11 @@
           <span class="crew-badge">Experimental Division</span>
         </div>
 
+        <!-- carte nuit 2 : Prof. Dark Lignine -->
         <div class="crew-card reveal" style="border-color:rgba(176,38,255,0.2);">
           <div class="crew-avatar" style="border-color:rgba(176,38,255,0.4);">
-            <img
-              class="crew-avatar-img"
-              src="assets/images/dark-lignine.png"
-              alt="Prof. Dark Lignine"
-              onerror="this.closest('.crew-avatar').classList.add('img-error')"
-            />
+            <img class="crew-avatar-img" src="assets/images/dark-lignine.png" alt="Prof. Dark Lignine"
+              onerror="this.closest('.crew-avatar').classList.add('img-error')" />
             <span class="crew-avatar-fallback" style="filter:drop-shadow(0 0 10px #b026ff);">💀</span>
           </div>
           <h3 class="crew-name">Prof. Dark Lignine</h3>
@@ -607,14 +686,11 @@
           <span class="crew-badge">Experimental Division</span>
         </div>
 
+        <!-- carte nuit 3 : Agent Beta-42 (couleur cyan au lieu de violet) -->
         <div class="crew-card reveal" style="border-color:rgba(176,38,255,0.2);">
           <div class="crew-avatar" style="border-color:rgba(0,245,212,0.4);">
-            <img
-              class="crew-avatar-img"
-              src="assets/images/agent-beta42.png"
-              alt="Agent Beta-42"
-              onerror="this.closest('.crew-avatar').classList.add('img-error')"
-            />
+            <img class="crew-avatar-img" src="assets/images/agent-beta42.png" alt="Agent Beta-42"
+              onerror="this.closest('.crew-avatar').classList.add('img-error')" />
             <span class="crew-avatar-fallback" style="filter:drop-shadow(0 0 10px #00f5d4);">🔮</span>
           </div>
           <h3 class="crew-name">Agent Beta-42</h3>
@@ -623,14 +699,11 @@
           <span class="crew-badge">Experimental Division</span>
         </div>
 
+        <!-- carte nuit 4 : Shadow Fibra -->
         <div class="crew-card reveal" style="border-color:rgba(176,38,255,0.2);">
           <div class="crew-avatar" style="border-color:rgba(0,245,212,0.4);">
-            <img
-              class="crew-avatar-img"
-              src="assets/images/shadow-fibra.png"
-              alt="Shadow Fibra"
-              onerror="this.closest('.crew-avatar').classList.add('img-error')"
-            />
+            <img class="crew-avatar-img" src="assets/images/shadow-fibra.png" alt="Shadow Fibra"
+              onerror="this.closest('.crew-avatar').classList.add('img-error')" />
             <span class="crew-avatar-fallback" style="filter:drop-shadow(0 0 10px #00f5d4);">🕶️</span>
           </div>
           <h3 class="crew-name">Shadow Fibra</h3>
@@ -639,30 +712,33 @@
           <span class="crew-badge">Experimental Division</span>
         </div>
 
-      </div><!-- fin night-grid équipage -->
+      </div>
+      <!-- fin night-grid équipage -->
 
-    </div><!-- fin crew-grid -->
+    </div>
+    <!-- fin crew-grid -->
 
+    <!-- bouton pour aller vers la page équipage complète -->
     <div style="text-align:center;margin-top:2.5rem;" class="reveal">
-      <a href="crew.html" class="hero-cta">
-        Rencontrer l'équipage <span class="arrow">→</span>
-      </a>
+      <a href="crew.html" class="hero-cta">Rencontrer l'équipage <span class="arrow">→</span></a>
     </div>
 
   </div>
 </section>
+<!-- fin section équipage -->
 
 
-<!-- ============================================================
-     FOOTER — Pied de page commun à toutes les pages
-     Grille 3 colonnes : logo + 2 colonnes de liens
-     .footer-year est rempli automatiquement par le JS
-     ============================================================ -->
+<!-- ======= FOOTER ======= -->
+<!-- pied de page commun à toutes les pages
+     grille 3 colonnes : logo/description + 2 colonnes de liens -->
 <footer>
   <div class="footer-inner">
 
     <div class="footer-top">
+
+      <!-- colonne 1 : logo + description courte -->
       <div class="footer-brand">
+        <!-- logo répété dans le footer, sans la mascotte -->
         <div class="nav-logo" style="margin-bottom:1rem;">
           <span class="logo-top">Space Beaver</span>
           <span class="logo-bottom">Coffee</span>
@@ -670,6 +746,7 @@
         <p>Laboratoire de nutrition orbitale certifié. Développons ensemble les formules qui feront avancer l'humanité vers les étoiles.</p>
       </div>
 
+      <!-- colonne 2 : liens de navigation -->
       <div class="footer-col">
         <h4>Navigation</h4>
         <a href="index.html">Accueil</a>
@@ -678,6 +755,7 @@
         <a href="contact.html">Prescription</a>
       </div>
 
+      <!-- colonne 3 : infos de contact / station -->
       <div class="footer-col">
         <h4>Station Orbitale</h4>
         <a href="#">Orbite Basse · Secteur 7</a>
@@ -685,23 +763,31 @@
         <a href="#">contact@spacebeaver.orbital</a>
         <a href="#">Lun–Sam · 06:00–22:00 UTC</a>
       </div>
-    </div>
 
+    </div>
+    <!-- fin footer-top -->
+
+    <!-- bas du footer : copyright + point vert "station en ligne" -->
     <div class="footer-bottom">
+      <!-- footer-year sera rempli automatiquement par le JS avec l'année actuelle -->
       <p class="footer-copy">© <span class="footer-year"></span> Space Beaver Coffee Corp. · Tous droits réservés · Secteur Galactique 7</p>
-      <!-- Point vert animé qui indique que la station est "en ligne" -->
+
+      <!-- petit indicateur vert animé pour montrer que le site est "en ligne" -->
       <div class="footer-status">
-        <div class="status-dot"></div>
+        <div class="status-dot"></div> <!-- point vert qui pulse -->
         <span>Station en ligne · Orbite stable</span>
       </div>
     </div>
 
   </div>
 </footer>
+<!-- fin footer -->
 
 
-<!-- Le script est chargé EN DERNIER pour que tout le HTML soit déjà
-     présent dans le DOM quand le JS s'exécute -->
+<!-- le script JS est chargé tout à la fin pour que le HTML soit déjà
+     entièrement chargé avant que le JS s'exécute
+     si on le mettait dans le <head> le JS ne trouverait pas les éléments HTML -->
 <script src="js/main.js"></script>
+
 </body>
 </html>

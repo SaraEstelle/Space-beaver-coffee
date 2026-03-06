@@ -6,10 +6,100 @@
   <title>Les Formules — Space Beaver Coffee</title>
   <link rel="stylesheet" href="css/style.css" />
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🦫</text></svg>" />
+  <style>
+    /* ---- GRILLES SECTIONS ---- */
+    /* Boissons & Pâtisseries : 4 colonnes fixes */
+    .grid-4col {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.5rem;
+      margin-top: 3rem;
+    }
+    /* Fast food : 3 colonnes fixes */
+    .grid-3col {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      margin-top: 3rem;
+    }
+
+    /* ---- IMAGE PNG DANS LES CARTES ---- */
+    .card-img-wrap {
+      aspect-ratio: 4/3;
+      overflow: hidden;
+      position: relative;
+      background: var(--bg-primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .card-img-wrap img.card-png {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      display: block;
+      transition: transform 0.3s ease;
+    }
+    .product-card:hover .card-img-wrap img.card-png { transform: scale(1.1); }
+    /* fallback emoji si png absent */
+    .card-img-wrap .card-emoji-fb {
+      display: none;
+      font-size: 3.5rem;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      height: 100%;
+    }
+    .card-img-wrap.img-error img.card-png   { display: none; }
+    .card-img-wrap.img-error .card-emoji-fb { display: flex; }
+
+    /* Overlay nuit sur l'image */
+    body.dark-mode .card-img-wrap::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(176,38,255,0.15), rgba(0,245,212,0.08));
+      mix-blend-mode: overlay;
+      pointer-events: none;
+    }
+
+    /* Fast food : carte horizontale avec image PNG */
+    .fastfood-card { display: flex; gap: 1.25rem; background: var(--bg-card); border: 1px solid var(--border-card); border-radius: 12px; padding: 1.25rem; align-items: center; transition: all 0.35s ease; }
+    .fastfood-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-hover); border-color: var(--accent); }
+    .fastfood-img-wrap { flex-shrink: 0; width: 110px; height: 110px; display: flex; align-items: center; justify-content: center; background: var(--bg-primary); border-radius: 10px; border: 1px solid var(--border); overflow: hidden; transition: all 0.3s ease; }
+    .fastfood-card:hover .fastfood-img-wrap { border-color: var(--accent); transform: scale(1.05); }
+    .fastfood-img-wrap img { width: 100%; height: 100%; object-fit: cover; object-position: center; }
+    .fastfood-img-wrap .card-emoji-fb { display: none; font-size: 2.5rem; }
+    .fastfood-img-wrap.img-error img { display: none; }
+    .fastfood-img-wrap.img-error .card-emoji-fb { display: flex; align-items: center; justify-content: center; width: 100%; height: 100%; }
+
+    /* Responsive */
+    @media (max-width: 1100px) {
+      .grid-4col { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 700px) {
+      .grid-4col { grid-template-columns: 1fr; }
+      .grid-3col { grid-template-columns: 1fr; }
+    }
+
+    /* day/night grid dans les nouvelles grilles */
+    .grid-4col .day-grid,
+    .grid-4col .night-grid,
+    .grid-3col .day-grid,
+    .grid-3col .night-grid {
+      display: contents;
+    }
+    .grid-4col .night-grid,
+    .grid-3col .night-grid { display: none; }
+    body.dark-mode .grid-4col .day-grid,
+    body.dark-mode .grid-3col .day-grid  { display: none; }
+    body.dark-mode .grid-4col .night-grid,
+    body.dark-mode .grid-3col .night-grid { display: contents; }
+  </style>
 </head>
 <body>
 
-<!-- NAVBAR -->
 <nav class="navbar">
   <div class="nav-container">
     <a href="index.html" class="nav-logo">
@@ -31,7 +121,8 @@
   </div>
 </nav>
 
-<!-- PAGE HERO -->
+
+<!-- HERO -->
 <div class="page-hero">
   <div class="day-content">
     <span class="page-hero-label">🧪 Catalogue Certifié</span>
@@ -45,11 +136,13 @@
   </div>
 </div>
 
-<!-- =============================
-     BOISSONS
-     ============================= -->
+
+<!-- =============================================
+     SECTION BOISSONS — 4 colonnes
+     ============================================= -->
 <section class="products-section" data-category="boissons">
   <div class="products-inner">
+
     <div class="section-header reveal">
       <div class="day-content">
         <span class="section-label">☕ Boissons</span>
@@ -63,11 +156,17 @@
       </div>
     </div>
 
-    <div class="products-grid">
-      <!-- DAY -->
+    <div class="grid-4col">
+
+      <!-- BOISSONS JOUR -->
       <div class="day-grid">
+
         <article class="product-card reveal">
-          <div class="card-image"><div class="card-emoji">🧪</div></div>
+          <div class="card-img-wrap" style="background:linear-gradient(135deg,#f0f4ff,#dce8ff);">
+            <img class="card-png" src="assets/images/icon-caffeine.png" alt="Caféine HCl"
+              onerror="this.closest('.card-img-wrap').classList.add('img-error')"/>
+            <span class="card-emoji-fb">🧪</span>
+          </div>
           <div class="card-content">
             <span class="card-tag">Stimulant · Classique</span>
             <h3 class="card-title">Caféine HCl 2.0™</h3>
@@ -80,7 +179,11 @@
         </article>
 
         <article class="product-card reveal">
-          <div class="card-image" style="background:linear-gradient(135deg,#e8f8ee,#c8f0d8);"><div class="card-emoji">🌿</div></div>
+          <div class="card-img-wrap" style="background:linear-gradient(135deg,#e8f8ee,#c8f0d8);">
+            <img class="card-png" src="assets/images/icon-matcha.png" alt="Matcha BioSynth"
+              onerror="this.closest('.card-img-wrap').classList.add('img-error')"/>
+            <span class="card-emoji-fb">🌿</span>
+          </div>
           <div class="card-content">
             <span class="card-tag">Endurance · Botanique</span>
             <h3 class="card-title">Matcha BioSynth™</h3>
@@ -93,7 +196,11 @@
         </article>
 
         <article class="product-card reveal">
-          <div class="card-image" style="background:linear-gradient(135deg,#eef8e8,#d0f0c8);"><div class="card-emoji">🧬</div></div>
+          <div class="card-img-wrap" style="background:linear-gradient(135deg,#eef8e8,#d0f0c8);">
+            <img class="card-png" src="assets/images/icon-vitality.png" alt="Sérum Vitalité"
+              onerror="this.closest('.card-img-wrap').classList.add('img-error')"/>
+            <span class="card-emoji-fb">🧬</span>
+          </div>
           <div class="card-content">
             <span class="card-tag">Récupération · Protéiné</span>
             <h3 class="card-title">Sérum Vitalité 3000™</h3>
@@ -106,7 +213,11 @@
         </article>
 
         <article class="product-card reveal">
-          <div class="card-image" style="background:linear-gradient(135deg,#f5eee8,#ead8c8);"><div class="card-emoji">🌡️</div></div>
+          <div class="card-img-wrap" style="background:linear-gradient(135deg,#f5eee8,#ead8c8);">
+            <img class="card-png" src="assets/images/icon-adaptogen.png" alt="Infusion Adaptogène"
+              onerror="this.closest('.card-img-wrap').classList.add('img-error')"/>
+            <span class="card-emoji-fb">🌡️</span>
+          </div>
           <div class="card-content">
             <span class="card-tag">Anti-Stress · Adaptogène</span>
             <h3 class="card-title">Infusion Adaptogène Alpha</h3>
@@ -117,12 +228,18 @@
             </div>
           </div>
         </article>
-      </div>
 
-      <!-- NIGHT -->
+      </div><!-- fin boissons jour -->
+
+      <!-- BOISSONS NUIT -->
       <div class="night-grid">
+
         <article class="product-card reveal">
-          <div class="card-image" style="background:linear-gradient(135deg,#0d0520,#1a0840);"><div class="card-emoji" style="filter:drop-shadow(0 0 15px #b026ff);">☕</div></div>
+          <div class="card-img-wrap" style="background:linear-gradient(135deg,#0d0520,#1a0840);">
+            <img class="card-png" src="assets/images/icon-dark-espresso.png" alt="Dark Matter Espresso"
+              onerror="this.closest('.card-img-wrap').classList.add('img-error')"/>
+            <span class="card-emoji-fb" style="filter:drop-shadow(0 0 15px #b026ff);">☕</span>
+          </div>
           <div class="card-content">
             <span class="card-tag">⚠️ Triple Extraction</span>
             <h3 class="card-title">Dark Matter Espresso</h3>
@@ -135,7 +252,11 @@
         </article>
 
         <article class="product-card reveal">
-          <div class="card-image" style="background:linear-gradient(135deg,#001a10,#003320);"><div class="card-emoji" style="filter:drop-shadow(0 0 15px #00f5d4);">🌿</div></div>
+          <div class="card-img-wrap" style="background:linear-gradient(135deg,#001a10,#003320);">
+            <img class="card-png" src="assets/images/icon-plasma-matcha.png" alt="Plasma Matcha X"
+              onerror="this.closest('.card-img-wrap').classList.add('img-error')"/>
+            <span class="card-emoji-fb" style="filter:drop-shadow(0 0 15px #00f5d4);">🌿</span>
+          </div>
           <div class="card-content">
             <span class="card-tag">☢️ Particules Actives</span>
             <h3 class="card-title">Plasma Matcha X</h3>
@@ -148,7 +269,11 @@
         </article>
 
         <article class="product-card reveal">
-          <div class="card-image" style="background:linear-gradient(135deg,#1a0010,#400030);"><div class="card-emoji" style="filter:drop-shadow(0 0 15px #ff00aa);">🧬</div></div>
+          <div class="card-img-wrap" style="background:linear-gradient(135deg,#1a0010,#400030);">
+            <img class="card-png" src="assets/images/icon-dopamine.png" alt="Sérum Dopamine"
+              onerror="this.closest('.card-img-wrap').classList.add('img-error')"/>
+            <span class="card-emoji-fb" style="filter:drop-shadow(0 0 15px #ff00aa);">🧬</span>
+          </div>
           <div class="card-content">
             <span class="card-tag">🔮 Formule Secrète</span>
             <h3 class="card-title">Sérum Dopamine-404</h3>
@@ -161,7 +286,11 @@
         </article>
 
         <article class="product-card reveal">
-          <div class="card-image" style="background:linear-gradient(135deg,#000d1a,#001a35);"><div class="card-emoji" style="filter:drop-shadow(0 0 15px #00aaff);">⚡</div></div>
+          <div class="card-img-wrap" style="background:linear-gradient(135deg,#000d1a,#001a35);">
+            <img class="card-png" src="assets/images/icon-nebula-shot.png" alt="Élixir Nebula Shot"
+              onerror="this.closest('.card-img-wrap').classList.add('img-error')"/>
+            <span class="card-emoji-fb" style="filter:drop-shadow(0 0 15px #00aaff);">⚡</span>
+          </div>
           <div class="card-content">
             <span class="card-tag">☣️ Effet Immédiat</span>
             <h3 class="card-title">Élixir Nebula Shot</h3>
@@ -172,16 +301,19 @@
             </div>
           </div>
         </article>
-      </div>
-    </div>
+
+      </div><!-- fin boissons nuit -->
+    </div><!-- fin grid-4col boissons -->
   </div>
 </section>
 
-<!-- =============================
-     GÂTEAUX
-     ============================= -->
+
+<!-- =============================================
+     SECTION PÂTISSERIES — 4 colonnes
+     ============================================= -->
 <section class="products-section alt" data-category="patisseries">
   <div class="products-inner">
+
     <div class="section-header reveal">
       <div class="day-content">
         <span class="section-label">🍰 Pâtisseries</span>
@@ -195,10 +327,17 @@
       </div>
     </div>
 
-    <div class="products-grid">
+    <div class="grid-4col">
+
+      <!-- PÂTISSERIES JOUR -->
       <div class="day-grid">
+
         <article class="product-card reveal">
-          <div class="card-image" style="background:linear-gradient(135deg,#fdf8f0,#f5e8d8);"><div class="card-emoji">🍪</div></div>
+          <div class="card-img-wrap" style="background:linear-gradient(135deg,#fdf8f0,#f5e8d8);">
+            <img class="card-png" src="assets/images/icon-cookie-anxio.png" alt="Cookie Anxiolytique"
+              onerror="this.closest('.card-img-wrap').classList.add('img-error')"/>
+            <span class="card-emoji-fb">🍪</span>
+          </div>
           <div class="card-content">
             <span class="card-tag">Anxiolytique · Bio</span>
             <h3 class="card-title">Cookie Anxiolytique</h3>
@@ -211,7 +350,11 @@
         </article>
 
         <article class="product-card reveal">
-          <div class="card-image" style="background:linear-gradient(135deg,#2d1b0e,#4a2c1a);"><div class="card-emoji">🍫</div></div>
+          <div class="card-img-wrap" style="background:linear-gradient(135deg,#2d1b0e,#4a2c1a);">
+            <img class="card-png" src="assets/images/icon-brownie-gravity.png" alt="Brownie Gravité Zéro"
+              onerror="this.closest('.card-img-wrap').classList.add('img-error')"/>
+            <span class="card-emoji-fb">🍫</span>
+          </div>
           <div class="card-content">
             <span class="card-tag">Chocolat · Allégé</span>
             <h3 class="card-title">Brownie Gravité Zéro</h3>
@@ -224,7 +367,11 @@
         </article>
 
         <article class="product-card reveal">
-          <div class="card-image" style="background:linear-gradient(135deg,#fffff0,#f5f5d0);"><div class="card-emoji">🍋</div></div>
+          <div class="card-img-wrap" style="background:linear-gradient(135deg,#fffff0,#f5f5d0);">
+            <img class="card-png" src="assets/images/icon-tarte-photon.png" alt="Tarte Photon"
+              onerror="this.closest('.card-img-wrap').classList.add('img-error')"/>
+            <span class="card-emoji-fb">🍋</span>
+          </div>
           <div class="card-content">
             <span class="card-tag">Citrus · Protéiné</span>
             <h3 class="card-title">Tarte Photon</h3>
@@ -237,7 +384,11 @@
         </article>
 
         <article class="product-card reveal">
-          <div class="card-image" style="background:linear-gradient(135deg,#f8f0e0,#ecdcc0);"><div class="card-emoji">🫐</div></div>
+          <div class="card-img-wrap" style="background:linear-gradient(135deg,#f8f0e0,#ecdcc0);">
+            <img class="card-png" src="assets/images/icon-muffin-omega.png" alt="Muffin Oméga-3"
+              onerror="this.closest('.card-img-wrap').classList.add('img-error')"/>
+            <span class="card-emoji-fb">🫐</span>
+          </div>
           <div class="card-content">
             <span class="card-tag">Oméga-3 · Graines</span>
             <h3 class="card-title">Muffin Oméga-3</h3>
@@ -248,11 +399,18 @@
             </div>
           </div>
         </article>
-      </div>
 
+      </div><!-- fin pâtisseries jour -->
+
+      <!-- PÂTISSERIES NUIT -->
       <div class="night-grid">
+
         <article class="product-card reveal">
-          <div class="card-image" style="background:linear-gradient(135deg,#0a0a0a,#1a1a1a);"><div class="card-emoji" style="filter:drop-shadow(0 0 15px #b026ff);">🍪</div></div>
+          <div class="card-img-wrap" style="background:linear-gradient(135deg,#0a0a0a,#1a1a1a);">
+            <img class="card-png" src="assets/images/icon-spacecake.png" alt="Space Cake 404"
+              onerror="this.closest('.card-img-wrap').classList.add('img-error')"/>
+            <span class="card-emoji-fb" style="filter:drop-shadow(0 0 15px #b026ff);">🍪</span>
+          </div>
           <div class="card-content">
             <span class="card-tag">🌫️ Effet Prolongé</span>
             <h3 class="card-title">Space Cake 404</h3>
@@ -265,7 +423,11 @@
         </article>
 
         <article class="product-card reveal">
-          <div class="card-image" style="background:linear-gradient(135deg,#1a0800,#3a1500);"><div class="card-emoji" style="filter:drop-shadow(0 0 15px #ff4400);">🍫</div></div>
+          <div class="card-img-wrap" style="background:linear-gradient(135deg,#1a0800,#3a1500);">
+            <img class="card-png" src="assets/images/icon-brownie-dark.png" alt="Brownie Dark Matter"
+              onerror="this.closest('.card-img-wrap').classList.add('img-error')"/>
+            <span class="card-emoji-fb" style="filter:drop-shadow(0 0 15px #ff4400);">🍫</span>
+          </div>
           <div class="card-content">
             <span class="card-tag">☢️ Radioactif</span>
             <h3 class="card-title">Brownie Dark Matter</h3>
@@ -278,7 +440,11 @@
         </article>
 
         <article class="product-card reveal">
-          <div class="card-image" style="background:linear-gradient(135deg,#0a1a0a,#1a2a0a);"><div class="card-emoji" style="filter:drop-shadow(0 0 15px #00ff44);">🍪</div></div>
+          <div class="card-img-wrap" style="background:linear-gradient(135deg,#0a1a0a,#1a2a0a);">
+            <img class="card-png" src="assets/images/icon-cookie-mutation.png" alt="Cookie Mutation"
+              onerror="this.closest('.card-img-wrap').classList.add('img-error')"/>
+            <span class="card-emoji-fb" style="filter:drop-shadow(0 0 15px #00ff44);">🍪</span>
+          </div>
           <div class="card-content">
             <span class="card-tag">🧬 Mutation</span>
             <h3 class="card-title">Cookie Mutation</h3>
@@ -291,27 +457,34 @@
         </article>
 
         <article class="product-card reveal">
-          <div class="card-image" style="background:linear-gradient(135deg,#10001a,#20003a);"><div class="card-emoji" style="filter:drop-shadow(0 0 15px #aa00ff);">🍩</div></div>
+          <div class="card-img-wrap" style="background:linear-gradient(135deg,#10001a,#20003a);">
+            <img class="card-png" src="assets/images/icon-donut-anti.png" alt="Donut Antigravity"
+              onerror="this.closest('.card-img-wrap').classList.add('img-error')"/>
+            <span class="card-emoji-fb" style="filter:drop-shadow(0 0 15px #aa00ff);">🍩</span>
+          </div>
           <div class="card-content">
             <span class="card-tag">🌀 Antigravité</span>
             <h3 class="card-title">Donut Antigravity</h3>
-            <p class="card-desc">Glaçage néon violet. Semble flotter légèrement au-dessus de l'assiette (selon les témoignages de l'équipage). Non vérifié.</p>
+            <p class="card-desc">Glaçage néon violet. Semble flotter légèrement au-dessus de l'assiette selon les témoignages de l'équipage. Non vérifié.</p>
             <div class="card-footer">
               <span class="card-price">5.88 €</span>
               <span class="card-badge">⚗️ Clandestin</span>
             </div>
           </div>
         </article>
-      </div>
-    </div>
+
+      </div><!-- fin pâtisseries nuit -->
+    </div><!-- fin grid-4col pâtisseries -->
   </div>
 </section>
 
-<!-- =============================
-     FAST FOOD
-     ============================= -->
+
+<!-- =============================================
+     SECTION FAST FOOD — 3 colonnes
+     ============================================= -->
 <section class="products-section" data-category="fastfood">
   <div class="products-inner">
+
     <div class="section-header reveal">
       <div class="day-content">
         <span class="section-label">🍔 Fast Food</span>
@@ -325,67 +498,123 @@
       </div>
     </div>
 
-    <div class="fastfood-grid">
+    <div class="grid-3col">
+
+      <!-- FAST FOOD JOUR -->
       <div class="day-grid">
-        <div class="fastfood-card reveal">
-          <div class="fastfood-emoji">🍔</div>
-          <div class="fastfood-info">
-            <h3 class="fastfood-title">Burger Protéiné Beta</h3>
-            <p class="fastfood-desc">Pain complet orbital, steak végétal enrichi protéines, sauce probiotiques cultivés en microgravité.</p>
-            <span class="fastfood-price">8.90 €</span>
-          </div>
-        </div>
 
-        <div class="fastfood-card reveal">
-          <div class="fastfood-emoji">🌮</div>
-          <div class="fastfood-info">
-            <h3 class="fastfood-title">Tacos Lacto-Free</h3>
-            <p class="fastfood-desc">Galette protéinée, poulet orbital bio, sauce yaourt végétal. Sans lactose, sans compromis.</p>
-            <span class="fastfood-price">7.50 €</span>
+        <article class="product-card reveal">
+          <div class="card-img-wrap" style="background:linear-gradient(135deg,#f0f4f0,#e0ecd8);">
+            <img class="card-png" src="assets/images/icon-burger-beta.png" alt="Burger Protéiné Beta"
+              onerror="this.closest('.card-img-wrap').classList.add('img-error')"/>
+            <span class="card-emoji-fb">🍔</span>
           </div>
-        </div>
-
-        <div class="fastfood-card reveal">
-          <div class="fastfood-emoji">🍕</div>
-          <div class="fastfood-info">
-            <h3 class="fastfood-title">Pizza Nutriplex</h3>
-            <p class="fastfood-desc">Base fine aux fibres actives, mozzarella allégée à 15%, légumes synthétisés en serre orbitale.</p>
-            <span class="fastfood-price">9.20 €</span>
+          <div class="card-content">
+            <span class="card-tag">Protéiné · Végétal</span>
+            <h3 class="card-title">Burger Protéiné Beta</h3>
+            <p class="card-desc">Pain complet orbital, steak végétal enrichi protéines, sauce probiotiques cultivés en microgravité.</p>
+            <div class="card-footer">
+              <span class="card-price">8.90 €</span>
+              <span class="card-badge">✓ Certifié</span>
+            </div>
           </div>
-        </div>
-      </div>
+        </article>
 
+        <article class="product-card reveal">
+          <div class="card-img-wrap" style="background:linear-gradient(135deg,#fff8e8,#faecd0);">
+            <img class="card-png" src="assets/images/icon-tacos-lacto.png" alt="Tacos Lacto-Free"
+              onerror="this.closest('.card-img-wrap').classList.add('img-error')"/>
+            <span class="card-emoji-fb">🌮</span>
+          </div>
+          <div class="card-content">
+            <span class="card-tag">Sans Lactose · Bio</span>
+            <h3 class="card-title">Tacos Lacto-Free</h3>
+            <p class="card-desc">Galette protéinée, poulet orbital bio, sauce yaourt végétal. Sans lactose, sans compromis.</p>
+            <div class="card-footer">
+              <span class="card-price">7.50 €</span>
+              <span class="card-badge">✓ Certifié</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="product-card reveal">
+          <div class="card-img-wrap" style="background:linear-gradient(135deg,#fff0f0,#fad8d8);">
+            <img class="card-png" src="assets/images/icon-pizza-nutri.png" alt="Pizza Nutriplex"
+              onerror="this.closest('.card-img-wrap').classList.add('img-error')"/>
+            <span class="card-emoji-fb">🍕</span>
+          </div>
+          <div class="card-content">
+            <span class="card-tag">Fibres · Allégé</span>
+            <h3 class="card-title">Pizza Nutriplex</h3>
+            <p class="card-desc">Base fine aux fibres actives, mozzarella allégée à 15%, légumes synthétisés en serre orbitale.</p>
+            <div class="card-footer">
+              <span class="card-price">9.20 €</span>
+              <span class="card-badge">✓ Certifié</span>
+            </div>
+          </div>
+        </article>
+
+      </div><!-- fin fast food jour -->
+
+      <!-- FAST FOOD NUIT -->
       <div class="night-grid">
-        <div class="fastfood-card reveal" style="border-color:rgba(176,38,255,0.2);">
-          <div class="fastfood-emoji" style="background:rgba(176,38,255,0.08);border-color:rgba(176,38,255,0.3);">🍔</div>
-          <div class="fastfood-info">
-            <h3 class="fastfood-title">Burger Supernova</h3>
-            <p class="fastfood-desc">Double steak cosmique, sauce explosive piment stellaire grade 7, fromage fondu à 800°C. Danger : 🔥🔥🔥</p>
-            <span class="fastfood-price" style="color:#00f5d4;">12.66 €</span>
-          </div>
-        </div>
 
-        <div class="fastfood-card reveal" style="border-color:rgba(176,38,255,0.2);">
-          <div class="fastfood-emoji" style="background:rgba(0,0,0,0.4);border-color:rgba(176,38,255,0.3);">🌮</div>
-          <div class="fastfood-info">
-            <h3 class="fastfood-title">Tacos Black Hole</h3>
-            <p class="fastfood-desc">Sauce noire secrète. Viande d'origine non communiquée. Résidu de matière sombre (au sens culinaire).</p>
-            <span class="fastfood-price" style="color:#00f5d4;">10.44 €</span>
+        <article class="product-card reveal" style="border-color:rgba(176,38,255,0.25);">
+          <div class="card-img-wrap" style="background:linear-gradient(135deg,#1a0010,#3a0020);">
+            <img class="card-png" src="assets/images/icon-burger-supernova.png" alt="Burger Supernova"
+              onerror="this.closest('.card-img-wrap').classList.add('img-error')"/>
+            <span class="card-emoji-fb" style="filter:drop-shadow(0 0 15px #ff4400);">🍔</span>
           </div>
-        </div>
+          <div class="card-content">
+            <span class="card-tag">🔥 Grade 7 · Danger</span>
+            <h3 class="card-title">Burger Supernova</h3>
+            <p class="card-desc">Double steak cosmique, sauce explosive piment stellaire grade 7, fromage fondu à 800°C. Danger : 🔥🔥🔥</p>
+            <div class="card-footer">
+              <span class="card-price" style="color:#00f5d4;">12.66 €</span>
+              <span class="card-badge" style="background:rgba(176,38,255,0.12);color:#b026ff;">⚗️ Clandestin</span>
+            </div>
+          </div>
+        </article>
 
-        <div class="fastfood-card reveal" style="border-color:rgba(176,38,255,0.2);">
-          <div class="fastfood-emoji" style="background:rgba(176,38,255,0.08);border-color:rgba(176,38,255,0.3);">🍕</div>
-          <div class="fastfood-info">
-            <h3 class="fastfood-title">Pizza Quasar</h3>
-            <p class="fastfood-desc">Fromage triple couche surchargé, piment stellaire, base radioactive (comestible). Intensité : EXTRÊME.</p>
-            <span class="fastfood-price" style="color:#00f5d4;">11.11 €</span>
+        <article class="product-card reveal" style="border-color:rgba(176,38,255,0.25);">
+          <div class="card-img-wrap" style="background:linear-gradient(135deg,#000810,#001020);">
+            <img class="card-png" src="assets/images/icon-tacos-blackhole.png" alt="Tacos Black Hole"
+              onerror="this.closest('.card-img-wrap').classList.add('img-error')"/>
+            <span class="card-emoji-fb" style="filter:drop-shadow(0 0 15px #b026ff);">🌮</span>
           </div>
-        </div>
-      </div>
-    </div>
+          <div class="card-content">
+            <span class="card-tag">🌑 Matière Sombre</span>
+            <h3 class="card-title">Tacos Black Hole</h3>
+            <p class="card-desc">Sauce noire secrète. Viande d'origine non communiquée. Résidu de matière sombre (au sens culinaire).</p>
+            <div class="card-footer">
+              <span class="card-price" style="color:#00f5d4;">10.44 €</span>
+              <span class="card-badge" style="background:rgba(176,38,255,0.12);color:#b026ff;">⚗️ Clandestin</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="product-card reveal" style="border-color:rgba(176,38,255,0.25);">
+          <div class="card-img-wrap" style="background:linear-gradient(135deg,#10001a,#20003a);">
+            <img class="card-png" src="assets/images/icon-pizza-quasar.png" alt="Pizza Quasar"
+              onerror="this.closest('.card-img-wrap').classList.add('img-error')"/>
+            <span class="card-emoji-fb" style="filter:drop-shadow(0 0 15px #aa00ff);">🍕</span>
+          </div>
+          <div class="card-content">
+            <span class="card-tag">☢️ Radioactif · EXTRÊME</span>
+            <h3 class="card-title">Pizza Quasar</h3>
+            <p class="card-desc">Fromage triple couche surchargé, piment stellaire, base radioactive (comestible). Intensité : EXTRÊME.</p>
+            <div class="card-footer">
+              <span class="card-price" style="color:#00f5d4;">11.11 €</span>
+              <span class="card-badge" style="background:rgba(176,38,255,0.12);color:#b026ff;">⚗️ Clandestin</span>
+            </div>
+          </div>
+        </article>
+
+      </div><!-- fin fast food nuit -->
+    </div><!-- fin grid-3col fast food -->
   </div>
 </section>
+
 
 <!-- FOOTER -->
 <footer>

@@ -1,4 +1,7 @@
 <!DOCTYPE html>
+<!-- crew.html — page dédiée à l'équipage
+     cartes détaillées avec stats, spécialités et badges
+     images des castors dans assets/images/ avec fallback emoji -->
 <html lang="fr">
 <head>
   <meta charset="UTF-8" />
@@ -6,8 +9,12 @@
   <title>L'Équipage — Space Beaver Coffee</title>
   <link rel="stylesheet" href="css/style.css" />
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🦫</text></svg>" />
+
+  <!-- styles propres à cette page
+       j'ai mis ça ici et pas dans style.css pour ne pas l'alourdir
+       même si dans un vrai projet on mettrait tout dans style.css -->
   <style>
-    /* Extra crew page styles */
+    /* ---- cartes équipage étendues (plus grandes que celles de l'accueil) ---- */
     .crew-full-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -23,6 +30,7 @@
       transition: all 0.35s ease;
     }
 
+    /* au hover la carte monte et reçoit l'ombre + bordure accent */
     .crew-card-full:hover {
       transform: translateY(-6px);
       box-shadow: var(--shadow-hover);
@@ -33,6 +41,7 @@
       box-shadow: 0 0 50px rgba(176,38,255,0.25);
     }
 
+    /* en-tête de la carte : avatar centré + nom + rôle */
     .crew-card-header {
       padding: 2.5rem 2rem 1.5rem;
       text-align: center;
@@ -42,6 +51,11 @@
       transition: background 0.4s;
     }
 
+    /* grand avatar circulaire avec image PNG
+       NOMS DES FICHIERS attendus dans assets/images/ :
+       Jour  : castor-nova.png, prof-lignine.png, fibra-7.png, analyste-orbit.png
+       Nuit  : dr-beaverstein.png, dark-lignine.png, agent-beta42.png, shadow-fibra.png
+       Si l'image est absente, le fallback emoji s'affiche via onerror + classe .img-error */
     .crew-avatar-xl {
       width: 110px;
       height: 110px;
@@ -50,15 +64,15 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 4rem;
       background: var(--bg-secondary);
       border: 2px solid var(--border);
       transition: all 0.35s ease;
+      overflow: hidden;   /* pour que l'image soit bien ronde */
     }
 
     .crew-card-full:hover .crew-avatar-xl {
       border-color: var(--accent);
-      transform: scale(1.05) rotate(-3deg);
+      transform: scale(1.05) rotate(-3deg); /* petite rotation sympa au hover */
     }
 
     body.dark-mode .crew-avatar-xl {
@@ -68,6 +82,33 @@
 
     body.dark-mode .crew-card-full:hover .crew-avatar-xl {
       box-shadow: 0 0 40px rgba(176,38,255,0.4);
+    }
+
+    /* image dans l'avatar grand format — classes alignées avec style.css */
+    .crew-avatar-xl-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+      display: block;
+      border-radius: 50%;
+    }
+
+    /* emoji fallback caché par défaut */
+    .crew-avatar-xl-fallback {
+      display: none;
+      font-size: 4rem;
+      line-height: 1;
+    }
+
+    /* quand JS ajoute .img-error sur l'avatar-xl : on cache l'img, on montre l'emoji */
+    .crew-avatar-xl.img-error .crew-avatar-xl-img      { display: none; }
+    .crew-avatar-xl.img-error .crew-avatar-xl-fallback {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      height: 100%;
     }
 
     .crew-card-header .crew-name {
@@ -87,6 +128,7 @@
       color: var(--accent);
     }
 
+    /* numéro de membre en haut à droite de la carte */
     .crew-rank {
       position: absolute;
       top: 1rem;
@@ -98,6 +140,7 @@
       text-transform: uppercase;
     }
 
+    /* corps de la carte : description + stats + tags */
     .crew-card-body {
       padding: 1.5rem 1.75rem 2rem;
     }
@@ -109,6 +152,7 @@
       margin-bottom: 1.5rem;
     }
 
+    /* grille de stats 2x2 */
     .crew-stats {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -125,10 +169,9 @@
       transition: all 0.3s ease;
     }
 
-    .crew-card-full:hover .crew-stat {
-      border-color: var(--accent);
-    }
+    .crew-card-full:hover .crew-stat { border-color: var(--accent); }
 
+    /* valeur principale de la stat */
     .stat-value {
       font-family: 'Orbitron', monospace;
       font-size: 1.2rem;
@@ -138,9 +181,7 @@
       line-height: 1;
     }
 
-    body.dark-mode .stat-value {
-      text-shadow: 0 0 10px rgba(176,38,255,0.5);
-    }
+    body.dark-mode .stat-value { text-shadow: 0 0 10px rgba(176,38,255,0.5); }
 
     .stat-label {
       font-family: 'Space Mono', monospace;
@@ -152,11 +193,8 @@
       margin-top: 0.25rem;
     }
 
-    .crew-specialties {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-    }
+    /* tags de spécialité sous les stats */
+    .crew-specialties { display: flex; flex-wrap: wrap; gap: 0.5rem; }
 
     .specialty-tag {
       padding: 0.3rem 0.7rem;
@@ -175,11 +213,13 @@
       border: 1px solid rgba(176,38,255,0.2);
     }
 
+    /* au hover les tags passent en couleur pleine */
     .crew-card-full:hover .specialty-tag {
       background: var(--accent);
       color: white;
     }
 
+    /* pied de carte avec le badge de certification */
     .crew-card-footer {
       padding: 1rem 1.75rem;
       border-top: 1px solid var(--border-card);
@@ -204,7 +244,7 @@
       box-shadow: 0 0 10px rgba(176,38,255,0.2);
     }
 
-    /* Mission Statement banner */
+    /* ---- BANNIÈRE CITATION DE MISSION ---- */
     .mission-banner {
       padding: 4rem 2rem;
       background: var(--accent);
@@ -233,7 +273,7 @@
       text-shadow: 0 0 30px rgba(176,38,255,0.5);
     }
 
-    .mission-banner .mission-source {
+    .mission-source {
       display: block;
       margin-top: 1rem;
       font-family: 'Space Mono', monospace;
@@ -243,19 +283,18 @@
       text-transform: uppercase;
     }
 
-    body.dark-mode .mission-banner .mission-source {
-      color: rgba(176,38,255,0.5);
-    }
+    body.dark-mode .mission-source { color: rgba(176,38,255,0.5); }
 
+    /* ---- responsive : 1 colonne sur mobile ---- */
     @media (max-width: 768px) {
-      .crew-stats { grid-template-columns: 1fr 1fr; }
       .crew-full-grid { grid-template-columns: 1fr; }
+      .crew-stats     { grid-template-columns: 1fr 1fr; }
     }
   </style>
 </head>
 <body>
 
-<!-- NAVBAR -->
+<!-- NAVBAR (identique sur toutes les pages) -->
 <nav class="navbar">
   <div class="nav-container">
     <a href="index.html" class="nav-logo">
@@ -277,7 +316,8 @@
   </div>
 </nav>
 
-<!-- PAGE HERO -->
+
+<!-- HERO DE PAGE INTERNE (plus petit que le hero de l'accueil) -->
 <div class="page-hero">
   <div class="day-content">
     <span class="page-hero-label">🦫 Notre Équipage</span>
@@ -291,7 +331,8 @@
   </div>
 </div>
 
-<!-- MISSION BANNER -->
+
+<!-- BANNIÈRE CITATION DE MISSION -->
 <div class="mission-banner">
   <div class="day-content">
     <blockquote>
@@ -307,11 +348,13 @@
   </div>
 </div>
 
-<!-- =============================
-     CREW DAY
-     ============================= -->
+
+<!-- =============================================
+     SECTION PRINCIPALE : CARTES ÉQUIPAGE
+     ============================================= -->
 <section class="crew-section">
   <div class="crew-inner">
+
     <div class="section-header reveal">
       <div class="day-content">
         <span class="section-label">🔬 Équipe Officielle</span>
@@ -321,39 +364,42 @@
       <div class="night-content">
         <span class="section-label" style="border-color:#b026ff;color:#b026ff;">☠️ Opérateurs Nocturnes</span>
         <h2 class="section-title">Black Division — Niveau Classifié</h2>
-        <p class="section-desc" style="color:#9ab0d4;">Identités partiellement masquées par mesure de sécurité galactique. Profils extraits des archives interdites.</p>
+        <p class="section-desc" style="color:#9ab0d4;">Identités partiellement masquées. Profils extraits des archives interdites.</p>
       </div>
     </div>
 
+    <!-- grille des grandes cartes équipage -->
     <div class="crew-full-grid">
-      <!-- DAY CREW CARDS -->
+
+      <!-- ============ ÉQUIPE JOUR ============ -->
       <div class="day-grid">
+
+        <!-- --- Dr. Castor Nova ---
+             image attendue : assets/images/castor-nova.png
+             si absente : onerror déclenche l'ajout de .img-error
+             le CSS fait alors disparaître l'img et apparaître l'emoji -->
         <div class="crew-card-full reveal">
           <div class="crew-card-header">
             <span class="crew-rank">#001</span>
-            <div class="crew-avatar-xl">🧑‍🔬</div>
+            <div class="crew-avatar-xl" id="xl-nova">
+              <img
+                class="crew-avatar-xl-img"
+                src="assets/images/castor-nova.png"
+                alt="Dr. Castor Nova — Chief Formulation Officer"
+                onerror="this.closest('.crew-avatar-xl').classList.add('img-error')"
+              />
+              <span class="crew-avatar-xl-fallback">🧑‍🔬</span>
+            </div>
             <h3 class="crew-name">Dr. Castor Nova</h3>
             <p class="crew-role">Chief Formulation Officer</p>
           </div>
           <div class="crew-card-body">
             <p class="crew-desc">Spécialiste en molécules stimulantes végétales. Fondateur de Space Beaver Coffee en 2147, après avoir quitté l'Académie Galactique suite à ses découvertes révolutionnaires sur la caféine stabilisée. 12 ans d'expérience en orbite basse.</p>
             <div class="crew-stats">
-              <div class="crew-stat">
-                <span class="stat-value">47</span>
-                <span class="stat-label">Publications</span>
-              </div>
-              <div class="crew-stat">
-                <span class="stat-value">12</span>
-                <span class="stat-label">Ans en orbite</span>
-              </div>
-              <div class="crew-stat">
-                <span class="stat-value">99%</span>
-                <span class="stat-label">Précision</span>
-              </div>
-              <div class="crew-stat">
-                <span class="stat-value">∞</span>
-                <span class="stat-label">Passion</span>
-              </div>
+              <div class="crew-stat"><span class="stat-value">47</span><span class="stat-label">Publications</span></div>
+              <div class="crew-stat"><span class="stat-value">12</span><span class="stat-label">Ans en orbite</span></div>
+              <div class="crew-stat"><span class="stat-value">99%</span><span class="stat-label">Précision</span></div>
+              <div class="crew-stat"><span class="stat-value">∞</span><span class="stat-label">Passion</span></div>
             </div>
             <div class="crew-specialties">
               <span class="specialty-tag">Caféine</span>
@@ -367,32 +413,30 @@
           </div>
         </div>
 
+        <!-- --- Prof. Lignine ---
+             image attendue : assets/images/prof-lignine.png -->
         <div class="crew-card-full reveal">
           <div class="crew-card-header">
             <span class="crew-rank">#002</span>
-            <div class="crew-avatar-xl">🔬</div>
+            <div class="crew-avatar-xl">
+              <img
+                class="crew-avatar-xl-img"
+                src="assets/images/prof-lignine.png"
+                alt="Prof. Lignine — R&D Director"
+                onerror="this.closest('.crew-avatar-xl').classList.add('img-error')"
+              />
+              <span class="crew-avatar-xl-fallback">🔬</span>
+            </div>
             <h3 class="crew-name">Prof. Lignine</h3>
             <p class="crew-role">R&D Research Director</p>
           </div>
           <div class="crew-card-body">
             <p class="crew-desc">Expert en extraction botanique orbitale. Auteur de 47 publications dans la Revue Galactique de Nutrition. Sa méthode d'extraction en microgravité est brevetée dans 8 systèmes stellaires. Il pense en équations et rêve en spectrogrammes.</p>
             <div class="crew-stats">
-              <div class="crew-stat">
-                <span class="stat-value">47</span>
-                <span class="stat-label">Publications</span>
-              </div>
-              <div class="crew-stat">
-                <span class="stat-value">8</span>
-                <span class="stat-label">Brevets</span>
-              </div>
-              <div class="crew-stat">
-                <span class="stat-value">200+</span>
-                <span class="stat-label">Plantes étudiées</span>
-              </div>
-              <div class="crew-stat">
-                <span class="stat-value">0</span>
-                <span class="stat-label">Congés pris</span>
-              </div>
+              <div class="crew-stat"><span class="stat-value">47</span><span class="stat-label">Publications</span></div>
+              <div class="crew-stat"><span class="stat-value">8</span><span class="stat-label">Brevets</span></div>
+              <div class="crew-stat"><span class="stat-value">200+</span><span class="stat-label">Plantes étudiées</span></div>
+              <div class="crew-stat"><span class="stat-value">0</span><span class="stat-label">Congés pris</span></div>
             </div>
             <div class="crew-specialties">
               <span class="specialty-tag">Botanique</span>
@@ -406,32 +450,30 @@
           </div>
         </div>
 
+        <!-- --- Ing. Fibra-7 ---
+             image attendue : assets/images/fibra-7.png -->
         <div class="crew-card-full reveal">
           <div class="crew-card-header">
             <span class="crew-rank">#003</span>
-            <div class="crew-avatar-xl">🧬</div>
+            <div class="crew-avatar-xl">
+              <img
+                class="crew-avatar-xl-img"
+                src="assets/images/fibra-7.png"
+                alt="Ing. Fibra-7 — Food Safety Officer"
+                onerror="this.closest('.crew-avatar-xl').classList.add('img-error')"
+              />
+              <span class="crew-avatar-xl-fallback">🧬</span>
+            </div>
             <h3 class="crew-name">Ing. Fibra-7</h3>
             <p class="crew-role">Food Safety Officer</p>
           </div>
           <div class="crew-card-body">
             <p class="crew-desc">Garant absolu de la conformité galactique. Zéro incident depuis 2151. Fibra-7 vérifie chaque milligramme avant qu'il ne quitte la station. Son taux d'erreur accepté : 0.000001%. Son taux réel : 0%.</p>
             <div class="crew-stats">
-              <div class="crew-stat">
-                <span class="stat-value">0</span>
-                <span class="stat-label">Incidents</span>
-              </div>
-              <div class="crew-stat">
-                <span class="stat-value">4+</span>
-                <span class="stat-label">Ans sans erreur</span>
-              </div>
-              <div class="crew-stat">
-                <span class="stat-value">AAA</span>
-                <span class="stat-label">Certification</span>
-              </div>
-              <div class="crew-stat">
-                <span class="stat-value">100%</span>
-                <span class="stat-label">Conformité</span>
-              </div>
+              <div class="crew-stat"><span class="stat-value">0</span><span class="stat-label">Incidents</span></div>
+              <div class="crew-stat"><span class="stat-value">4+</span><span class="stat-label">Ans sans erreur</span></div>
+              <div class="crew-stat"><span class="stat-value">AAA</span><span class="stat-label">Certification</span></div>
+              <div class="crew-stat"><span class="stat-value">100%</span><span class="stat-label">Conformité</span></div>
             </div>
             <div class="crew-specialties">
               <span class="specialty-tag">Sécurité</span>
@@ -445,32 +487,30 @@
           </div>
         </div>
 
+        <!-- --- Analyste Orbit ---
+             image attendue : assets/images/analyste-orbit.png -->
         <div class="crew-card-full reveal">
           <div class="crew-card-header">
             <span class="crew-rank">#004</span>
-            <div class="crew-avatar-xl">📡</div>
+            <div class="crew-avatar-xl">
+              <img
+                class="crew-avatar-xl-img"
+                src="assets/images/analyste-orbit.png"
+                alt="Analyste Orbit — Quality Control"
+                onerror="this.closest('.crew-avatar-xl').classList.add('img-error')"
+              />
+              <span class="crew-avatar-xl-fallback">📡</span>
+            </div>
             <h3 class="crew-name">Analyste Orbit</h3>
             <p class="crew-role">Quality Control Analyst</p>
           </div>
           <div class="crew-card-body">
             <p class="crew-desc">Contrôle qualité et dosage moléculaire. Précision certifiée à 0.001 mg près. Il analyse chaque formule avec ses scanners moléculaires de dernière génération, et peut détecter une anomalie chimique à 400 km de distance.</p>
             <div class="crew-stats">
-              <div class="crew-stat">
-                <span class="stat-value">0.001</span>
-                <span class="stat-label">Marge d'erreur mg</span>
-              </div>
-              <div class="crew-stat">
-                <span class="stat-value">1000+</span>
-                <span class="stat-label">Analyses/jour</span>
-              </div>
-              <div class="crew-stat">
-                <span class="stat-value">3</span>
-                <span class="stat-label">Scanners</span>
-              </div>
-              <div class="crew-stat">
-                <span class="stat-value">A+</span>
-                <span class="stat-label">Rating</span>
-              </div>
+              <div class="crew-stat"><span class="stat-value">0.001</span><span class="stat-label">Marge d'erreur mg</span></div>
+              <div class="crew-stat"><span class="stat-value">1000+</span><span class="stat-label">Analyses/jour</span></div>
+              <div class="crew-stat"><span class="stat-value">3</span><span class="stat-label">Scanners</span></div>
+              <div class="crew-stat"><span class="stat-value">A+</span><span class="stat-label">Rating</span></div>
             </div>
             <div class="crew-specialties">
               <span class="specialty-tag">Analyse</span>
@@ -483,14 +523,27 @@
             <span class="crew-badge">✓ Certified Research Crew</span>
           </div>
         </div>
-      </div>
 
-      <!-- NIGHT CREW CARDS -->
+      </div><!-- fin day-grid -->
+
+
+      <!-- ============ ÉQUIPE NUIT ============ -->
       <div class="night-grid">
+
+        <!-- --- Dr. Beaverstein ---
+             image attendue : assets/images/dr-beaverstein.png -->
         <div class="crew-card-full reveal" style="border-color:rgba(176,38,255,0.25);">
           <div class="crew-card-header" style="background:rgba(176,38,255,0.05);">
             <span class="crew-rank" style="color:#b026ff;">#X01</span>
-            <div class="crew-avatar-xl" style="border-color:rgba(176,38,255,0.4);filter:drop-shadow(0 0 20px rgba(176,38,255,0.3));">🧪</div>
+            <div class="crew-avatar-xl" style="border-color:rgba(176,38,255,0.4);">
+              <img
+                class="crew-avatar-xl-img"
+                src="assets/images/dr-beaverstein.png"
+                alt="Dr. Beaverstein — Rebelle Scientifique"
+                onerror="this.closest('.crew-avatar-xl').classList.add('img-error')"
+              />
+              <span class="crew-avatar-xl-fallback" style="filter:drop-shadow(0 0 10px #b026ff);">🧪</span>
+            </div>
             <h3 class="crew-name">Dr. Beaverstein</h3>
             <p class="crew-role" style="color:#b026ff;">Ancien Certifié · Rebelle Scientifique</p>
           </div>
@@ -522,19 +575,29 @@
             </div>
           </div>
           <div class="crew-card-footer">
-            <span class="crew-badge" style="background:rgba(176,38,255,0.12);color:#b026ff;box-shadow:0 0 10px rgba(176,38,255,0.2);">⚗️ Experimental Division</span>
+            <span class="crew-badge" style="background:rgba(176,38,255,0.12);color:#b026ff;">⚗️ Experimental Division</span>
           </div>
         </div>
 
+        <!-- --- Prof. Dark Lignine ---
+             image attendue : assets/images/dark-lignine.png -->
         <div class="crew-card-full reveal" style="border-color:rgba(176,38,255,0.25);">
           <div class="crew-card-header" style="background:rgba(176,38,255,0.05);">
             <span class="crew-rank" style="color:#b026ff;">#X02</span>
-            <div class="crew-avatar-xl" style="border-color:rgba(176,38,255,0.4);filter:drop-shadow(0 0 20px rgba(176,38,255,0.3));">💀</div>
+            <div class="crew-avatar-xl" style="border-color:rgba(176,38,255,0.4);">
+              <img
+                class="crew-avatar-xl-img"
+                src="assets/images/dark-lignine.png"
+                alt="Prof. Dark Lignine"
+                onerror="this.closest('.crew-avatar-xl').classList.add('img-error')"
+              />
+              <span class="crew-avatar-xl-fallback" style="filter:drop-shadow(0 0 10px #b026ff);">💀</span>
+            </div>
             <h3 class="crew-name">Prof. Dark Lignine</h3>
             <p class="crew-role" style="color:#b026ff;">Réactions Instables · Niveau DANGER</p>
           </div>
           <div class="crew-card-body">
-            <p class="crew-desc">Spécialiste des réactions chimiques non documentées. Ne lit jamais les notices de sécurité. Diplômé de l'Institut Clandestin de Chimie Avancée. Sa formule préférée : "si ça explose, on recommence avec plus".</p>
+            <p class="crew-desc">Spécialiste des réactions chimiques non documentées. Ne lit jamais les notices de sécurité. Sa formule préférée : "si ça explose, on recommence avec plus".</p>
             <div class="crew-stats">
               <div class="crew-stat" style="border-color:rgba(176,38,255,0.15);">
                 <span class="stat-value" style="color:#b026ff;">47</span>
@@ -561,19 +624,29 @@
             </div>
           </div>
           <div class="crew-card-footer">
-            <span class="crew-badge" style="background:rgba(176,38,255,0.12);color:#b026ff;box-shadow:0 0 10px rgba(176,38,255,0.2);">⚗️ Experimental Division</span>
+            <span class="crew-badge" style="background:rgba(176,38,255,0.12);color:#b026ff;">⚗️ Experimental Division</span>
           </div>
         </div>
 
+        <!-- --- Agent Beta-42 ---
+             image attendue : assets/images/agent-beta42.png -->
         <div class="crew-card-full reveal" style="border-color:rgba(0,245,212,0.2);">
           <div class="crew-card-header" style="background:rgba(0,245,212,0.03);">
             <span class="crew-rank" style="color:#00f5d4;">#X03</span>
-            <div class="crew-avatar-xl" style="border-color:rgba(0,245,212,0.4);filter:drop-shadow(0 0 20px rgba(0,245,212,0.3));">🔮</div>
+            <div class="crew-avatar-xl" style="border-color:rgba(0,245,212,0.4);">
+              <img
+                class="crew-avatar-xl-img"
+                src="assets/images/agent-beta42.png"
+                alt="Agent Beta-42"
+                onerror="this.closest('.crew-avatar-xl').classList.add('img-error')"
+              />
+              <span class="crew-avatar-xl-fallback" style="filter:drop-shadow(0 0 10px #00f5d4);">🔮</span>
+            </div>
             <h3 class="crew-name">Agent Beta-42</h3>
             <p class="crew-role" style="color:#00f5d4;">Manipulation Moléculaire · Classifié</p>
           </div>
           <div class="crew-card-body">
-            <p class="crew-desc">Identité partiellement masquée par mesure de sécurité galactique. Spécialiste en manipulation moléculaire expérimentale. Niveau d'habilitation : EXTRÊME. Ce que nous savons : il est efficace. Ce que nous ignorons : tout le reste.</p>
+            <p class="crew-desc">Identité partiellement masquée. Spécialiste en manipulation moléculaire expérimentale. Niveau d'habilitation : EXTRÊME. Ce que nous savons : il est efficace. Ce que nous ignorons : tout le reste.</p>
             <div class="crew-stats">
               <div class="crew-stat" style="border-color:rgba(0,245,212,0.15);">
                 <span class="stat-value" style="color:#00f5d4;">???</span>
@@ -600,19 +673,29 @@
             </div>
           </div>
           <div class="crew-card-footer">
-            <span class="crew-badge" style="background:rgba(0,245,212,0.08);color:#00f5d4;box-shadow:0 0 10px rgba(0,245,212,0.2);">⚗️ Experimental Division</span>
+            <span class="crew-badge" style="background:rgba(0,245,212,0.08);color:#00f5d4;">⚗️ Experimental Division</span>
           </div>
         </div>
 
+        <!-- --- Shadow Fibra ---
+             image attendue : assets/images/shadow-fibra.png -->
         <div class="crew-card-full reveal" style="border-color:rgba(0,245,212,0.2);">
           <div class="crew-card-header" style="background:rgba(0,245,212,0.03);">
             <span class="crew-rank" style="color:#00f5d4;">#X04</span>
-            <div class="crew-avatar-xl" style="border-color:rgba(0,245,212,0.4);filter:drop-shadow(0 0 20px rgba(0,245,212,0.3));">🕶️</div>
+            <div class="crew-avatar-xl" style="border-color:rgba(0,245,212,0.4);">
+              <img
+                class="crew-avatar-xl-img"
+                src="assets/images/shadow-fibra.png"
+                alt="Shadow Fibra — Opérations Nocturnes"
+                onerror="this.closest('.crew-avatar-xl').classList.add('img-error')"
+              />
+              <span class="crew-avatar-xl-fallback" style="filter:drop-shadow(0 0 10px #00f5d4);">🕶️</span>
+            </div>
             <h3 class="crew-name">Shadow Fibra</h3>
             <p class="crew-role" style="color:#00f5d4;">Opérations Nocturnes · Chef de Réseau</p>
           </div>
           <div class="crew-card-body">
-            <p class="crew-desc">Responsable des opérations nocturnes et de la logistique clandestine. Coordonne les livraisons interdites dans 3 galaxies. Ancienne responsable sécurité de la station, elle connaît toutes les failles. Elle les utilise.</p>
+            <p class="crew-desc">Responsable des opérations nocturnes et de la logistique clandestine. Coordonne les livraisons interdites dans 3 galaxies. Ancienne responsable sécurité de la station, elle connaît toutes les failles.</p>
             <div class="crew-stats">
               <div class="crew-stat" style="border-color:rgba(0,245,212,0.15);">
                 <span class="stat-value" style="color:#00f5d4;">3</span>
@@ -639,21 +722,25 @@
             </div>
           </div>
           <div class="crew-card-footer">
-            <span class="crew-badge" style="background:rgba(0,245,212,0.08);color:#00f5d4;box-shadow:0 0 10px rgba(0,245,212,0.2);">⚗️ Experimental Division</span>
+            <span class="crew-badge" style="background:rgba(0,245,212,0.08);color:#00f5d4;">⚗️ Experimental Division</span>
           </div>
         </div>
-      </div>
-    </div>
 
+      </div><!-- fin night-grid -->
+    </div><!-- fin crew-full-grid -->
+
+    <!-- lien vers la page contact -->
     <div style="text-align:center;margin-top:3rem;" class="reveal">
       <a href="contact.html" class="hero-cta">
         Contacter l'équipage <span class="arrow">→</span>
       </a>
     </div>
+
   </div>
 </section>
 
-<!-- FOOTER -->
+
+<!-- FOOTER (identique sur toutes les pages) -->
 <footer>
   <div class="footer-inner">
     <div class="footer-top">
@@ -675,7 +762,7 @@
         <h4>Station Orbitale</h4>
         <a href="#">Orbite Basse · Secteur 7</a>
         <a href="#">Alt: 408 km</a>
-        <a href="#">contact@spacebeaver.orbital</a>
+        <a href="#"><span class="__cf_email__" data-cfemail="b4d7dbdac0d5d7c0f4c7c4d5d7d1d6d1d5c2d1c69adbc6d6ddc0d5d8">[email&#160;protected]</span></a>
       </div>
     </div>
     <div class="footer-bottom">
