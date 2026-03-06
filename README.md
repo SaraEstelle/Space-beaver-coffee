@@ -140,3 +140,8 @@ Ouvrir les DevTools (`F12`), cliquer sur l'icône 📱, puis tester :
 | 1100px | grilles boissons/pâtisseries → 2 colonnes |
 | 768px | burger menu, grilles 1 colonne, concept 1 colonne |
 | 375px | affichage mobile complet |
+---
+---
+Author :
+---
+SARA REBATI
