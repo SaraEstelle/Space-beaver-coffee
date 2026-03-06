@@ -1,111 +1,181 @@
 <!DOCTYPE html>
+<!-- page du menu complet : boissons, pâtisseries, fast food -->
 <html lang="fr">
+
 <head>
+  <!-- encodage pour les accents -->
   <meta charset="UTF-8" />
+  <!-- la page s'adapte à la taille de l'écran du téléphone -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- titre dans l'onglet -->
   <title>Les Formules — Space Beaver Coffee</title>
+  <!-- feuille de style principale partagée avec toutes les pages -->
   <link rel="stylesheet" href="css/style.css" />
+  <!-- favicon castor en emoji SVG inline -->
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🦫</text></svg>" />
+
   <style>
-    /* ---- GRILLES SECTIONS ---- */
-    /* Boissons & Pâtisseries : 4 colonnes fixes */
+    /* styles spécifiques à cette page seulement
+       je les mets ici plutôt que dans style.css pour garder les choses séparées */
+
+    /* je force le logo navbar en mode horizontal (icône + texte côte à côte)
+       !important pour écraser le style.css si besoin */
+    .nav-logo {
+      flex-direction: row !important;
+      align-items: center;
+      gap: 0.6rem;
+    }
+    /* taille et effet du castor dans le logo */
+    .nav-logo-icon {
+      font-size: 2rem;
+      line-height: 1;
+      filter: drop-shadow(0 0 6px rgba(0,120,255,0.3));
+      transition: transform 0.3s ease;
+    }
+    /* petite rotation du castor au survol */
+    .nav-logo:hover .nav-logo-icon { transform: rotate(-10deg) scale(1.15); }
+    /* conteneur du texte logo en deux lignes */
+    .nav-logo-text { display: flex; flex-direction: column; line-height: 1; }
+    /* taille du texte logo */
+    .nav-logo .logo-top  { font-size: 1.15rem !important; letter-spacing: 0.12em; }
+    .nav-logo .logo-bottom { font-size: 0.6rem !important; letter-spacing: 0.3em; }
+    /* halo violet sur le castor en mode nuit */
+    body.dark-mode .nav-logo-icon { filter: drop-shadow(0 0 8px rgba(176,38,255,0.6)); }
+
+    /* grille 4 colonnes pour les boissons et pâtisseries */
     .grid-4col {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 1.5rem;
-      margin-top: 3rem;
-    }
-    /* Fast food : 3 colonnes fixes */
-    .grid-3col {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(4, 1fr); /* 4 colonnes égales */
       gap: 1.5rem;
       margin-top: 3rem;
     }
 
-    /* ---- IMAGE PNG DANS LES CARTES ---- */
+    /* grille 3 colonnes pour le fast food */
+    .grid-3col {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr); /* 3 colonnes égales */
+      gap: 1.5rem;
+      margin-top: 3rem;
+    }
+
+    /* zone image des cartes produit sur cette page
+       je n'utilise pas .card-image du style.css mais ma propre classe .card-img-wrap
+       pour avoir plus de contrôle sur le rendu des PNG */
     .card-img-wrap {
-      aspect-ratio: 4/3;
+      aspect-ratio: 4/3;   /* ratio fixe pour toutes les images */
       overflow: hidden;
-      position: relative;
+      position: relative;  /* nécessaire pour positionner l'image en absolute */
       background: var(--bg-primary);
       display: flex;
       align-items: center;
       justify-content: center;
     }
+    /* l'image PNG remplit tout le cadre sans se déformer */
     .card-img-wrap img.card-png {
       width: 100%;
       height: 100%;
       object-fit: cover;
       object-position: center;
       display: block;
-      transition: transform 0.3s ease;
+      transition: transform 0.3s ease; /* zoom au hover */
     }
+    /* zoom sur l'image quand on survole la carte */
     .product-card:hover .card-img-wrap img.card-png { transform: scale(1.1); }
-    /* fallback emoji si png absent */
+
+    /* emoji de secours si le PNG n'existe pas
+       onerror dans le HTML ajoute .img-error → l'emoji apparaît */
     .card-img-wrap .card-emoji-fb {
-      display: none;
+      display: none; /* caché par défaut */
       font-size: 3.5rem;
       align-items: center;
       justify-content: center;
       width: 100%;
       height: 100%;
     }
+    /* quand .img-error est ajouté : cache l'image, montre l'emoji */
     .card-img-wrap.img-error img.card-png   { display: none; }
     .card-img-wrap.img-error .card-emoji-fb { display: flex; }
 
-    /* Overlay nuit sur l'image */
+    /* overlay coloré sur les images en mode nuit (même effet que sur l'index) */
     body.dark-mode .card-img-wrap::after {
       content: '';
       position: absolute;
       inset: 0;
       background: linear-gradient(135deg, rgba(176,38,255,0.15), rgba(0,245,212,0.08));
-      mix-blend-mode: overlay;
-      pointer-events: none;
+      mix-blend-mode: overlay; /* mélange la couleur avec l'image */
+      pointer-events: none;    /* ne bloque pas les clics */
     }
 
-    /* Fast food : carte horizontale avec image PNG */
-    .fastfood-card { display: flex; gap: 1.25rem; background: var(--bg-card); border: 1px solid var(--border-card); border-radius: 12px; padding: 1.25rem; align-items: center; transition: all 0.35s ease; }
-    .fastfood-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-hover); border-color: var(--accent); }
-    .fastfood-img-wrap { flex-shrink: 0; width: 110px; height: 110px; display: flex; align-items: center; justify-content: center; background: var(--bg-primary); border-radius: 10px; border: 1px solid var(--border); overflow: hidden; transition: all 0.3s ease; }
+    /* zone image des cartes fast food : même logique mais taille carrée */
+    .fastfood-img-wrap {
+      flex-shrink: 0;        /* ne rétrécit pas */
+      width: 110px;
+      height: 110px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--bg-primary);
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      overflow: hidden;
+      transition: all 0.3s ease;
+    }
+    /* la bordure devient colorée quand on survole la carte */
     .fastfood-card:hover .fastfood-img-wrap { border-color: var(--accent); transform: scale(1.05); }
+    /* l'image remplit le cadre */
     .fastfood-img-wrap img { width: 100%; height: 100%; object-fit: cover; object-position: center; }
+    /* emoji de secours fast food */
     .fastfood-img-wrap .card-emoji-fb { display: none; font-size: 2.5rem; }
     .fastfood-img-wrap.img-error img { display: none; }
     .fastfood-img-wrap.img-error .card-emoji-fb { display: flex; align-items: center; justify-content: center; width: 100%; height: 100%; }
 
-    /* Responsive */
+    /* responsive : en dessous de 1100px, la grille 4col passe à 2col */
     @media (max-width: 1100px) {
       .grid-4col { grid-template-columns: repeat(2, 1fr); }
     }
+    /* en dessous de 700px, toutes les grilles passent à 1 colonne */
     @media (max-width: 700px) {
       .grid-4col { grid-template-columns: 1fr; }
       .grid-3col { grid-template-columns: 1fr; }
     }
 
-    /* day/night grid dans les nouvelles grilles */
+    /* les wrappers day-grid et night-grid doivent utiliser display:contents
+       pour que les cartes s'insèrent directement dans la grille parente
+       si j'utilisais display:block ça casserait la grille */
     .grid-4col .day-grid,
     .grid-4col .night-grid,
     .grid-3col .day-grid,
     .grid-3col .night-grid {
       display: contents;
     }
+    /* les grilles nuit sont cachées par défaut */
     .grid-4col .night-grid,
     .grid-3col .night-grid { display: none; }
+    /* en mode nuit : cache les grilles jour et montre les grilles nuit */
     body.dark-mode .grid-4col .day-grid,
     body.dark-mode .grid-3col .day-grid  { display: none; }
     body.dark-mode .grid-4col .night-grid,
     body.dark-mode .grid-3col .night-grid { display: contents; }
   </style>
 </head>
+
 <body>
 
+<!-- barre de navigation fixe, identique sur toutes les pages -->
 <nav class="navbar">
   <div class="nav-container">
+
+    <!-- logo cliquable qui ramène à l'accueil -->
     <a href="index.html" class="nav-logo">
-      <span class="logo-top">Space Beaver</span>
-      <span class="logo-bottom">Coffee</span>
+      <span class="nav-logo-icon">🦫</span>
+      <span class="nav-logo-text">
+        <span class="logo-top">Space Beaver</span>
+        <span class="logo-bottom">Coffee</span>
+      </span>
     </a>
+
+    <!-- liens de navigation
+         class="active" sur "Les Formules" car on est sur cette page -->
     <ul class="nav-links" id="navLinks">
       <li><a href="index.html">Accueil</a></li>
       <li><a href="menu.html" class="active">Les Formules</a></li>
@@ -115,20 +185,28 @@
         <button class="mode-toggle">🌙 Black Orbit Mode</button>
       </li>
     </ul>
+
+    <!-- bouton burger mobile (3 traits) -->
     <button class="burger" id="burger" aria-label="Menu mobile">
-      <span></span><span></span><span></span>
+      <span></span>
+      <span></span>
+      <span></span>
     </button>
+
   </div>
 </nav>
 
 
-<!-- HERO -->
+<!-- hero compact des pages internes
+     pas d'image plein écran, juste un titre centré avec fond uni -->
 <div class="page-hero">
+  <!-- version jour -->
   <div class="day-content">
     <span class="page-hero-label">🧪 Catalogue Certifié</span>
     <h1 class="page-hero-title">Les Formules Certifiées</h1>
     <p class="page-hero-desc">Toutes nos formules sont développées en orbite basse, testées en microgravité et approuvées par les autorités galactiques.</p>
   </div>
+  <!-- version nuit -->
   <div class="night-content">
     <span class="page-hero-label" style="color:#b026ff;">☣️ Catalogue Clandestin</span>
     <h1 class="page-hero-title" style="color:#b026ff;">Formules Interdites</h1>
@@ -137,12 +215,11 @@
 </div>
 
 
-<!-- =============================================
-     SECTION BOISSONS — 4 colonnes
-     ============================================= -->
+<!-- section boissons : 4 colonnes -->
 <section class="products-section" data-category="boissons">
   <div class="products-inner">
 
+    <!-- en-tête de section -->
     <div class="section-header reveal">
       <div class="day-content">
         <span class="section-label">☕ Boissons</span>
@@ -156,13 +233,20 @@
       </div>
     </div>
 
+    <!-- grille 4 colonnes
+         les wrappers day-grid/night-grid ont display:contents (voir CSS en haut)
+         leurs cartes enfants s'insèrent directement dans la grille comme si les wrappers n'existaient pas -->
     <div class="grid-4col">
 
-      <!-- BOISSONS JOUR -->
+      <!-- boissons affichées en mode jour -->
       <div class="day-grid">
 
+        <!-- carte 1 : Caféine HCl 2.0 -->
         <article class="product-card reveal">
+          <!-- le style inline donne une couleur de fond douce si le PNG est absent -->
           <div class="card-img-wrap" style="background:linear-gradient(135deg,#f0f4ff,#dce8ff);">
+            <!-- onerror : si l'image ne charge pas, ajoute .img-error sur la div parente
+                 le CSS cache alors l'image et affiche l'emoji à la place -->
             <img class="card-png" src="assets/images/icon-caffeine.png" alt="Caféine HCl"
               onerror="this.closest('.card-img-wrap').classList.add('img-error')"/>
             <span class="card-emoji-fb">🧪</span>
@@ -178,6 +262,7 @@
           </div>
         </article>
 
+        <!-- carte 2 : Matcha BioSynth -->
         <article class="product-card reveal">
           <div class="card-img-wrap" style="background:linear-gradient(135deg,#e8f8ee,#c8f0d8);">
             <img class="card-png" src="assets/images/icon-matcha.png" alt="Matcha BioSynth"
@@ -195,6 +280,7 @@
           </div>
         </article>
 
+        <!-- carte 3 : Sérum Vitalité 3000 -->
         <article class="product-card reveal">
           <div class="card-img-wrap" style="background:linear-gradient(135deg,#eef8e8,#d0f0c8);">
             <img class="card-png" src="assets/images/icon-vitality.png" alt="Sérum Vitalité"
@@ -212,6 +298,7 @@
           </div>
         </article>
 
+        <!-- carte 4 : Infusion Adaptogène -->
         <article class="product-card reveal">
           <div class="card-img-wrap" style="background:linear-gradient(135deg,#f5eee8,#ead8c8);">
             <img class="card-png" src="assets/images/icon-adaptogen.png" alt="Infusion Adaptogène"
@@ -229,15 +316,19 @@
           </div>
         </article>
 
-      </div><!-- fin boissons jour -->
+      </div>
+      <!-- fin boissons jour -->
 
-      <!-- BOISSONS NUIT -->
+      <!-- boissons affichées en mode nuit (mêmes positions, contenus différents) -->
       <div class="night-grid">
 
+        <!-- carte nuit 1 : Dark Matter Espresso -->
         <article class="product-card reveal">
+          <!-- fond sombre pour renforcer l'ambiance nuit -->
           <div class="card-img-wrap" style="background:linear-gradient(135deg,#0d0520,#1a0840);">
             <img class="card-png" src="assets/images/icon-dark-espresso.png" alt="Dark Matter Espresso"
               onerror="this.closest('.card-img-wrap').classList.add('img-error')"/>
+            <!-- filtre néon sur l'emoji de secours -->
             <span class="card-emoji-fb" style="filter:drop-shadow(0 0 15px #b026ff);">☕</span>
           </div>
           <div class="card-content">
@@ -251,6 +342,7 @@
           </div>
         </article>
 
+        <!-- carte nuit 2 : Plasma Matcha X -->
         <article class="product-card reveal">
           <div class="card-img-wrap" style="background:linear-gradient(135deg,#001a10,#003320);">
             <img class="card-png" src="assets/images/icon-plasma-matcha.png" alt="Plasma Matcha X"
@@ -268,6 +360,7 @@
           </div>
         </article>
 
+        <!-- carte nuit 3 : Sérum Dopamine-404 -->
         <article class="product-card reveal">
           <div class="card-img-wrap" style="background:linear-gradient(135deg,#1a0010,#400030);">
             <img class="card-png" src="assets/images/icon-dopamine.png" alt="Sérum Dopamine"
@@ -285,6 +378,7 @@
           </div>
         </article>
 
+        <!-- carte nuit 4 : Élixir Nebula Shot -->
         <article class="product-card reveal">
           <div class="card-img-wrap" style="background:linear-gradient(135deg,#000d1a,#001a35);">
             <img class="card-png" src="assets/images/icon-nebula-shot.png" alt="Élixir Nebula Shot"
@@ -302,18 +396,22 @@
           </div>
         </article>
 
-      </div><!-- fin boissons nuit -->
-    </div><!-- fin grid-4col boissons -->
+      </div>
+      <!-- fin boissons nuit -->
+
+    </div>
+    <!-- fin grille 4col boissons -->
+
   </div>
 </section>
 
 
-<!-- =============================================
-     SECTION PÂTISSERIES — 4 colonnes
-     ============================================= -->
+<!-- section pâtisseries : 4 colonnes
+     class="alt" donne un fond légèrement différent pour alterner visuellement -->
 <section class="products-section alt" data-category="patisseries">
   <div class="products-inner">
 
+    <!-- en-tête de section -->
     <div class="section-header reveal">
       <div class="day-content">
         <span class="section-label">🍰 Pâtisseries</span>
@@ -327,11 +425,13 @@
       </div>
     </div>
 
+    <!-- même système que les boissons : grille 4col + day-grid/night-grid -->
     <div class="grid-4col">
 
-      <!-- PÂTISSERIES JOUR -->
+      <!-- pâtisseries mode jour -->
       <div class="day-grid">
 
+        <!-- carte 1 : Cookie Anxiolytique -->
         <article class="product-card reveal">
           <div class="card-img-wrap" style="background:linear-gradient(135deg,#fdf8f0,#f5e8d8);">
             <img class="card-png" src="assets/images/icon-cookie-anxio.png" alt="Cookie Anxiolytique"
@@ -349,6 +449,7 @@
           </div>
         </article>
 
+        <!-- carte 2 : Brownie Gravité Zéro -->
         <article class="product-card reveal">
           <div class="card-img-wrap" style="background:linear-gradient(135deg,#2d1b0e,#4a2c1a);">
             <img class="card-png" src="assets/images/icon-brownie-gravity.png" alt="Brownie Gravité Zéro"
@@ -366,6 +467,7 @@
           </div>
         </article>
 
+        <!-- carte 3 : Tarte Photon -->
         <article class="product-card reveal">
           <div class="card-img-wrap" style="background:linear-gradient(135deg,#fffff0,#f5f5d0);">
             <img class="card-png" src="assets/images/icon-tarte-photon.png" alt="Tarte Photon"
@@ -383,6 +485,7 @@
           </div>
         </article>
 
+        <!-- carte 4 : Muffin Oméga-3 -->
         <article class="product-card reveal">
           <div class="card-img-wrap" style="background:linear-gradient(135deg,#f8f0e0,#ecdcc0);">
             <img class="card-png" src="assets/images/icon-muffin-omega.png" alt="Muffin Oméga-3"
@@ -400,11 +503,13 @@
           </div>
         </article>
 
-      </div><!-- fin pâtisseries jour -->
+      </div>
+      <!-- fin pâtisseries jour -->
 
-      <!-- PÂTISSERIES NUIT -->
+      <!-- pâtisseries mode nuit -->
       <div class="night-grid">
 
+        <!-- carte nuit 1 : Space Cake 404 -->
         <article class="product-card reveal">
           <div class="card-img-wrap" style="background:linear-gradient(135deg,#0a0a0a,#1a1a1a);">
             <img class="card-png" src="assets/images/icon-spacecake.png" alt="Space Cake 404"
@@ -422,6 +527,7 @@
           </div>
         </article>
 
+        <!-- carte nuit 2 : Brownie Dark Matter -->
         <article class="product-card reveal">
           <div class="card-img-wrap" style="background:linear-gradient(135deg,#1a0800,#3a1500);">
             <img class="card-png" src="assets/images/icon-brownie-dark.png" alt="Brownie Dark Matter"
@@ -439,6 +545,7 @@
           </div>
         </article>
 
+        <!-- carte nuit 3 : Cookie Mutation -->
         <article class="product-card reveal">
           <div class="card-img-wrap" style="background:linear-gradient(135deg,#0a1a0a,#1a2a0a);">
             <img class="card-png" src="assets/images/icon-cookie-mutation.png" alt="Cookie Mutation"
@@ -456,6 +563,7 @@
           </div>
         </article>
 
+        <!-- carte nuit 4 : Donut Antigravity -->
         <article class="product-card reveal">
           <div class="card-img-wrap" style="background:linear-gradient(135deg,#10001a,#20003a);">
             <img class="card-png" src="assets/images/icon-donut-anti.png" alt="Donut Antigravity"
@@ -473,18 +581,22 @@
           </div>
         </article>
 
-      </div><!-- fin pâtisseries nuit -->
-    </div><!-- fin grid-4col pâtisseries -->
+      </div>
+      <!-- fin pâtisseries nuit -->
+
+    </div>
+    <!-- fin grille 4col pâtisseries -->
+
   </div>
 </section>
 
 
-<!-- =============================================
-     SECTION FAST FOOD — 3 colonnes
-     ============================================= -->
+<!-- section fast food : 3 colonnes
+     même structure que les autres sections mais grille 3col -->
 <section class="products-section" data-category="fastfood">
   <div class="products-inner">
 
+    <!-- en-tête de section -->
     <div class="section-header reveal">
       <div class="day-content">
         <span class="section-label">🍔 Fast Food</span>
@@ -498,11 +610,13 @@
       </div>
     </div>
 
+    <!-- grille 3 colonnes -->
     <div class="grid-3col">
 
-      <!-- FAST FOOD JOUR -->
+      <!-- fast food mode jour -->
       <div class="day-grid">
 
+        <!-- carte 1 : Burger Protéiné Beta -->
         <article class="product-card reveal">
           <div class="card-img-wrap" style="background:linear-gradient(135deg,#f0f4f0,#e0ecd8);">
             <img class="card-png" src="assets/images/icon-burger-beta.png" alt="Burger Protéiné Beta"
@@ -520,6 +634,7 @@
           </div>
         </article>
 
+        <!-- carte 2 : Tacos Lacto-Free -->
         <article class="product-card reveal">
           <div class="card-img-wrap" style="background:linear-gradient(135deg,#fff8e8,#faecd0);">
             <img class="card-png" src="assets/images/icon-tacos-lacto.png" alt="Tacos Lacto-Free"
@@ -537,6 +652,7 @@
           </div>
         </article>
 
+        <!-- carte 3 : Pizza Nutriplex -->
         <article class="product-card reveal">
           <div class="card-img-wrap" style="background:linear-gradient(135deg,#fff0f0,#fad8d8);">
             <img class="card-png" src="assets/images/icon-pizza-nutri.png" alt="Pizza Nutriplex"
@@ -554,11 +670,14 @@
           </div>
         </article>
 
-      </div><!-- fin fast food jour -->
+      </div>
+      <!-- fin fast food jour -->
 
-      <!-- FAST FOOD NUIT -->
+      <!-- fast food mode nuit -->
       <div class="night-grid">
 
+        <!-- carte nuit 1 : Burger Supernova -->
+        <!-- border-color en style inline car c'est une carte nuit avec bordure violette -->
         <article class="product-card reveal" style="border-color:rgba(176,38,255,0.25);">
           <div class="card-img-wrap" style="background:linear-gradient(135deg,#1a0010,#3a0020);">
             <img class="card-png" src="assets/images/icon-burger-supernova.png" alt="Burger Supernova"
@@ -570,12 +689,14 @@
             <h3 class="card-title">Burger Supernova</h3>
             <p class="card-desc">Double steak cosmique, sauce explosive piment stellaire grade 7, fromage fondu à 800°C. Danger : 🔥🔥🔥</p>
             <div class="card-footer">
+              <!-- prix en cyan et badge violet pour les cartes nuit -->
               <span class="card-price" style="color:#00f5d4;">12.66 €</span>
               <span class="card-badge" style="background:rgba(176,38,255,0.12);color:#b026ff;">⚗️ Clandestin</span>
             </div>
           </div>
         </article>
 
+        <!-- carte nuit 2 : Tacos Black Hole -->
         <article class="product-card reveal" style="border-color:rgba(176,38,255,0.25);">
           <div class="card-img-wrap" style="background:linear-gradient(135deg,#000810,#001020);">
             <img class="card-png" src="assets/images/icon-tacos-blackhole.png" alt="Tacos Black Hole"
@@ -593,6 +714,7 @@
           </div>
         </article>
 
+        <!-- carte nuit 3 : Pizza Quasar -->
         <article class="product-card reveal" style="border-color:rgba(176,38,255,0.25);">
           <div class="card-img-wrap" style="background:linear-gradient(135deg,#10001a,#20003a);">
             <img class="card-png" src="assets/images/icon-pizza-quasar.png" alt="Pizza Quasar"
@@ -610,16 +732,22 @@
           </div>
         </article>
 
-      </div><!-- fin fast food nuit -->
-    </div><!-- fin grid-3col fast food -->
+      </div>
+      <!-- fin fast food nuit -->
+
+    </div>
+    <!-- fin grille 3col fast food -->
+
   </div>
 </section>
 
 
-<!-- FOOTER -->
+<!-- footer identique sur toutes les pages -->
 <footer>
   <div class="footer-inner">
     <div class="footer-top">
+
+      <!-- colonne 1 : logo + description -->
       <div class="footer-brand">
         <div class="nav-logo" style="margin-bottom:1rem;">
           <span class="logo-top">Space Beaver</span>
@@ -627,6 +755,8 @@
         </div>
         <p>Laboratoire de nutrition orbitale certifié. Formulons l'avenir, une boisson à la fois.</p>
       </div>
+
+      <!-- colonne 2 : liens de navigation -->
       <div class="footer-col">
         <h4>Navigation</h4>
         <a href="index.html">Accueil</a>
@@ -634,23 +764,33 @@
         <a href="crew.html">L'Équipage</a>
         <a href="contact.html">Prescription</a>
       </div>
+
+      <!-- colonne 3 : infos station -->
       <div class="footer-col">
         <h4>Station Orbitale</h4>
         <a href="#">Orbite Basse · Secteur 7</a>
         <a href="#">Alt: 408 km</a>
         <a href="#">contact@spacebeaver.orbital</a>
+        <a href="#">Lun–Sam · 06:00–22:00 UTC</a>
       </div>
+
     </div>
+
+    <!-- bas du footer : copyright + indicateur "en ligne" -->
     <div class="footer-bottom">
+      <!-- footer-year est rempli par le JS avec l'année en cours -->
       <p class="footer-copy">© <span class="footer-year"></span> Space Beaver Coffee Corp. · Tous droits réservés</p>
       <div class="footer-status">
         <div class="status-dot"></div>
         <span>Station en ligne · Orbite stable</span>
       </div>
     </div>
+
   </div>
 </footer>
 
+<!-- script chargé en dernier pour que tout le HTML soit présent avant l'exécution -->
 <script src="js/main.js"></script>
+
 </body>
 </html>

@@ -1,115 +1,107 @@
-/* ============================================================
-   style.css — Feuille de style principale de Space Beaver Coffee
-   Organisé par grandes sections pour s'y retrouver facilement
-   ============================================================ */
-
-
-/* ============================================================
-   IMPORT DES POLICES (Google Fonts)
-   Orbitron  → titres futuristes
-   Space Mono → labels techniques, petits textes mono
-   Rajdhani  → corps de texte, plus lisible que Orbitron
-   ============================================================ */
+/* je charge les 3 polices depuis Google Fonts
+   Orbitron pour les titres futuristes
+   Space Mono pour les petits labels techniques
+   Rajdhani pour le texte courant, plus lisible */
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Rajdhani:wght@300;400;600;700&display=swap');
 
 
-/* ============================================================
-   VARIABLES CSS — THÈME JOUR (mode par défaut)
-   Toutes les couleurs sont centralisées ici.
-   Pour changer le thème, on modifie juste ces valeurs.
-   La notation --nom-variable est propre au CSS moderne.
-   ============================================================ */
+/* ---- VARIABLES CSS : THÈME JOUR (mode par défaut) ----
+   je regroupe toutes les couleurs ici dans :root
+   comme ça si je veux changer une couleur, je le fais une seule fois
+   la syntaxe --nom-variable est du CSS moderne (custom properties) */
 :root {
-  /* Fonds */
-  --bg-primary:   #f0f4f8;
-  --bg-secondary: #ffffff;
-  --bg-card:      #ffffff;
+  /* couleurs de fond */
+  --bg-primary:   #f0f4f8; /* fond principal de la page */
+  --bg-secondary: #ffffff; /* fond des sections alternées */
+  --bg-card:      #ffffff; /* fond des cartes */
 
-  /* Textes */
-  --text-primary:   #0a1628;
-  --text-secondary: #3a5a8a;
-  --text-muted:     #6b8aaa;
+  /* couleurs de texte */
+  --text-primary:   #0a1628; /* texte principal, presque noir */
+  --text-secondary: #3a5a8a; /* texte secondaire, bleu foncé */
+  --text-muted:     #6b8aaa; /* texte discret, pour les descriptions */
 
-  /* Couleur principale (bleu scientifique) */
+  /* couleur principale du site : bleu scientifique */
   --accent:           #1a6bdc;
-  --accent-hover:     #0f4fa8;
+  --accent-hover:     #0f4fa8; /* version plus foncée pour le hover */
   --accent-secondary: #00b4d8;
 
-  /* Bordures */
-  --border:      #d0dce8;
-  --border-card: #e2ecf5;
+  /* couleurs de bordure */
+  --border:      #d0dce8; /* bordures normales */
+  --border-card: #e2ecf5; /* bordures des cartes */
 
-  /* Ombres */
+  /* ombres portées */
   --shadow:       0 4px 24px rgba(26,107,220,0.08);
   --shadow-card:  0 2px 16px rgba(26,107,220,0.10);
-  --shadow-hover: 0 8px 32px rgba(26,107,220,0.18);
+  --shadow-hover: 0 8px 32px rgba(26,107,220,0.18); /* ombre au survol */
 
-  /* Navbar avec flou (effet verre dépoli) */
+  /* fond de la navbar avec transparence pour l'effet verre dépoli */
   --nav-bg: rgba(240,244,248,0.92);
 
-  /* Dégradé sombre sur le hero pour que le texte reste lisible */
+  /* dégradé sombre sur le hero pour rendre le texte blanc lisible */
   --hero-overlay: linear-gradient(135deg, rgba(10,22,40,0.82) 0%, rgba(26,107,220,0.35) 100%);
 
-  /* Badges et tags colorés */
+  /* couleurs des badges et tags */
   --badge-bg:    #e8f0fe;
   --badge-color: #1a6bdc;
   --tag-bg:      #e0f0ff;
 
-  /* Pas d'effet glow en mode jour */
+  /* pas d'effet néon en mode jour */
   --glow: none;
 
-  /* Les cartes ne se transforment pas en mode jour */
+  /* les cartes ne montent pas au hover en mode jour */
   --card-transform: none;
 
-  /* Footer toujours sombre même en mode jour */
+  /* le footer est toujours sombre, même en mode jour */
   --footer-bg:   #0a1628;
   --footer-text: #c8d8f0;
 
+  /* autres variables utilisées dans le site */
   --hero-text:   #ffffff;
-  --section-alt: #e8f0fb;
+  --section-alt: #e8f0fb; /* fond des sections alternées */
   --input-bg:    #f8faff;
   --price-color: #1a6bdc;
 }
 
 
-/* ============================================================
-   VARIABLES CSS — THÈME NUIT
-   On écrase les mêmes variables quand .dark-mode est sur le body.
-   Le JS ajoute/retire cette classe au clic sur le bouton toggle.
-   ============================================================ */
+/* ---- VARIABLES CSS : THÈME NUIT ----
+   quand le JS ajoute la classe .dark-mode sur le <body>,
+   toutes ces variables écrasent celles de :root
+   résultat : tout le site change de couleur automatiquement */
 body.dark-mode {
+  /* fonds sombres presque noirs */
   --bg-primary:   #070a10;
   --bg-secondary: #0d1220;
   --bg-card:      #111827;
 
+  /* textes clairs sur fond sombre */
   --text-primary:   #e8f0ff;
   --text-secondary: #9ab0d4;
   --text-muted:     #5a7090;
 
-  /* Violet néon pour le mode nuit */
+  /* violet néon remplace le bleu en mode nuit */
   --accent:           #b026ff;
   --accent-hover:     #8a00dd;
-  --accent-secondary: #00f5d4;
+  --accent-secondary: #00f5d4; /* cyan néon pour les prix */
 
   --border:      #1e2d45;
   --border-card: #1a2540;
 
-  /* Ombres violettes lumineuses */
+  /* ombres violettes lumineuses */
   --shadow:       0 4px 32px rgba(176,38,255,0.15);
   --shadow-card:  0 2px 20px rgba(176,38,255,0.12);
   --shadow-hover: 0 0 40px rgba(176,38,255,0.4), 0 0 80px rgba(176,38,255,0.15);
 
-  --nav-bg: rgba(7,10,16,0.95);
+  --nav-bg: rgba(7,10,16,0.95); /* navbar encore plus opaque en mode nuit */
   --hero-overlay: linear-gradient(135deg, rgba(7,10,16,0.92) 0%, rgba(176,38,255,0.25) 100%);
 
   --badge-bg:    #1a0a2e;
   --badge-color: #b026ff;
   --tag-bg:      #0d1a30;
 
-  /* Effet néon sur certains éléments */
+  /* effet de halo violet sur les titres en mode nuit */
   --glow: 0 0 20px rgba(176,38,255,0.6), 0 0 60px rgba(176,38,255,0.2);
 
-  /* Les cartes montent légèrement au hover en mode nuit */
+  /* les cartes montent légèrement au survol en mode nuit */
   --card-transform: translateY(-4px);
 
   --footer-bg:   #050709;
@@ -118,40 +110,44 @@ body.dark-mode {
   --hero-text:   #e8f0ff;
   --section-alt: #0a0f1a;
   --input-bg:    #0d1220;
-  --price-color: #00f5d4;
+  --price-color: #00f5d4; /* prix en cyan néon */
 }
 
 
-/* ============================================================
-   RESET DE BASE
-   Remet à zéro les marges/paddings des navigateurs
-   box-sizing: border-box évite les débordements de mise en page
-   ============================================================ */
+/* ---- RESET DE BASE ----
+   les navigateurs ajoutent des marges et paddings par défaut
+   je les remets tous à zéro pour partir d'une base propre
+   * = s'applique à tous les éléments de la page */
 *, *::before, *::after {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
+  box-sizing: border-box; /* le padding et la bordure sont inclus dans la largeur */
+  margin: 0;  /* supprime les marges par défaut */
+  padding: 0; /* supprime les paddings par défaut */
 }
 
+/* scroll doux quand on clique sur un lien ancre (#hero, #concept, etc.) */
 html {
-  scroll-behavior: smooth; /* scroll doux quand on clique sur une ancre # */
+  scroll-behavior: smooth;
 }
 
+/* styles de base du corps de la page */
 body {
-  font-family: 'Rajdhani', sans-serif;
+  font-family: 'Rajdhani', sans-serif; /* police par défaut pour tout le texte */
   background-color: var(--bg-primary);
   color: var(--text-primary);
-  transition: background-color 0.4s ease, color 0.4s ease; /* transition fluide jour/nuit */
-  overflow-x: hidden; /* évite le scroll horizontal non voulu */
-  min-height: 100vh;
+  transition: background-color 0.4s ease, color 0.4s ease; /* transition douce lors du changement de mode */
+  overflow-x: hidden; /* cache le scroll horizontal si quelque chose déborde */
+  min-height: 100vh;  /* la page fait au minimum la hauteur de l'écran */
 }
 
-/* Étoiles en fond en mode nuit, générées via plusieurs radial-gradient */
+/* étoiles en arrière-plan en mode nuit
+   je les crée avec ::before sans HTML supplémentaire
+   position:fixed = elles restent fixes même quand on scrolle */
 body.dark-mode::before {
-  content: '';
+  content: ''; /* obligatoire pour que le pseudo-élément existe */
   position: fixed;
   top: 0; left: 0;
   width: 100%; height: 100%;
+  /* chaque radial-gradient crée un point lumineux à une position différente */
   background-image:
     radial-gradient(1px 1px at 10% 20%, rgba(255,255,255,0.8) 0%, transparent 100%),
     radial-gradient(1px 1px at 30% 60%, rgba(255,255,255,0.6) 0%, transparent 100%),
@@ -162,83 +158,90 @@ body.dark-mode::before {
     radial-gradient(1px 1px at 80% 15%, rgba(255,255,255,0.6) 0%, transparent 100%),
     radial-gradient(2px 2px at 45% 50%, rgba(176,38,255,0.5) 0%, transparent 100%),
     radial-gradient(2px 2px at 65% 30%, rgba(0,245,212,0.4) 0%, transparent 100%);
-  pointer-events: none; /* ne bloque pas les clics */
-  z-index: 0;
-  animation: twinkle 4s ease-in-out infinite alternate;
+  pointer-events: none; /* les étoiles ne bloquent pas les clics */
+  z-index: 0; /* derrière tout le contenu */
+  animation: twinkle 4s ease-in-out infinite alternate; /* scintillement */
 }
 
+/* animation de scintillement des étoiles */
 @keyframes twinkle {
   0%   { opacity: 0.6; }
   100% { opacity: 1; }
 }
 
-/* Réinitialisation rapide pour images et liens */
-img { max-width: 100%; height: auto; display: block; }
-a   { text-decoration: none; color: inherit; }
-ul  { list-style: none; }
+/* réinitialisations rapides pour les images et les liens */
+img { max-width: 100%; height: auto; display: block; } /* les images ne débordent jamais */
+a   { text-decoration: none; color: inherit; }         /* pas de soulignement, hérite la couleur */
+ul  { list-style: none; }                              /* pas de puces dans les listes */
 
 
-/* ============================================================
-   NAVBAR — Barre de navigation fixe en haut
-   backdrop-filter: blur donne l'effet "verre dépoli"
-   ============================================================ */
+/* ---- NAVBAR ----
+   barre fixe en haut de la page, toujours visible même en scrollant
+   backdrop-filter:blur donne l'effet "verre dépoli" */
 .navbar {
-  position: fixed;
+  position: fixed;    /* reste en haut même au scroll */
   top: 0; left: 0; right: 0;
-  z-index: 1000; /* au-dessus de tout le reste */
+  z-index: 1000;      /* au-dessus de tout le reste */
   background: var(--nav-bg);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px); /* préfixe nécessaire pour Safari */
+  backdrop-filter: blur(16px);            /* flou derrière la navbar */
+  -webkit-backdrop-filter: blur(16px);    /* même chose pour Safari */
   border-bottom: 1px solid var(--border);
   transition: all 0.4s ease;
   padding: 0 1.5rem;
 }
 
+/* conteneur interne qui centre et limite la largeur */
 .nav-container {
   max-width: 1280px;
-  margin: 0 auto; /* centrage */
+  margin: 0 auto; /* centre horizontalement */
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  height: 70px;
+  justify-content: space-between; /* logo à gauche, liens à droite */
+  height: 70px; /* hauteur fixe de la navbar */
 }
 
-/* Logo avec mascotte à gauche et texte à droite */
+/* logo : mascotte castor + texte en deux lignes côte à côte */
 .nav-logo {
   display: flex;
-  flex-direction: row;
+  flex-direction: row; /* disposition horizontale */
   align-items: center;
-  gap: 0.55rem;
+  gap: 0.55rem;        /* espace entre le castor et le texte */
   line-height: 1;
 }
 
+/* icône castor à gauche du logo */
 .nav-logo-icon {
   font-size: 2rem;
   line-height: 1;
-  filter: drop-shadow(0 0 5px rgba(26,107,220,0.3));
+  filter: drop-shadow(0 0 5px rgba(26,107,220,0.3)); /* halo bleu autour du castor */
   transition: transform 0.3s ease;
-  flex-shrink: 0;
+  flex-shrink: 0; /* ne rétrécit pas si la navbar est petite */
 }
 
+/* rotation du castor quand on passe la souris sur le logo */
 .nav-logo:hover .nav-logo-icon { transform: rotate(-12deg) scale(1.15); }
 
+/* wrapper du texte du logo pour l'empiler en colonne */
 .nav-logo-text {
   display: flex;
   flex-direction: column;
   line-height: 1;
 }
 
+/* en mode nuit le castor a un halo violet */
 body.dark-mode .nav-logo-icon { filter: drop-shadow(0 0 8px rgba(176,38,255,0.7)); }
 
+/* "Space Beaver" en gros */
 .logo-top {
   font-family: 'Orbitron', monospace;
   font-size: 1.1rem;
   font-weight: 900;
   letter-spacing: 0.12em;
   color: var(--accent);
-  transition: color 0.4s;
+  transition: color 0.4s; /* change de couleur lors du changement de mode */
 }
 
+/* "Coffee" en petit en dessous */
 .logo-bottom {
   font-family: 'Space Mono', monospace;
   font-size: 0.55rem;
@@ -247,17 +250,19 @@ body.dark-mode .nav-logo-icon { filter: drop-shadow(0 0 8px rgba(176,38,255,0.7)
   text-transform: uppercase;
 }
 
+/* effet néon sur le logo en mode nuit */
 body.dark-mode .logo-top {
   text-shadow: var(--glow);
 }
 
-/* Liens de navigation */
+/* liste des liens de navigation */
 .nav-links {
   display: flex;
   align-items: center;
-  gap: 2rem;
+  gap: 2rem; /* espace entre chaque lien */
 }
 
+/* style de chaque lien */
 .nav-links a {
   font-family: 'Space Mono', monospace;
   font-size: 0.72rem;
@@ -265,34 +270,38 @@ body.dark-mode .logo-top {
   text-transform: uppercase;
   color: var(--text-secondary);
   transition: color 0.3s;
-  position: relative;
-  padding-bottom: 4px;
+  position: relative;  /* nécessaire pour positionner le soulignement ::after */
+  padding-bottom: 4px; /* espace entre le texte et le soulignement */
 }
 
-/* Soulignement animé au hover : ::after part de width:0 → width:100% */
+/* soulignement animé : je crée une ligne invisible qui s'étend au hover
+   width:0 par défaut → width:100% quand on survole */
 .nav-links a::after {
   content: '';
   position: absolute;
   bottom: 0; left: 0;
-  width: 0;
+  width: 0; /* invisible par défaut */
   height: 2px;
   background: var(--accent);
-  transition: width 0.3s ease;
+  transition: width 0.3s ease; /* animation de gauche à droite */
 }
 
+/* lien actif (page actuelle) ou survolé → couleur accent */
 .nav-links a:hover,
-.nav-links a.active           { color: var(--accent); }
-.nav-links a:hover::after,
-.nav-links a.active::after    { width: 100%; }
+.nav-links a.active        { color: var(--accent); }
 
-/* Bouton toggle jour/nuit */
+/* soulignement visible sur le lien actif ou survolé */
+.nav-links a:hover::after,
+.nav-links a.active::after { width: 100%; }
+
+/* bouton de bascule jour/nuit */
 .mode-toggle {
   display: flex;
   align-items: center;
   gap: 0.5rem;
   padding: 0.45rem 1rem;
   border: 1px solid var(--accent);
-  border-radius: 50px;
+  border-radius: 50px; /* bords arrondis en forme de pilule */
   background: transparent;
   color: var(--accent);
   font-family: 'Space Mono', monospace;
@@ -300,22 +309,24 @@ body.dark-mode .logo-top {
   letter-spacing: 0.1em;
   cursor: pointer;
   transition: all 0.3s ease;
-  white-space: nowrap;
+  white-space: nowrap; /* le texte ne passe pas à la ligne */
 }
 
+/* au hover : fond plein blanc */
 .mode-toggle:hover {
   background: var(--accent);
   color: #fff;
   box-shadow: var(--shadow);
 }
 
+/* halo violet sur le bouton en mode nuit */
 body.dark-mode .mode-toggle {
   box-shadow: var(--glow);
 }
 
-/* Bouton burger (mobile) — caché sur desktop */
+/* bouton burger (3 traits) : caché sur desktop, visible sur mobile */
 .burger {
-  display: none;
+  display: none; /* caché par défaut */
   flex-direction: column;
   gap: 5px;
   cursor: pointer;
@@ -324,45 +335,53 @@ body.dark-mode .mode-toggle {
   border: none;
 }
 
+/* chaque trait du burger */
 .burger span {
   display: block;
   width: 24px;
   height: 2px;
   background: var(--text-primary);
   border-radius: 2px;
-  transition: all 0.3s ease;
+  transition: all 0.3s ease; /* animation vers la croix */
 }
 
-/* Animation 3 traits → croix quand .active est ajouté par le JS */
+/* quand le JS ajoute .active sur le burger, les 3 traits forment une croix
+   trait 1 : descend et pivote à 45°
+   trait 2 : disparaît
+   trait 3 : monte et pivote à -45° */
 .burger.active span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
 .burger.active span:nth-child(2) { opacity: 0; }
 .burger.active span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
-/* Responsive mobile : en dessous de 768px */
+/* ---- responsive mobile : en dessous de 768px ---- */
 @media (max-width: 768px) {
+
+  /* le burger devient visible */
   .burger { display: flex; }
 
-  /* Menu caché via max-height:0 (on ne peut pas animer display:none) */
+  /* le menu se cache derrière max-height:0
+     je ne peux pas animer display:none donc j'anime max-height à la place */
   .nav-links {
     position: fixed;
-    top: 70px; left: 0; right: 0;
+    top: 70px; left: 0; right: 0; /* juste sous la navbar */
     background: var(--nav-bg);
     backdrop-filter: blur(20px);
-    flex-direction: column;
+    flex-direction: column; /* liens empilés verticalement */
     gap: 0;
     padding: 0;
-    max-height: 0;
+    max-height: 0;    /* fermé par défaut */
     overflow: hidden;
     transition: max-height 0.4s ease, padding 0.4s ease;
     border-bottom: 1px solid var(--border);
   }
 
-  /* Quand .open est ajouté par le JS, le menu se déplie */
+  /* quand le JS ajoute .open sur les nav-links, le menu se déplie */
   .nav-links.open {
     max-height: 400px;
     padding: 1rem 0;
   }
 
+  /* liens plus grands et centrés sur mobile */
   .nav-links a {
     padding: 1rem 2rem;
     font-size: 0.8rem;
@@ -370,43 +389,43 @@ body.dark-mode .mode-toggle {
     text-align: center;
   }
 
+  /* pas de soulignement sur mobile */
   .nav-links a::after { display: none; }
 
+  /* bouton toggle centré */
   .mode-toggle { margin: 0.5rem auto; }
 }
 
 
-/* ============================================================
-   SECTION HERO — Grande image plein écran
-   Deux divs superposés pour les fonds jour/nuit
-   On bascule via opacity (transition douce)
-   ============================================================ */
+/* ---- SECTION HERO ----
+   grande image plein écran, minimum 100% de la hauteur de la fenêtre */
 .hero {
   position: relative;
   min-height: 100vh;
   display: flex;
-  align-items: center;
+  align-items: center; /* contenu centré verticalement */
   overflow: hidden;
 }
 
-/* Conteneur de fond commun aux deux modes */
+/* les deux fonds (jour et nuit) sont superposés en position absolute
+   je bascule entre eux en changeant leur opacité */
 .hero-bg {
   position: absolute;
-  inset: 0;
+  inset: 0; /* équivaut à top:0; right:0; bottom:0; left:0 */
   background-size: cover;
   background-position: center;
-  transition: opacity 0.6s ease;
+  transition: opacity 0.6s ease; /* transition douce entre les deux fonds */
 }
 
-/* Fond MODE JOUR — fichier : assets/images/hero-lab-day.png
-   Le dégradé sert de fallback si l'image ne charge pas */
+/* fond jour : photo du labo blanc + dégradé bleu de secours si l'image manque */
 .hero-bg-day {
   background:
     url('../assets/images/hero-lab-day.png') center/cover no-repeat,
     linear-gradient(135deg, #0a1628 0%, #1a6bdc 100%);
 }
 
-/* Fond MODE NUIT — fichier : assets/images/hero-lab-night.png */
+/* fond nuit : même labo version sombre + dégradé violet de secours
+   opacity:0 par défaut car on est en mode jour au départ */
 .hero-bg-night {
   background:
     url('../assets/images/hero-lab-night.png') center/cover no-repeat,
@@ -414,13 +433,13 @@ body.dark-mode .mode-toggle {
   opacity: 0;
 }
 
-/* Basculement d'opacity selon le mode actif */
-body.dark-mode .hero-bg-day   { opacity: 0; }
-body.dark-mode .hero-bg-night { opacity: 1; }
+/* bascule des opacités selon le mode actif */
+body.dark-mode .hero-bg-day   { opacity: 0; } /* cache le fond jour */
+body.dark-mode .hero-bg-night { opacity: 1; } /* montre le fond nuit */
 body:not(.dark-mode) .hero-bg-day   { opacity: 1; }
 body:not(.dark-mode) .hero-bg-night { opacity: 0; }
 
-/* Overlay sombre pour lisibilité du texte */
+/* overlay sombre semi-transparent pour que le texte blanc reste lisible sur la photo */
 .hero-overlay {
   position: absolute;
   inset: 0;
@@ -428,17 +447,17 @@ body:not(.dark-mode) .hero-bg-night { opacity: 0; }
   transition: background 0.6s ease;
 }
 
-/* Contenu textuel du hero, au-dessus de l'overlay */
+/* le contenu textuel doit être au-dessus de l'overlay (z-index:2) */
 .hero-content {
   position: relative;
   z-index: 2;
   max-width: 1280px;
   margin: 0 auto;
-  padding: 120px 2rem 4rem;
+  padding: 120px 2rem 4rem; /* 120px en haut à cause de la navbar fixe */
   width: 100%;
 }
 
-/* Badge au-dessus du titre */
+/* badge d'info en haut du titre : petit texte dans une pilule */
 .hero-badge {
   display: inline-flex;
   align-items: center;
@@ -453,9 +472,10 @@ body:not(.dark-mode) .hero-bg-night { opacity: 0; }
   margin-bottom: 1.5rem;
   backdrop-filter: blur(8px);
   background: rgba(255,255,255,0.08);
-  animation: fadeSlideDown 0.8s ease both;
+  animation: fadeSlideDown 0.8s ease both; /* entrée depuis le haut au chargement */
 }
 
+/* badge violet en mode nuit */
 body.dark-mode .hero-badge {
   border-color: rgba(176,38,255,0.4);
   color: rgba(176,38,255,0.9);
@@ -463,25 +483,29 @@ body.dark-mode .hero-badge {
   box-shadow: 0 0 20px rgba(176,38,255,0.2);
 }
 
-/* Titre principal — clamp() ajuste la taille selon la largeur d'écran */
+/* titre principal du hero
+   clamp(min, préféré, max) : taille responsive sans media query */
 .hero-title {
   font-family: 'Orbitron', monospace;
-  font-size: clamp(2.5rem, 6vw, 5rem);
+  font-size: clamp(2.5rem, 6vw, 5rem); /* entre 2.5rem et 5rem selon la largeur */
   font-weight: 900;
   line-height: 1.05;
   color: var(--hero-text);
   margin-bottom: 1.5rem;
-  animation: fadeSlideDown 0.8s 0.1s ease both;
+  animation: fadeSlideDown 0.8s 0.1s ease both; /* 0.1s de délai après le badge */
   max-width: 700px;
 }
 
+/* le <span> dans le titre passe à la ligne et prend la couleur accent */
 .hero-title span {
   color: var(--accent);
   display: block;
 }
 
+/* halo néon sur le span du titre en mode nuit */
 body.dark-mode .hero-title span { text-shadow: var(--glow); }
 
+/* sous-titre descriptif */
 .hero-subtitle {
   font-family: 'Rajdhani', sans-serif;
   font-size: clamp(1rem, 2vw, 1.25rem);
@@ -490,10 +514,10 @@ body.dark-mode .hero-title span { text-shadow: var(--glow); }
   line-height: 1.7;
   max-width: 520px;
   margin-bottom: 2.5rem;
-  animation: fadeSlideDown 0.8s 0.2s ease both;
+  animation: fadeSlideDown 0.8s 0.2s ease both; /* 0.2s de délai */
 }
 
-/* Bouton d'appel à l'action (CTA) */
+/* bouton d'appel à l'action (CTA) */
 .hero-cta {
   display: inline-flex;
   align-items: center;
@@ -507,33 +531,36 @@ body.dark-mode .hero-title span { text-shadow: var(--glow); }
   text-transform: uppercase;
   border-radius: 4px;
   transition: all 0.3s ease;
-  animation: fadeSlideDown 0.8s 0.3s ease both;
+  animation: fadeSlideDown 0.8s 0.3s ease both; /* 0.3s de délai */
   border: none;
   cursor: pointer;
   text-decoration: none;
 }
 
+/* effet au survol : fond plus foncé + léger soulèvement */
 .hero-cta:hover {
   background: var(--accent-hover);
   transform: translateY(-2px);
   box-shadow: var(--shadow-hover);
 }
 
+/* halo violet sur le bouton en mode nuit */
 body.dark-mode .hero-cta { box-shadow: var(--glow); }
 
-/* La flèche → dans le bouton se déplace au hover */
+/* la flèche → se déplace vers la droite au hover */
 .hero-cta .arrow { transition: transform 0.3s ease; }
 .hero-cta:hover .arrow { transform: translateX(5px); }
 
-/* Petits tags informatifs sous le CTA */
+/* petits tags d'info sous le bouton */
 .hero-tags {
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: wrap; /* passe à la ligne si pas assez de place */
   gap: 0.75rem;
   margin-top: 3rem;
-  animation: fadeSlideDown 0.8s 0.4s ease both;
+  animation: fadeSlideDown 0.8s 0.4s ease both; /* dernier à apparaître */
 }
 
+/* style de chaque tag */
 .hero-tag {
   padding: 0.3rem 0.9rem;
   border: 1px solid rgba(255,255,255,0.2);
@@ -545,25 +572,28 @@ body.dark-mode .hero-cta { box-shadow: var(--glow); }
   text-transform: uppercase;
 }
 
+/* tags violets en mode nuit */
 body.dark-mode .hero-tag {
   border-color: rgba(176,38,255,0.3);
   color: rgba(176,38,255,0.6);
 }
 
-/* Indicateur "explorer" en bas du hero */
+/* indicateur "Explorer" en bas du hero pour inviter au scroll
+   position:absolute centré horizontalement */
 .hero-scroll {
   position: absolute;
   bottom: 2.5rem;
   left: 50%;
-  transform: translateX(-50%);
+  transform: translateX(-50%); /* centrage horizontal parfait */
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 0.5rem;
   z-index: 2;
-  animation: bounce 2s infinite;
+  animation: bounce 2s infinite; /* rebond continu */
 }
 
+/* texte "Explorer" */
 .hero-scroll span {
   font-family: 'Space Mono', monospace;
   font-size: 0.55rem;
@@ -572,31 +602,32 @@ body.dark-mode .hero-tag {
   text-transform: uppercase;
 }
 
+/* ligne verticale qui descend */
 .scroll-line {
   width: 1px;
   height: 40px;
   background: linear-gradient(to bottom, rgba(255,255,255,0.5), transparent);
 }
 
+/* animation de rebond de l'indicateur scroll */
 @keyframes bounce {
   0%, 100% { transform: translateX(-50%) translateY(0); }
   50%       { transform: translateX(-50%) translateY(-6px); }
 }
 
 
-/* ============================================================
-   ÉLÉMENTS COMMUNS AUX SECTIONS
-   section en position relative pour rester au-dessus
-   du pseudo-élément étoiles du body (z-index: 0)
-   ============================================================ */
+/* ---- ÉLÉMENTS COMMUNS AUX SECTIONS ----
+   position:relative sur section pour qu'il soit au-dessus
+   du pseudo-élément ::before des étoiles (z-index:0) */
 section {
   position: relative;
   z-index: 1;
 }
 
-/* En-tête de section : label + titre + séparateur */
+/* en-tête centré de chaque section */
 .section-header { text-align: center; margin-bottom: 3.5rem; }
 
+/* petit label coloré encadré au-dessus du titre */
 .section-label {
   display: inline-block;
   font-family: 'Space Mono', monospace;
@@ -610,11 +641,13 @@ section {
   border-radius: 2px;
 }
 
+/* halo et ombre sur le label en mode nuit */
 body.dark-mode .section-label {
   text-shadow: var(--glow);
   box-shadow: 0 0 10px rgba(176,38,255,0.2);
 }
 
+/* titre principal de section, responsive avec clamp() */
 .section-title {
   font-family: 'Orbitron', monospace;
   font-size: clamp(1.6rem, 4vw, 2.8rem);
@@ -624,6 +657,7 @@ body.dark-mode .section-label {
   line-height: 1.2;
 }
 
+/* séparateur décoratif : ligne + points + texte + ligne */
 .section-divider {
   display: flex;
   align-items: center;
@@ -632,39 +666,44 @@ body.dark-mode .section-label {
   margin-top: 1rem;
 }
 
+/* points et textes du séparateur */
 .divider-dot  { font-size: 0.6rem; color: var(--accent); }
+/* lignes horizontales courtes du séparateur */
 .divider-line { width: 60px; height: 1px; background: var(--border); }
 
+/* lignes violettes en mode nuit */
 body.dark-mode .divider-line { background: rgba(176,38,255,0.3); }
 
+/* description courte sous le titre de section */
 .section-desc {
   font-size: 1.05rem;
   color: var(--text-secondary);
   max-width: 600px;
-  margin: 1rem auto 0;
+  margin: 1rem auto 0; /* centré horizontalement */
   line-height: 1.8;
 }
 
 
-/* ============================================================
-   SECTION CONCEPT — Grille 2 colonnes texte + image
-   ============================================================ */
+/* ---- SECTION CONCEPT ---- */
 .concept {
   padding: 6rem 2rem;
   background: var(--bg-secondary);
   transition: background 0.4s;
 }
 
+/* conteneur interne centré */
 .concept-inner { max-width: 1280px; margin: 0 auto; }
 
+/* grille 2 colonnes : texte à gauche, image à droite */
 .concept-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr 1fr; /* deux colonnes égales */
   gap: 4rem;
-  align-items: center;
+  align-items: center; /* centrage vertical */
   margin-top: 3rem;
 }
 
+/* paragraphes du texte concept */
 .concept-text p {
   font-size: 1.05rem;
   color: var(--text-secondary);
@@ -672,8 +711,10 @@ body.dark-mode .divider-line { background: rgba(176,38,255,0.3); }
   margin-bottom: 1.5rem;
 }
 
+/* liste verticale des points forts */
 .concept-features { display: flex; flex-direction: column; gap: 1rem; margin-top: 2rem; }
 
+/* chaque point fort : icône + titre + texte côte à côte */
 .concept-feature {
   display: flex;
   align-items: flex-start;
@@ -685,15 +726,17 @@ body.dark-mode .divider-line { background: rgba(176,38,255,0.3); }
   transition: all 0.3s ease;
 }
 
-/* Glissement vers la droite au hover */
+/* au hover : la carte glisse légèrement vers la droite */
 .concept-feature:hover {
   border-color: var(--accent);
   transform: translateX(4px);
   box-shadow: var(--shadow-card);
 }
 
+/* icône à gauche de chaque point fort */
 .feature-icon { font-size: 1.4rem; flex-shrink: 0; }
 
+/* titre en gras du point fort */
 .feature-text strong {
   display: block;
   font-family: 'Orbitron', monospace;
@@ -704,37 +747,39 @@ body.dark-mode .divider-line { background: rgba(176,38,255,0.3); }
   letter-spacing: 0.05em;
 }
 
+/* description du point fort */
 .feature-text p { font-size: 0.9rem; color: var(--text-muted); margin: 0; }
 
-/* Partie droite : cadre image */
+/* colonne droite : cadre de l'image */
 .concept-visual { position: relative; }
 
+/* cadre qui contient l'image avec un ratio fixe 4/3 */
 .concept-image-frame {
   position: relative;
   border-radius: 12px;
   overflow: hidden;
-  aspect-ratio: 4/3; /* maintient le ratio même sans image */
+  aspect-ratio: 4/3; /* maintient le ratio même si l'image est absente */
   border: 1px solid var(--border);
 }
 
-/* Image réelle dans le cadre concept
-   position: absolute pour remplir tout le cadre
-   object-fit: cover pour ne pas déformer l'image */
+/* image à l'intérieur du cadre
+   position:absolute + inset:0 pour qu'elle remplisse tout le cadre */
 .concept-img {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: cover;        /* remplit sans déformer */
   object-position: center;
   transition: transform 0.5s ease;
   border-radius: 12px;
 }
 
+/* zoom léger sur l'image au survol */
 .concept-image-frame:hover .concept-img { transform: scale(1.03); }
 
-/* Fallback emoji si l'image ne charge pas
-   display:none par défaut, onerror le passe à flex */
+/* fallback emoji si l'image ne charge pas
+   display:none par défaut, onerror dans le HTML le passe à flex */
 .concept-img-fallback {
   display: none;
   position: absolute;
@@ -745,11 +790,25 @@ body.dark-mode .divider-line { background: rgba(176,38,255,0.3); }
   background: linear-gradient(135deg, #e8f0fb, #c8daf5);
 }
 
-/* Petite carte statistique superposée en bas à droite */
+/* image jour visible par défaut */
+.concept-img-day   { display: block; }
+body.dark-mode .concept-img-day { display: none; }
+
+/* image nuit cachée par défaut */
+.concept-img-night { display: none; }
+body.dark-mode .concept-img-night { display: block; }
+
+/* fallback jour et nuit cachés par défaut */
+.concept-fallback-day  { display: none; }
+.concept-fallback-night { display: none; }
+body.dark-mode .concept-fallback-day  { display: none !important; }
+.concept-fallback-night:not(body.dark-mode *)  { display: none !important; }
+
+/* petite carte statistique superposée en bas à droite de l'image */
 .concept-overlay-card {
   position: absolute;
-  bottom: -1.5rem;
-  right: -1.5rem;
+  bottom: -1.5rem; /* dépasse légèrement l'image vers le bas */
+  right: -1.5rem;  /* dépasse légèrement l'image vers la droite */
   background: var(--bg-card);
   border: 1px solid var(--border-card);
   border-radius: 10px;
@@ -757,11 +816,13 @@ body.dark-mode .divider-line { background: rgba(176,38,255,0.3); }
   box-shadow: var(--shadow-card);
 }
 
+/* halo violet sur la carte en mode nuit */
 body.dark-mode .concept-overlay-card {
   box-shadow: 0 0 30px rgba(176,38,255,0.2);
   border-color: rgba(176,38,255,0.3);
 }
 
+/* grand chiffre dans la carte (ex: "2147") */
 .overlay-stat {
   font-family: 'Orbitron', monospace;
   font-size: 2rem;
@@ -771,8 +832,10 @@ body.dark-mode .concept-overlay-card {
   display: block;
 }
 
+/* halo néon sur le chiffre en mode nuit */
 body.dark-mode .overlay-stat { text-shadow: var(--glow); }
 
+/* label sous le chiffre */
 .overlay-label {
   font-family: 'Space Mono', monospace;
   font-size: 0.6rem;
@@ -783,27 +846,29 @@ body.dark-mode .overlay-stat { text-shadow: var(--glow); }
   margin-top: 0.25rem;
 }
 
+/* sur mobile : une seule colonne et la carte sort moins de l'image */
 @media (max-width: 768px) {
   .concept-grid { grid-template-columns: 1fr; gap: 2.5rem; }
   .concept-overlay-card { right: 0; bottom: -1rem; }
 }
 
 
-/* ============================================================
-   CARTES PRODUITS — Grille responsive auto-fill
-   ============================================================ */
+/* ---- CARTES PRODUITS ----
+   utilisées pour les boissons et les pâtisseries */
 .products-section {
   padding: 6rem 2rem;
   background: var(--bg-primary);
   transition: background 0.4s;
 }
 
+/* fond légèrement différent pour les sections alternées */
 .products-section.alt { background: var(--section-alt); }
 
+/* conteneur interne centré */
 .products-inner { max-width: 1280px; margin: 0 auto; }
 
-/* auto-fill : chaque carte fait au minimum 260px
-   le navigateur calcule le nombre de colonnes tout seul */
+/* grille auto-fill : le navigateur calcule le nombre de colonnes
+   chaque carte fait minimum 260px, et elles s'étendent pour remplir */
 .products-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
@@ -811,23 +876,25 @@ body.dark-mode .overlay-stat { text-shadow: var(--glow); }
   margin-top: 3rem;
 }
 
+/* carte produit de base */
 .product-card {
   background: var(--bg-card);
   border: 1px solid var(--border-card);
   border-radius: 12px;
-  overflow: hidden;
+  overflow: hidden; /* les coins arrondis cachent l'image qui déborderait */
   transition: all 0.35s ease;
 }
 
+/* au hover : la carte monte légèrement et une ombre apparaît */
 .product-card:hover {
   transform: var(--card-transform, translateY(-4px));
   box-shadow: var(--shadow-hover);
   border-color: var(--accent);
 }
 
-/* Zone image de la carte (emoji ou future illustration) */
+/* zone image en haut de la carte */
 .card-image {
-  aspect-ratio: 16/9;
+  aspect-ratio: 16/9; /* ratio fixe pour toutes les images */
   overflow: hidden;
   position: relative;
   background: var(--bg-primary);
@@ -836,33 +903,104 @@ body.dark-mode .overlay-stat { text-shadow: var(--glow); }
   justify-content: center;
 }
 
-/* Overlay coloré sur les images de carte en mode nuit */
+/* image réelle dans la carte */
+.card-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  transition: transform 0.5s ease;
+  display: block;
+}
+
+/* zoom léger sur l'image au survol de la carte */
+.product-card:hover .card-img { transform: scale(1.05); }
+
+/* emoji de secours si le PNG est absent : caché par défaut
+   onerror dans le HTML le rend visible si l'image ne charge pas */
+.card-emoji-fallback {
+  display: none;
+  font-size: 3.5rem;
+  position: absolute;
+  inset: 0;
+  align-items: center;
+  justify-content: center;
+}
+
+/* overlay coloré sur les images en mode nuit
+   mix-blend-mode:overlay mélange la couleur avec l'image en dessous */
 body.dark-mode .card-image::after {
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(135deg, rgba(176,38,255,0.15), rgba(0,245,212,0.08));
+  background: linear-gradient(135deg, rgba(176,38,255,0.20), rgba(0,245,212,0.10));
   mix-blend-mode: overlay;
-  pointer-events: none;
+  pointer-events: none; /* ne bloque pas les clics */
+  z-index: 1;
 }
 
-/* Avatars castors dans les cartes équipage
-   Fichiers PNG dans assets/images/ avec fallback emoji via onerror */
+/* zone image pour les cartes fast food : pleine largeur en haut de la carte */
+.fastfood-emoji {
+  width: 100%;
+  aspect-ratio: 4/3;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-primary);
+  border-radius: 10px 10px 0 0; /* coins arrondis seulement en haut */
+  border-bottom: 1px solid var(--border);
+  overflow: hidden;
+  position: relative;
+  font-size: 3.5rem;
+}
+
+/* image dans la zone fast food */
+.fastfood-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  border-radius: 10px 10px 0 0;
+  transition: transform 0.5s ease;
+  display: block;
+}
+
+/* zoom au hover */
+.fastfood-card:hover .fastfood-img { transform: scale(1.05); }
+
+/* fallback emoji fast food */
+.fastfood-emoji-fallback {
+  display: none;
+  font-size: 3.5rem;
+  position: absolute;
+  inset: 0;
+  align-items: center;
+  justify-content: center;
+}
+
+/* avatar circulaire des membres de l'équipe : image PNG ronde */
 .crew-avatar-img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center top;
-  border-radius: 50%;
+  object-position: center top; /* cadré sur le visage */
+  border-radius: 50%; /* cercle parfait */
   display: block;
 }
 
+/* emoji de secours pour les avatars (petits, sur la page d'accueil) */
 .crew-avatar-fallback { display: none; font-size: 3.5rem; line-height: 1; }
 
+/* quand .img-error est ajouté par onerror : cache la photo, affiche l'emoji */
 .crew-avatar.img-error .crew-avatar-img      { display: none; }
 .crew-avatar.img-error .crew-avatar-fallback { display: flex; align-items: center; justify-content: center; width: 100%; height: 100%; }
 
-/* Grands avatars de la page crew.html */
+/* grands avatars de la page crew.html (même principe mais taille différente) */
 .crew-avatar-xl-img {
   width: 100%;
   height: 100%;
@@ -872,17 +1010,21 @@ body.dark-mode .card-image::after {
   display: block;
 }
 
+/* emoji de secours pour les grands avatars */
 .crew-avatar-xl-fallback { display: none; font-size: 4rem; line-height: 1; }
 
 .crew-avatar-xl.img-error .crew-avatar-xl-img      { display: none; }
 .crew-avatar-xl.img-error .crew-avatar-xl-fallback { display: flex; align-items: center; justify-content: center; width: 100%; height: 100%; }
 
-/* Emoji dans les cartes produit */
+/* emoji dans les cartes produit (rétrocompatibilité) */
 .card-emoji { font-size: 3.5rem; transition: transform 0.3s ease; }
-.product-card:hover .card-emoji { transform: scale(1.15); }
+.product-card:hover .card-emoji          { transform: scale(1.15); }
+.product-card:hover .card-emoji-fallback { transform: scale(1.15); }
 
+/* zone de texte en bas de la carte */
 .card-content { padding: 1.25rem; }
 
+/* petit tag coloré en haut du contenu (ex: "Stimulant") */
 .card-tag {
   display: inline-block;
   padding: 0.2rem 0.6rem;
@@ -896,11 +1038,13 @@ body.dark-mode .card-image::after {
   margin-bottom: 0.75rem;
 }
 
+/* tag violet en mode nuit */
 body.dark-mode .card-tag {
   background: rgba(176,38,255,0.12);
   box-shadow: 0 0 8px rgba(176,38,255,0.15);
 }
 
+/* titre de la carte */
 .card-title {
   font-family: 'Orbitron', monospace;
   font-size: 0.9rem;
@@ -910,6 +1054,7 @@ body.dark-mode .card-tag {
   letter-spacing: 0.03em;
 }
 
+/* description courte */
 .card-desc {
   font-size: 0.88rem;
   color: var(--text-muted);
@@ -917,6 +1062,7 @@ body.dark-mode .card-tag {
   margin-bottom: 1rem;
 }
 
+/* pied de carte : prix à gauche, badge à droite */
 .card-footer {
   display: flex;
   align-items: center;
@@ -925,6 +1071,7 @@ body.dark-mode .card-tag {
   padding-top: 0.75rem;
 }
 
+/* prix en gras avec la couleur accent */
 .card-price {
   font-family: 'Orbitron', monospace;
   font-size: 1rem;
@@ -932,8 +1079,10 @@ body.dark-mode .card-tag {
   color: var(--price-color);
 }
 
+/* halo sur le prix en mode nuit */
 body.dark-mode .card-price { text-shadow: 0 0 10px rgba(0,245,212,0.5); }
 
+/* badge "Certifié" ou "Experimental" */
 .card-badge {
   padding: 0.2rem 0.6rem;
   background: var(--badge-bg);
@@ -945,15 +1094,15 @@ body.dark-mode .card-price { text-shadow: 0 0 10px rgba(0,245,212,0.5); }
   text-transform: uppercase;
 }
 
+/* badge violet en mode nuit */
 body.dark-mode .card-badge {
   background: rgba(176,38,255,0.15);
   box-shadow: 0 0 6px rgba(176,38,255,0.2);
 }
 
 
-/* ============================================================
-   CARTES FAST FOOD — Disposition horizontale (flexbox)
-   ============================================================ */
+/* ---- CARTES FAST FOOD ----
+   grille et styles pour la section restauration */
 .fastfood-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
@@ -961,14 +1110,15 @@ body.dark-mode .card-badge {
   margin-top: 3rem;
 }
 
+/* carte fast food : disposition verticale, image en haut */
 .fastfood-card {
   display: flex;
-  gap: 1.25rem;
+  flex-direction: column;
+  gap: 0;
   background: var(--bg-card);
   border: 1px solid var(--border-card);
   border-radius: 12px;
-  padding: 1.25rem;
-  align-items: center;
+  overflow: hidden;
   transition: all 0.35s ease;
 }
 
@@ -978,35 +1128,23 @@ body.dark-mode .card-badge {
   border-color: var(--accent);
 }
 
-/* Bloc emoji à gauche de la carte fast food */
-.fastfood-emoji {
-  font-size: 3rem;
-  flex-shrink: 0;
-  width: 70px;
-  height: 70px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: var(--bg-primary);
-  border-radius: 10px;
-  border: 1px solid var(--border);
-  transition: all 0.3s ease;
-}
-
+/* la bordure de la zone image suit la couleur accent au hover */
 .fastfood-card:hover .fastfood-emoji {
   border-color: var(--accent);
-  transform: scale(1.1);
 }
 
-.fastfood-info  { flex: 1; }
+/* zone texte sous l'image dans la carte fast food */
+.fastfood-info {
+  padding: 1.1rem 1.25rem 1.25rem;
+  flex: 1; /* prend l'espace disponible */
+}
+
 .fastfood-title { font-family: 'Orbitron', monospace; font-size: 0.85rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.4rem; }
 .fastfood-desc  { font-size: 0.85rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 0.5rem; }
 .fastfood-price { font-family: 'Orbitron', monospace; font-size: 0.9rem; font-weight: 700; color: var(--price-color); }
 
 
-/* ============================================================
-   SECTION ÉQUIPAGE — Grille de cartes membres
-   ============================================================ */
+/* ---- SECTION ÉQUIPAGE ---- */
 .crew-section {
   padding: 6rem 2rem;
   background: var(--bg-secondary);
@@ -1015,6 +1153,7 @@ body.dark-mode .card-badge {
 
 .crew-inner { max-width: 1280px; margin: 0 auto; }
 
+/* grille de cartes membres : minimum 240px chacune */
 .crew-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
@@ -1022,6 +1161,7 @@ body.dark-mode .card-badge {
   margin-top: 3rem;
 }
 
+/* carte membre centrée */
 .crew-card {
   background: var(--bg-card);
   border: 1px solid var(--border-card);
@@ -1037,14 +1177,15 @@ body.dark-mode .card-badge {
   border-color: var(--accent);
 }
 
+/* halo violet au hover en mode nuit */
 body.dark-mode .crew-card:hover { box-shadow: 0 0 40px rgba(176,38,255,0.3); }
 
-/* Avatar circulaire — overflow:hidden pour que l'img PNG reste ronde */
+/* avatar circulaire : overflow:hidden pour que l'image PNG reste dans le cercle */
 .crew-avatar {
   width: 90px;
   height: 90px;
-  border-radius: 50%;
-  margin: 0 auto 1.25rem;
+  border-radius: 50%; /* cercle */
+  margin: 0 auto 1.25rem; /* centré avec marge en bas */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1052,14 +1193,17 @@ body.dark-mode .crew-card:hover { box-shadow: 0 0 40px rgba(176,38,255,0.3); }
   background: var(--bg-primary);
   border: 2px solid var(--border);
   transition: all 0.3s ease;
-  overflow: hidden;
+  overflow: hidden; /* l'image PNG ne déborde pas du cercle */
 }
 
+/* au hover : bordure colorée + léger zoom de l'avatar */
 .crew-card:hover .crew-avatar { border-color: var(--accent); transform: scale(1.05); }
 
+/* halo violet autour de l'avatar en mode nuit */
 body.dark-mode .crew-avatar { border-color: rgba(176,38,255,0.3); box-shadow: 0 0 20px rgba(176,38,255,0.15); }
 body.dark-mode .crew-card:hover .crew-avatar { box-shadow: 0 0 30px rgba(176,38,255,0.4); }
 
+/* nom du membre */
 .crew-name {
   font-family: 'Orbitron', monospace;
   font-size: 0.9rem;
@@ -1069,6 +1213,7 @@ body.dark-mode .crew-card:hover .crew-avatar { box-shadow: 0 0 30px rgba(176,38,
   letter-spacing: 0.05em;
 }
 
+/* rôle/poste du membre */
 .crew-role {
   font-family: 'Space Mono', monospace;
   font-size: 0.6rem;
@@ -1078,6 +1223,7 @@ body.dark-mode .crew-card:hover .crew-avatar { box-shadow: 0 0 30px rgba(176,38,
   margin-bottom: 0.75rem;
 }
 
+/* description courte */
 .crew-desc {
   font-size: 0.85rem;
   color: var(--text-muted);
@@ -1085,6 +1231,7 @@ body.dark-mode .crew-card:hover .crew-avatar { box-shadow: 0 0 30px rgba(176,38,
   margin-bottom: 1.2rem;
 }
 
+/* badge en bas de la carte */
 .crew-badge {
   display: inline-block;
   padding: 0.3rem 0.9rem;
@@ -1097,12 +1244,11 @@ body.dark-mode .crew-card:hover .crew-avatar { box-shadow: 0 0 30px rgba(176,38,
   border-radius: 3px;
 }
 
+/* badge violet en mode nuit */
 body.dark-mode .crew-badge { background: rgba(176,38,255,0.12); box-shadow: 0 0 10px rgba(176,38,255,0.2); }
 
 
-/* ============================================================
-   SECTION CONTACT — Grille infos + formulaire
-   ============================================================ */
+/* ---- SECTION CONTACT ---- */
 .contact-section {
   padding: 6rem 2rem;
   background: var(--bg-primary);
@@ -1111,7 +1257,7 @@ body.dark-mode .crew-badge { background: rgba(176,38,255,0.12); box-shadow: 0 0 
 
 .contact-inner { max-width: 1280px; margin: 0 auto; }
 
-/* Grille 2 colonnes : infos (1fr) + formulaire (1.5fr) */
+/* grille 2 colonnes : infos à gauche (1fr), formulaire à droite (1.5fr, plus large) */
 .contact-grid {
   display: grid;
   grid-template-columns: 1fr 1.5fr;
@@ -1119,6 +1265,7 @@ body.dark-mode .crew-badge { background: rgba(176,38,255,0.12); box-shadow: 0 0 
   margin-top: 3rem;
 }
 
+/* titre dans la colonne infos */
 .contact-info h3 {
   font-family: 'Orbitron', monospace;
   font-size: 1rem;
@@ -1128,6 +1275,7 @@ body.dark-mode .crew-badge { background: rgba(176,38,255,0.12); box-shadow: 0 0 
   letter-spacing: 0.05em;
 }
 
+/* texte de présentation */
 .contact-info p {
   font-size: 0.95rem;
   color: var(--text-muted);
@@ -1135,7 +1283,7 @@ body.dark-mode .crew-badge { background: rgba(176,38,255,0.12); box-shadow: 0 0 
   margin-bottom: 2rem;
 }
 
-/* Ligne de détail contact : icône + label + valeur */
+/* ligne de détail (adresse, email, horaires...) */
 .contact-detail {
   display: flex;
   align-items: center;
@@ -1148,10 +1296,13 @@ body.dark-mode .crew-badge { background: rgba(176,38,255,0.12); box-shadow: 0 0 
   transition: all 0.3s ease;
 }
 
+/* glisse vers la droite au hover comme les features */
 .contact-detail:hover { border-color: var(--accent); transform: translateX(4px); }
 
+/* icône à gauche */
 .detail-icon { font-size: 1.2rem; }
 
+/* label en petit (ex: "ADRESSE") */
 .detail-text strong {
   display: block;
   font-family: 'Space Mono', monospace;
@@ -1162,9 +1313,10 @@ body.dark-mode .crew-badge { background: rgba(176,38,255,0.12); box-shadow: 0 0 
   margin-bottom: 0.2rem;
 }
 
+/* valeur en dessous du label */
 .detail-text span { font-size: 0.9rem; color: var(--text-primary); }
 
-/* Wrapper du formulaire */
+/* boîte blanche qui contient le formulaire */
 .contact-form-wrapper {
   background: var(--bg-card);
   border: 1px solid var(--border-card);
@@ -1173,12 +1325,13 @@ body.dark-mode .crew-badge { background: rgba(176,38,255,0.12); box-shadow: 0 0 
   transition: all 0.4s ease;
 }
 
+/* halo violet sur le formulaire en mode nuit */
 body.dark-mode .contact-form-wrapper {
   border-color: rgba(176,38,255,0.2);
   box-shadow: 0 0 40px rgba(176,38,255,0.08);
 }
 
-/* Label style terminal au-dessus du titre du formulaire */
+/* label style "terminal" au-dessus du titre du formulaire */
 .form-terminal {
   font-family: 'Space Mono', monospace;
   font-size: 0.65rem;
@@ -1188,19 +1341,23 @@ body.dark-mode .contact-form-wrapper {
   display: block;
 }
 
-/* Curseur clignotant en mode nuit */
+/* curseur clignotant sur le label en mode nuit */
 body.dark-mode .form-terminal { animation: blink 1.2s step-end infinite; }
 
+/* animation de clignotement */
 @keyframes blink {
   0%, 100% { opacity: 1; }
   50%       { opacity: 0; }
 }
 
+/* en-tête du formulaire */
 .form-header { margin-bottom: 2rem; }
 .form-title  { font-family: 'Orbitron', monospace; font-size: 1.2rem; font-weight: 700; color: var(--text-primary); }
 
+/* groupe label + input */
 .form-group { margin-bottom: 1.25rem; }
 
+/* label au-dessus de chaque champ */
 .form-group label {
   display: block;
   font-family: 'Space Mono', monospace;
@@ -1211,6 +1368,7 @@ body.dark-mode .form-terminal { animation: blink 1.2s step-end infinite; }
   margin-bottom: 0.5rem;
 }
 
+/* style commun aux champs texte et textarea */
 .form-group input,
 .form-group textarea {
   width: 100%;
@@ -1222,36 +1380,39 @@ body.dark-mode .form-terminal { animation: blink 1.2s step-end infinite; }
   font-family: 'Rajdhani', sans-serif;
   font-size: 1rem;
   transition: all 0.3s ease;
-  outline: none;
+  outline: none; /* supprime le contour bleu natif du navigateur */
 }
 
-/* Halo au focus */
+/* halo bleu quand on clique sur un champ (focus) */
 .form-group input:focus,
 .form-group textarea:focus {
   border-color: var(--accent);
   box-shadow: 0 0 0 3px rgba(26,107,220,0.1);
 }
 
+/* halo violet en mode nuit */
 body.dark-mode .form-group input:focus,
 body.dark-mode .form-group textarea:focus {
   box-shadow: 0 0 0 3px rgba(176,38,255,0.15), 0 0 20px rgba(176,38,255,0.1);
 }
 
-/* Bordure rouge quand le JS ajoute .error sur le champ */
+/* bordure rouge si le JS détecte un champ mal rempli */
 .form-group input.error,
 .form-group textarea.error {
   border-color: #ef4444;
   box-shadow: 0 0 0 3px rgba(239,68,68,0.1);
 }
 
-/* Message d'erreur (affiché par le JS via .show) */
+/* message d'erreur sous le champ : caché par défaut, visible avec .show */
 .error-msg      { display: none; font-family: 'Space Mono', monospace; font-size: 0.6rem; color: #ef4444; margin-top: 0.35rem; letter-spacing: 0.1em; }
 .error-msg.show { display: block; }
 
+/* textarea peut être redimensionné verticalement par l'utilisateur */
 .form-group textarea { min-height: 130px; resize: vertical; }
 
+/* bouton d'envoi */
 .form-submit {
-  width: 100%;
+  width: 100%; /* prend toute la largeur du formulaire */
   padding: 1rem 2rem;
   background: var(--accent);
   color: white;
@@ -1272,44 +1433,48 @@ body.dark-mode .form-group textarea:focus {
   box-shadow: var(--shadow-hover);
 }
 
+/* halo violet sur le bouton en mode nuit */
 body.dark-mode .form-submit { box-shadow: var(--glow); }
 
-/* Message de succès affiché après "envoi" du formulaire */
+/* message de succès qui s'affiche après l'envoi du formulaire
+   caché par défaut, le JS ajoute .show pour le rendre visible */
 .form-success       { display: none; text-align: center; padding: 2rem; }
 .form-success.show  { display: block; }
 .form-success .success-icon { font-size: 3rem; margin-bottom: 1rem; }
 .form-success p { font-family: 'Orbitron', monospace; font-size: 0.85rem; color: var(--accent); letter-spacing: 0.05em; }
 
+/* sur mobile : une seule colonne pour le contact */
 @media (max-width: 768px) {
   .contact-grid { grid-template-columns: 1fr; gap: 2rem; }
 }
 
 
-/* ============================================================
-   FOOTER
-   ============================================================ */
+/* ---- FOOTER ---- */
 footer {
-  background: var(--footer-bg);
+  background: var(--footer-bg); /* fond sombre même en mode jour */
   color: var(--footer-text);
   padding: 3rem 2rem 2rem;
   transition: background 0.4s;
 }
 
+/* conteneur centré */
 .footer-inner { max-width: 1280px; margin: 0 auto; }
 
-/* Grille 3 colonnes */
+/* grille 3 colonnes : logo (plus large) + 2 colonnes de liens */
 .footer-top {
   display: grid;
   grid-template-columns: 1.5fr 1fr 1fr;
   gap: 3rem;
   padding-bottom: 2rem;
-  border-bottom: 1px solid rgba(255,255,255,0.06);
+  border-bottom: 1px solid rgba(255,255,255,0.06); /* séparateur discret */
   margin-bottom: 2rem;
 }
 
+/* couleurs du logo dans le footer */
 .footer-brand .logo-top    { color: var(--accent); margin-bottom: 0.25rem; }
 .footer-brand .logo-bottom { color: rgba(255,255,255,0.3); }
 
+/* description de la marque dans le footer */
 .footer-brand p {
   margin-top: 1rem;
   font-size: 0.85rem;
@@ -1318,6 +1483,7 @@ footer {
   max-width: 280px;
 }
 
+/* titre de colonne dans le footer */
 .footer-col h4 {
   font-family: 'Orbitron', monospace;
   font-size: 0.65rem;
@@ -1328,8 +1494,9 @@ footer {
   margin-bottom: 1.25rem;
 }
 
+/* liens dans les colonnes du footer */
 .footer-col a {
-  display: block;
+  display: block; /* chaque lien sur sa propre ligne */
   font-size: 0.9rem;
   color: var(--footer-text);
   margin-bottom: 0.6rem;
@@ -1337,16 +1504,19 @@ footer {
   font-family: 'Rajdhani', sans-serif;
 }
 
+/* lien du footer en couleur accent au hover */
 .footer-col a:hover { color: var(--accent); }
 
+/* bas du footer : copyright à gauche, statut à droite */
 .footer-bottom {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  flex-wrap: wrap;
+  flex-wrap: wrap; /* passe à la ligne sur petits écrans */
   gap: 1rem;
 }
 
+/* texte de copyright très petit */
 .footer-copy {
   font-family: 'Space Mono', monospace;
   font-size: 0.6rem;
@@ -1354,7 +1524,7 @@ footer {
   color: rgba(255,255,255,0.25);
 }
 
-/* Point vert clignotant "station en ligne" */
+/* indicateur "station en ligne" avec point vert */
 .footer-status {
   display: flex;
   align-items: center;
@@ -1365,37 +1535,40 @@ footer {
   color: rgba(255,255,255,0.3);
 }
 
+/* point vert qui pulse pour simuler un voyant "en ligne" */
 .status-dot {
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  background: #22c55e;
+  background: #22c55e; /* vert */
   animation: pulse 2s ease-in-out infinite;
 }
 
+/* animation de pulsation du point vert */
 @keyframes pulse {
   0%, 100% { opacity: 1; transform: scale(1); }
-  50%       { opacity: 0.5; transform: scale(1.3); }
+  50%       { opacity: 0.5; transform: scale(1.3); } /* grossit et pâlit */
 }
 
+/* sur mobile : footer en colonne, texte centré */
 @media (max-width: 768px) {
   .footer-top    { grid-template-columns: 1fr; gap: 2rem; }
   .footer-bottom { flex-direction: column; text-align: center; }
 }
 
 
-/* ============================================================
-   HERO DES PAGES INTERNES (menu, crew, contact)
-   Version compacte du hero pour les pages secondaires
-   ============================================================ */
+/* ---- HERO DES PAGES INTERNES (menu, crew, contact) ----
+   version compacte du hero pour les pages secondaires
+   pas d'image plein écran, juste un bloc de texte centré */
 .page-hero {
-  padding: 120px 2rem 4rem;
+  padding: 120px 2rem 4rem; /* 120px en haut à cause de la navbar fixe */
   text-align: center;
   background: var(--bg-secondary);
   border-bottom: 1px solid var(--border);
   transition: all 0.4s;
 }
 
+/* petit label au-dessus du titre */
 .page-hero-label {
   font-family: 'Space Mono', monospace;
   font-size: 0.65rem;
@@ -1406,6 +1579,7 @@ footer {
   display: block;
 }
 
+/* titre principal de la page interne */
 .page-hero-title {
   font-family: 'Orbitron', monospace;
   font-size: clamp(2rem, 5vw, 3.5rem);
@@ -1414,29 +1588,27 @@ footer {
   margin-bottom: 1rem;
 }
 
+/* description sous le titre */
 .page-hero-desc {
   font-size: 1rem;
   color: var(--text-muted);
   max-width: 600px;
-  margin: 0 auto;
+  margin: 0 auto; /* centré */
   line-height: 1.8;
 }
 
 
-/* ============================================================
-   SYSTÈME JOUR / NUIT — Bascule de contenu
-   .day-content  visible par défaut, caché en dark-mode
-   .night-content caché par défaut, visible en dark-mode
-   .day-grid / .night-grid : même logique pour les grilles CSS
-   ============================================================ */
+/* ---- SYSTÈME JOUR / NUIT ----
+   .day-content  : visible par défaut, caché quand dark-mode est actif
+   .night-content : caché par défaut, visible quand dark-mode est actif */
 .day-content   { display: block; }
 .night-content { display: none; }
 
 body.dark-mode .day-content   { display: none; }
 body.dark-mode .night-content { display: block; }
 
-/* display:contents permet aux cartes enfants de s'insérer
-   directement dans la grille parente sans wrapper intermédiaire */
+/* display:contents permet aux cartes enfants de s'insérer directement
+   dans la grille parente sans créer de div intermédiaire qui casserait la grille */
 .day-grid   { display: contents; }
 .night-grid { display: none; }
 
@@ -1444,59 +1616,59 @@ body.dark-mode .day-grid   { display: none; }
 body.dark-mode .night-grid { display: contents; }
 
 
-/* ============================================================
-   ANIMATIONS
-   ============================================================ */
+/* ---- ANIMATIONS ---- */
 
-/* Entrée depuis le haut (éléments du hero) */
+/* entrée depuis le haut : utilisée pour les éléments du hero au chargement */
 @keyframes fadeSlideDown {
   from { opacity: 0; transform: translateY(-20px); }
   to   { opacity: 1; transform: translateY(0); }
 }
 
-/* Entrée depuis le bas (cartes) */
+/* entrée depuis le bas : utilisée pour les cartes au scroll */
 @keyframes cardReveal {
   from { opacity: 0; transform: translateY(20px); }
   to   { opacity: 1; transform: translateY(0); }
 }
 
-/* État initial avant apparition au scroll */
+/* état initial de tous les éléments avec class="reveal"
+   ils sont invisibles et légèrement décalés vers le bas */
 .reveal {
   opacity: 0;
   transform: translateY(30px);
   transition: opacity 0.6s ease, transform 0.6s ease;
 }
 
-/* État final après que l'IntersectionObserver détecte l'élément */
+/* quand l'IntersectionObserver du JS détecte que l'élément est visible à l'écran,
+   il ajoute la classe .visible → l'élément apparaît en fondu */
 .reveal.visible {
   opacity: 1;
   transform: translateY(0);
 }
 
-/* Délais échelonnés pour un effet cascade sur les grilles */
+/* délais échelonnés pour que les cartes d'une même grille apparaissent en cascade */
 .reveal:nth-child(1) { transition-delay: 0s; }
 .reveal:nth-child(2) { transition-delay: 0.08s; }
 .reveal:nth-child(3) { transition-delay: 0.16s; }
 .reveal:nth-child(4) { transition-delay: 0.24s; }
 
 
-/* ============================================================
-   EFFET GLITCH — Mode nuit uniquement
-   ::before et ::after dupliquent le texte (via data-text mis par JS)
-   avec un léger décalage et des couleurs différentes
-   clip:rect découpe le texte en tranches animées
-   ============================================================ */
+/* ---- EFFET GLITCH ----
+   effet de "bug" sur certains titres en mode nuit uniquement
+   ::before et ::after créent deux copies décalées du texte
+   avec des couleurs et des animations différentes */
 body.dark-mode .glitch { position: relative; }
 
+/* copie violet décalée vers la droite */
 body.dark-mode .glitch::before {
-  content: attr(data-text);
+  content: attr(data-text); /* récupère le texte depuis l'attribut data-text mis par JS */
   position: absolute;
   left: 2px; top: 0;
   color: #b026ff;
-  clip: rect(0, 900px, 0, 0);
+  clip: rect(0, 900px, 0, 0); /* découpe le texte en tranches */
   animation: glitch-1 3s infinite linear alternate-reverse;
 }
 
+/* copie cyan décalée vers la gauche */
 body.dark-mode .glitch::after {
   content: attr(data-text);
   position: absolute;
@@ -1506,6 +1678,8 @@ body.dark-mode .glitch::after {
   animation: glitch-2 2s infinite linear alternate-reverse;
 }
 
+/* les deux animations découpent le texte à des endroits différents
+   pour créer l'illusion d'un écran qui glitche */
 @keyframes glitch-1 {
   0%   { clip: rect(30px, 9999px, 10px, 0); }
   25%  { clip: rect(60px, 9999px, 40px, 0); }
@@ -1523,14 +1697,13 @@ body.dark-mode .glitch::after {
 }
 
 
-/* ============================================================
-   UTILITAIRES DIVERS
-   ============================================================ */
+/* ---- CLASSES UTILITAIRES ----
+   petites classes réutilisables partout dans le HTML */
 .container   { max-width: 1280px; margin: 0 auto; padding: 0 2rem; }
 .text-accent { color: var(--accent); }
 .text-center { text-align: center; }
 
-/* Onglets de filtre sur la page menu */
+/* onglets de filtre sur la page menu (Boissons / Pâtisseries / Fast Food) */
 .menu-tabs {
   display: flex;
   gap: 0.5rem;
@@ -1539,10 +1712,11 @@ body.dark-mode .glitch::after {
   margin-bottom: 1rem;
 }
 
+/* style de chaque onglet */
 .menu-tab {
   padding: 0.5rem 1.3rem;
   border: 1px solid var(--border);
-  border-radius: 50px;
+  border-radius: 50px; /* forme pilule */
   font-family: 'Space Mono', monospace;
   font-size: 0.6rem;
   letter-spacing: 0.12em;
@@ -1553,6 +1727,7 @@ body.dark-mode .glitch::after {
   background: transparent;
 }
 
+/* onglet actif ou survolé */
 .menu-tab:hover,
 .menu-tab.active {
   border-color: var(--accent);
@@ -1560,6 +1735,7 @@ body.dark-mode .glitch::after {
   background: var(--badge-bg);
 }
 
+/* halo sur l'onglet actif en mode nuit */
 body.dark-mode .menu-tab.active {
   box-shadow: 0 0 15px rgba(176,38,255,0.25);
 }
