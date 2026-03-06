@@ -1,9 +1,14 @@
-const toggle = document.getElementById("theme-toggle");
+const button = document.getElementById("toggleTheme")
 
-toggle.addEventListener("click", () => {
+button.addEventListener("click", () => {
 
-console.log("CLICK");
+document.body.classList.toggle("dark")
 
-document.body.classList.toggle("dark-mode");
+if(document.body.classList.contains("dark")){
+button.textContent = "Mode Jour"
+}
+else{
+button.textContent = "Mode Nuit"
+}
 
-});
+})
